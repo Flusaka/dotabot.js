@@ -1,4 +1,4 @@
-# dotabot-ts
+# dotabot.js
 
 To install dependencies:
 
