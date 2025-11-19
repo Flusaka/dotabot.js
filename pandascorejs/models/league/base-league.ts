@@ -1,0 +1,14 @@
+import z from "zod";
+import camelcaseKeys from "camelcase-keys";
+
+export const BaseLeagueSchema = z.looseObject({
+    id: z.int().gte(1),
+    imageUrl: z.url().nullable(),
+    modifiedAt: z.iso.datetime(),
+    name: z.string(),
+    slug: z.string().min(1),
+    url: z.string().nullable()
+});
+
+export const BaseLeague = z.preprocess((data: object) => camelcaseKeys(data), BaseLeagueSchema);
+export type BaseLeague = z.infer<typeof BaseLeague>;
