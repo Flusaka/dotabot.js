@@ -2,7 +2,7 @@
   "lockfileVersion": 1,
   "workspaces": {
     "": {
-      "name": "dotabot-ts",
+      "name": "dotabot.js",
       "dependencies": {
         "camelcase-keys": "^10.0.1",
         "discord.js": "^14.25.0",
