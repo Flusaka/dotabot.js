@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { Match } from '../match';
+import { Match } from '../Match';
 
 describe('Match Schema', () => {
     it('should parse a valid match in snake_case', () => {

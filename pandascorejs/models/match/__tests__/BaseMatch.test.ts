@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { BaseMatch } from '../base-match'; // Adjust the import path
+import { BaseMatch } from '../BaseMatch'; // Adjust the import path
 
 describe('Base Match Schema', () => {
     it('should parse a valid match in snake_case', () => {
