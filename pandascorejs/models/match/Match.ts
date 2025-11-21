@@ -26,4 +26,5 @@ export const Match = z.preprocess(
 );
 
 export type Opponent = z.infer<typeof Opponent>;
+export type MatchResponse = z.input<typeof Match>;
 export type Match = z.infer<typeof Match>;

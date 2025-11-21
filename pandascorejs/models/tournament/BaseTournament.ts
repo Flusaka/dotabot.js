@@ -9,22 +9,22 @@ const TournamentType = z.enum(['offline', 'online', 'online/offline']);
 export const BaseTournamentSchema = z.looseObject({
     beginAt: z.iso.datetime().nullable(),
     country: z.string().nullable(),
-    detailedStarts: z.boolean(),
+    detailedStats: z.boolean(),
     endAt: z.iso.datetime().nullable(),
-    hasBracket: z.iso.datetime(),
+    hasBracket: z.boolean(),
     id: z.int().gte(1),
     leagueId: z.int().gte(1),
     liveSupported: z.boolean(),
     modifiedAt: z.iso.datetime(),
     name: z.string(),
     prizepool: z.string().nullable(),
-    region: Region,
+    region: Region.nullable(),
     serieId: z.int(),
     slug: z.string().min(1),
     tier: Tier.nullable(),
-    type: TournamentType,
+    type: TournamentType.nullable(),
     // TODO: winnerId
-    winnerType: WinnerType
+    winnerType: WinnerType.nullable()
 });
 
 export const BaseTournament = z.preprocess((data: object) => camelcaseKeys(data), BaseTournamentSchema);

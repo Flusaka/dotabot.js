@@ -27,7 +27,6 @@ export const BaseMatchSchema = z.looseObject({
     tournamentId: z.int().gte(1),
     // TODO: winner_id
     // TODO: winner_type 
-    year: z.int().gte(2012).nullable()
 });
 
 export const BaseMatch = z.preprocess(

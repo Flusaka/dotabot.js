@@ -14,5 +14,8 @@
     "camelcase-keys": "^10.0.1",
     "discord.js": "^14.25.0",
     "zod": "^4.1.12"
+  },
+  "scripts": {
+    "test": "vitest"
   }
 }
