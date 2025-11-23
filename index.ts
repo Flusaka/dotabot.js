@@ -1,9 +1,11 @@
 // import { Client, Events, GatewayIntentBits } from "discord.js";
 
-import { ZodError } from "zod";
+// import { ZodError } from "zod";
 // import { Client as DiscordClient, Events, GatewayIntentBits } from 'discord.js';
-import { Client as PandaScoreClient } from "./pandascorejs/Client";
-import { DateTime } from "luxon";
+// import { Client as PandaScoreClient } from "./pandascorejs/Client";
+// import { DateTime } from "luxon";
+import { PrismaPg } from "@prisma/adapter-pg";
+import { PrismaClient, Prisma } from "./generated/prisma/client";
 
 const pandaScoreToken = process.env.PANDASCORE_TOKEN;
 if(!pandaScoreToken) {
@@ -17,22 +19,34 @@ if(!pandaScoreToken) {
 
 // client.login(process.env.DISCORD_TOKEN);
 
-const pandascore = new PandaScoreClient(pandaScoreToken);
+// const pandascore = new PandaScoreClient(pandaScoreToken);
+// (async () => {
+//     try {
+//         const earliest = DateTime.utc();//.minus({days: 2});
+//         const latest = DateTime.utc().plus({days: 2});
+//         const matches = await pandascore.matches.getDota2Matches({
+//             range: {
+//                 beginAt: [earliest.toISO(), latest.toISO()]
+//             }
+//         });
+//         console.log(`Success! Match count: ${matches.length}`);
+//     }
+//     catch(err: unknown) {
+//         console.error(err);
+//         if(err instanceof ZodError) {
+//             console.log(err.message);
+//         }
+//     }
+// })();
+
 (async () => {
-    try {
-        const earliest = DateTime.utc();//.minus({days: 2});
-        const latest = DateTime.utc().plus({days: 2});
-        const matches = await pandascore.matches.getDota2Matches({
-            range: {
-                beginAt: [earliest.toISO(), latest.toISO()]
-            }
-        });
-        console.log(`Success! Match count: ${matches.length}`);
-    }
-    catch(err: unknown) {
-        console.error(err);
-        if(err instanceof ZodError) {
-            console.log(err.message);
+    const connectionString = `${process.env.DATABASE_URL}`;
+    const adapter = new PrismaPg({connectionString});
+    const prisma = new PrismaClient({adapter});
+    const channelConfiguration = await prisma.channelConfiguration.create({
+        data: {
+            channelId: 898676943610851358n
         }
-    }
+    });
+    console.log(`Created channel config ${channelConfiguration.id}`);
 })();

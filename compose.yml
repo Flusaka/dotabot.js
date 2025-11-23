@@ -1,0 +1,22 @@
+﻿services:
+  db:
+    image: postgres:17-alpine
+    restart: always
+    environment:
+      POSTGRES_DB: "dotabot"
+      POSTGRES_PASSWORD: "p4ssw0rd"
+      POSTGRES_USER: "admin"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    command: postgres -c log_connections=on -c log_hostname=on -c log_statement=all -c log_line_prefix="%m [%p] %u@%d "
+        
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8080:8080"
+
+volumes:
+  pgdata:

@@ -1,0 +1,43 @@
+/**
+    Bot-related database schema
+**/
+
+/**
+    Enums
+**/
+enum Language {
+    English
+}
+
+enum Timezone {
+    EET
+    GMT
+}
+
+enum Tier {
+    S
+    A
+    B
+    C
+    D
+    Unknown
+}
+
+/**
+    Models
+**/
+model ChannelConfiguration {
+    // Mapping
+    @@map("channel_configurations")
+
+    // Properties
+    id Int @id @default(autoincrement()) @map("id")
+    channelId BigInt @unique @map("channel_id")
+    tiers Tier[] @default([S, A]) @map("tiers")
+    timezone Timezone @default(GMT) @map("timezone")
+    preferredLanguage Language @default(English) @map("preferred_language")
+    dailyNotificationTime DateTime? @map("daily_notification_time")
+
+    // Indices
+    @@index(channelId)
+}
