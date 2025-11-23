@@ -1,8 +1,9 @@
 import z from "zod";
+import { DateTimeRange } from "./Range";
 
-export const MatchesRange = z.looseObject({
-    beginAt: z.array(z.iso.datetime()).min(2).max(2),
-    scheduledAt: z.array(z.iso.datetime()).min(2).max(2)
+export const MatchesRange = z.object({
+    beginAt: DateTimeRange.optional(),
+    scheduledAt: DateTimeRange.optional()
 });
 
 export type MatchesRange = z.infer<typeof MatchesRange>;

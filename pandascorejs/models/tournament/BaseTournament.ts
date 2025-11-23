@@ -2,7 +2,7 @@ import z from "zod";
 import { Region } from "../common/Region";
 import { Tier } from "../common/Tier";
 import { WinnerType } from "../common/WinnerType";
-import camelcaseKeys from "camelcase-keys";
+import { camelCase } from "change-case/keys";
 
 const TournamentType = z.enum(['offline', 'online', 'online/offline']);
 
@@ -27,5 +27,5 @@ export const BaseTournamentSchema = z.looseObject({
     winnerType: WinnerType.nullable()
 });
 
-export const BaseTournament = z.preprocess((data: object) => camelcaseKeys(data), BaseTournamentSchema);
+export const BaseTournament = z.preprocess((data: object) => camelCase(data), BaseTournamentSchema);
 export type BaseTournament = z.infer<typeof BaseTournament>;

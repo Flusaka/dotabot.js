@@ -1,5 +1,5 @@
 import z from "zod";
-import camelcaseKeys from "camelcase-keys";
+import { camelCase } from "change-case/keys";
 
 export const BasePlayerSchema = z.looseObject({
     active: z.boolean(),
@@ -16,5 +16,5 @@ export const BasePlayerSchema = z.looseObject({
     slug: z.string().nullable()
 });
 
-export const BasePlayer = z.preprocess((data: object) => camelcaseKeys(data), BasePlayerSchema);
+export const BasePlayer = z.preprocess((data: object) => camelCase(data), BasePlayerSchema);
 export type BasePlayer = z.infer<typeof BasePlayerSchema>;

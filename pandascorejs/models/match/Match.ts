@@ -1,11 +1,11 @@
 import z from "zod";
-import camelcaseKeys from "camelcase-keys";
 import { BaseMatchSchema } from "./BaseMatch";
 import { BaseLeague } from "../league/BaseLeague";
 import { BaseTeam } from "../team/BaseTeam";
 import { BasePlayer } from "../player/BasePlayer";
 import { BaseTournament } from "../tournament/BaseTournament";
 import { BaseSerie } from "../serie/BaseSerie";
+import { camelCase } from "change-case/keys";
 
 const Opponent = z.discriminatedUnion('type', [
     z.object({ type: z.literal('Team'), opponent: BaseTeam }),
@@ -21,7 +21,7 @@ export const MatchSchema = BaseMatchSchema.extend({
 });
 
 export const Match = z.preprocess(
-    (data: object) => camelcaseKeys(data),
+    (data: object) => camelCase(data),
     MatchSchema
 );
 

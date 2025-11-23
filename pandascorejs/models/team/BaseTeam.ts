@@ -1,5 +1,5 @@
 import z from "zod";
-import camelcaseKeys from "camelcase-keys";
+import { camelCase } from "change-case/keys";
 
 export const BaseTeamSchema = z.looseObject({
     acronym: z.string().nullable(),
@@ -12,5 +12,5 @@ export const BaseTeamSchema = z.looseObject({
     slug: z.string().nullable()
 });
 
-export const BaseTeam = z.preprocess((data: object) => camelcaseKeys(data), BaseTeamSchema);
+export const BaseTeam = z.preprocess((data: object) => camelCase(data), BaseTeamSchema);
 export type BaseTeam = z.infer<typeof BaseTeam>;

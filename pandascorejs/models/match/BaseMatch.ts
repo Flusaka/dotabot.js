@@ -1,7 +1,7 @@
-import camelcaseKeys from "camelcase-keys";
 import z from "zod";
 import { Status } from "../common/Status";
 import { Stream } from "../common/Stream";
+import { camelCase } from "change-case/keys";
 
 const MatchType = z.enum(['all_games_played', 'best_of', 'custom', 'first_to', 'ow_best_of', 'red_bull_home_ground']);
 
@@ -30,7 +30,7 @@ export const BaseMatchSchema = z.looseObject({
 });
 
 export const BaseMatch = z.preprocess(
-    (data: object) => camelcaseKeys(data),
+    (data: object) => camelCase(data),
     BaseMatchSchema
 );
 

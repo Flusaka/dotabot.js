@@ -1,6 +1,6 @@
 import z from "zod";
 import { WinnerType } from "../common/WinnerType";
-import camelcaseKeys from "camelcase-keys";
+import { camelCase } from "change-case/keys";
 
 export const BaseSerieSchema = z.looseObject({
     beginAt: z.iso.datetime().nullable(),
@@ -17,5 +17,5 @@ export const BaseSerieSchema = z.looseObject({
     year: z.int().gte(2012).nullable()
 });
 
-export const BaseSerie = z.preprocess((data: object) => camelcaseKeys(data), BaseSerieSchema);
+export const BaseSerie = z.preprocess((data: object) => camelCase(data), BaseSerieSchema);
 export type BaseSerie = z.infer<typeof BaseSerie>;

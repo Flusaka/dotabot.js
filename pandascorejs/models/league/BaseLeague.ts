@@ -1,5 +1,5 @@
 import z from "zod";
-import camelcaseKeys from "camelcase-keys";
+import { camelCase } from "change-case/keys";
 
 export const BaseLeagueSchema = z.looseObject({
     id: z.int().gte(1),
@@ -10,5 +10,5 @@ export const BaseLeagueSchema = z.looseObject({
     url: z.string().nullable()
 });
 
-export const BaseLeague = z.preprocess((data: object) => camelcaseKeys(data), BaseLeagueSchema);
+export const BaseLeague = z.preprocess((data: object) => camelCase(data), BaseLeagueSchema);
 export type BaseLeague = z.infer<typeof BaseLeague>;

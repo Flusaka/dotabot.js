@@ -1,4 +1,4 @@
-import camelcaseKeys from "camelcase-keys";
+import { camelCase } from "change-case/keys";
 import z from "zod";
 
 export const Language = z.enum([
@@ -28,6 +28,6 @@ const StreamSchema = z.looseObject({
     rawUrl: z.url()
 });
 
-export const Stream = z.preprocess((data: object) => camelcaseKeys(data), StreamSchema);
+export const Stream = z.preprocess((data: object) => camelCase(data), StreamSchema);
 export type Language = z.infer<typeof Language>;
 export type Stream = z.infer<typeof Stream>;
