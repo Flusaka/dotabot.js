@@ -24,6 +24,10 @@
     // Some stricter flags (disabled by default)
     "noUnusedLocals": false,
     "noUnusedParameters": false,
-    "noPropertyAccessFromIndexSignature": false
+    "noPropertyAccessFromIndexSignature": false,
+
+    // discordx requirements
+    "emitDecoratorMetadata": false, // required
+    "experimentalDecorators": true // required
   }
 }
