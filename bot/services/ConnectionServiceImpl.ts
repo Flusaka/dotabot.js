@@ -1,5 +1,5 @@
 import { inject, injectable } from "inversify";
-import { ConnectionResult, type ConnectionService, type DisconnectionResult } from "./interfaces/ConnectionService";
+import { ConnectionResult, DisconnectionResult, type ConnectionService } from "./interfaces/ConnectionService";
 import { Types } from "../di/Types";
 import type { ChannelConfigurationRepository } from "../repositories/interfaces/ChannelConfigurationRepository";
 
@@ -21,8 +21,18 @@ export class ConnectionServiceImpl implements ConnectionService {
         }
         return ConnectionResult.Success;
     }
-    disconnect(channelId: bigint): Promise<DisconnectionResult> {
-        throw new Error("Method not implemented.");
+
+    async disconnect(channelId: bigint): Promise<DisconnectionResult> {
+        const existing = await this.channelConfigRepo.getByChannelId(channelId);
+        if(!existing) {
+            return DisconnectionResult.ChannelNotConnected;
+        }
+
+        const result = await this.channelConfigRepo.delete(existing.id);
+        if(!result) {
+            return DisconnectionResult.UnknownError;
+        }
+        return DisconnectionResult.Success;
     }
 
 }

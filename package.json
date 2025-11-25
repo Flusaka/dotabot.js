@@ -28,6 +28,7 @@
     "zod": "^4.1.12"
   },
   "scripts": {
+    "dev": "bun .",
     "test": "vitest"
   }
 }

@@ -27,7 +27,17 @@ export class PrismaChannelConfigurationRepository implements ChannelConfiguratio
     }
     
     async create(entity: Omit<ChannelConfiguration, "id">): Promise<ChannelConfiguration> {
+        // TODO: Map properly, in case domain and data diverge
         const result = await this.prisma.channelConfiguration.create({data: { ...entity } } );
         return result;
+    }
+
+    async delete(id: number): Promise<boolean> {
+        try {
+            await this.prisma.channelConfiguration.delete({ where: { id: id } });
+            return true;
+        } catch(e: unknown) {
+            return false;
+        }
     }
 }
