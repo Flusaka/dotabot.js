@@ -2,6 +2,7 @@ import { inject, injectable } from "inversify";
 import { ConnectionResult, DisconnectionResult, type ConnectionService } from "./interfaces/ConnectionService";
 import { Types } from "../di/Types";
 import type { ChannelConfigurationRepository } from "../repositories/interfaces/ChannelConfigurationRepository";
+import { ChannelConfiguration } from "../domain/ChannelConfiguration";
 
 @injectable()
 export class ConnectionServiceImpl implements ConnectionService {
@@ -15,7 +16,7 @@ export class ConnectionServiceImpl implements ConnectionService {
             return ConnectionResult.ChannelAlreadyConnected;
         }
 
-        const result = await this.channelConfigRepo.create({channelId: channelId});
+        const result = await this.channelConfigRepo.create(ChannelConfiguration.defaultNew(channelId));
         if(!result) {
             return ConnectionResult.UnknownError;
         }

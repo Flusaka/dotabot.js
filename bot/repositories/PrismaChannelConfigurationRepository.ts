@@ -1,9 +1,14 @@
 import { inject, injectable } from "inversify";
-// import prisma from "../../database/prisma";
-import type { ChannelConfiguration } from "../domain/ChannelConfiguration";
+import { ChannelConfiguration } from "../domain/ChannelConfiguration";
 import type { ChannelConfigurationRepository } from "./interfaces/ChannelConfigurationRepository";
 import { Types } from "../di/Types";
 import type { PrismaClient } from "../../generated/prisma/client";
+import { Tier } from "../domain/Tier";
+import { Timezone } from "../domain/Timezone";
+import { Language } from "../domain/Language";
+import { TimeOnly } from "../domain/TimeOnly";
+import type { ChannelConfigurationUpdateInput } from "../../generated/prisma/models";
+import { ChannelConfigurationMapper } from "../mappers/ChannelConfigurationMapper";
 
 @injectable()
 export class PrismaChannelConfigurationRepository implements ChannelConfigurationRepository {
@@ -16,10 +21,7 @@ export class PrismaChannelConfigurationRepository implements ChannelConfiguratio
             return undefined;
         }
 
-        return {
-            id: channelConfig.id,
-            channelId: channelConfig.channelId
-        };
+        return ChannelConfigurationMapper.toDomain(channelConfig);
     }
 
     getById(id: number): Promise<ChannelConfiguration> {
@@ -27,9 +29,21 @@ export class PrismaChannelConfigurationRepository implements ChannelConfiguratio
     }
     
     async create(entity: Omit<ChannelConfiguration, "id">): Promise<ChannelConfiguration> {
-        // TODO: Map properly, in case domain and data diverge
-        const result = await this.prisma.channelConfiguration.create({data: { ...entity } } );
-        return result;
+        const model = ChannelConfigurationMapper.toModel(entity);
+        const result = await this.prisma.channelConfiguration.create({data: model});
+        return ChannelConfigurationMapper.toDomain(result);
+    }
+
+    async update(id: number, entity: Partial<Omit<ChannelConfiguration, "id">>): Promise<boolean> {
+        const model = ChannelConfigurationMapper.toPartialModel(entity);
+        const result = await this.prisma.channelConfiguration.update({
+            where: { id },
+            data: model
+        });
+        if(!result) {
+            return false;
+        }
+        return true;
     }
 
     async delete(id: number): Promise<boolean> {

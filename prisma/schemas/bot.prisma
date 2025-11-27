@@ -36,7 +36,7 @@ model ChannelConfiguration {
     tiers Tier[] @default([S, A]) @map("tiers")
     timezone Timezone @default(GMT) @map("timezone")
     preferredLanguage Language @default(English) @map("preferred_language")
-    dailyNotificationTime DateTime? @map("daily_notification_time")
+    dailyNotificationTime DateTime? @db.Time() @map("daily_notification_time")
 
     // Indices
     @@index(channelId)
