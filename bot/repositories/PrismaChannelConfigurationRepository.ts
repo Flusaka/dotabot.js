@@ -3,11 +3,6 @@ import { ChannelConfiguration } from "../domain/ChannelConfiguration";
 import type { ChannelConfigurationRepository } from "./interfaces/ChannelConfigurationRepository";
 import { Types } from "../di/Types";
 import type { PrismaClient } from "../../generated/prisma/client";
-import { Tier } from "../domain/Tier";
-import { Timezone } from "../domain/Timezone";
-import { Language } from "../domain/Language";
-import { TimeOnly } from "../domain/TimeOnly";
-import type { ChannelConfigurationUpdateInput } from "../../generated/prisma/models";
 import { ChannelConfigurationMapper } from "../mappers/ChannelConfigurationMapper";
 
 @injectable()

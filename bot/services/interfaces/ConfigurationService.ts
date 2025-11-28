@@ -1,18 +1,51 @@
-import type { Timezone } from "../../../generated/prisma/enums";
 import type { Language } from "../../domain/Language";
 import type { Tier } from "../../domain/Tier";
+import type { Timezone } from "../../domain/Timezone";
+
+export enum AddTierResult {
+    Success,
+    ChannelNotConnected,
+    TierAlreadyAdded,
+    UnknownError,
+}
+
+export enum RemoveTierResult {
+    Success,
+    ChannelNotConnected,
+    TierNotAdded,
+    UnknownError,
+}
+
+export enum SetPreferredLanguageResult {
+    Success,
+    ChannelNotConnected,
+    UnknownError,
+}
+
+export enum SetNotificationTimezoneResult {
+    Success,
+    ChannelNotConnected,
+    UnknownError,
+}
+
+export enum SetDailyNotificationTimeResult {
+    Success,
+    ChannelNotConnected,
+    InvalidTimeString,
+    UnknownError
+}
 
 export interface ConfigurationService {
     // Tier configuration
-    addTier(tier: Tier): Promise<boolean>;
-    removeTier(tier: Tier): Promise<boolean>;
+    addTier(channelId: bigint, tier: Tier): Promise<AddTierResult>;
+    removeTier(channelId: bigint, tier: Tier): Promise<RemoveTierResult>;
 
     // Language configuration
-    setPreferredLanguage(language: Language): Promise<boolean>;
+    setPreferredLanguage(channelId: bigint, language: Language): Promise<SetPreferredLanguageResult>;
 
     // Timezone configuration
-    setNotificationTimezone(timezone: Timezone): Promise<boolean>;
+    setNotificationTimezone(channelId: bigint, timezone: Timezone): Promise<SetNotificationTimezoneResult>;
     
     // Daily notification configuration
-    setDailyNotificationTime(timeString: string): Promise<boolean>;
+    setDailyNotificationTime(channelId: bigint, timeString: string): Promise<SetDailyNotificationTimeResult>;
 }
