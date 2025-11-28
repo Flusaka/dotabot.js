@@ -1,20 +1,20 @@
 export enum ConnectionResult {
-    Success = 0,
+  Success = 0,
 
-    ChannelAlreadyConnected,
+  ChannelAlreadyConnected,
 
-    UnknownError,
+  UnknownError,
 }
 
 export enum DisconnectionResult {
-    Success = 0,
+  Success = 0,
 
-    ChannelNotConnected,
+  ChannelNotConnected,
 
-    UnknownError,
+  UnknownError,
 }
 
 export interface ConnectionService {
-    connect(channelId: bigint): Promise<ConnectionResult>;
-    disconnect(channelId: bigint): Promise<DisconnectionResult>;
+  connect(channelId: bigint): Promise<ConnectionResult>;
+  disconnect(channelId: bigint): Promise<DisconnectionResult>;
 }

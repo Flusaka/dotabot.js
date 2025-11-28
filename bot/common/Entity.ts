@@ -1,3 +1,3 @@
 export interface Entity {
-    get id(): number | undefined;
+  get id(): number | undefined;
 }

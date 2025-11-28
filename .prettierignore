@@ -1,0 +1,8 @@
+# Ignore generated Prisma code
+generated
+
+# Ignore VSCode configs
+.vscode
+
+# Ignore compose YAML
+compose.yml

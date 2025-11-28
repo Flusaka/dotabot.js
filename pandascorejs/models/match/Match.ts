@@ -7,22 +7,22 @@ import { BaseTournament } from "../tournament/BaseTournament";
 import { BaseSerie } from "../serie/BaseSerie";
 import { camelCase } from "change-case/keys";
 
-const Opponent = z.discriminatedUnion('type', [
-    z.object({ type: z.literal('Team'), opponent: BaseTeam }),
-    z.object({ type: z.literal('Player'), opponent: BasePlayer })
+const Opponent = z.discriminatedUnion("type", [
+  z.object({ type: z.literal("Team"), opponent: BaseTeam }),
+  z.object({ type: z.literal("Player"), opponent: BasePlayer }),
 ]);
 
 export const MatchSchema = BaseMatchSchema.extend({
-    league: BaseLeague,
-    opponents: z.array(Opponent),
-    serie: BaseSerie,
-    tournament: BaseTournament
-    // TODO: winner
+  league: BaseLeague,
+  opponents: z.array(Opponent),
+  serie: BaseSerie,
+  tournament: BaseTournament,
+  // TODO: winner
 });
 
 export const Match = z.preprocess(
-    (data: object) => camelCase(data),
-    MatchSchema
+  (data: object) => camelCase(data),
+  MatchSchema,
 );
 
 export type Opponent = z.infer<typeof Opponent>;
