@@ -6,6 +6,8 @@ import { PrismaClient } from "../../generated/prisma/client";
 import prisma from "../../database/prisma";
 import type { ConnectionService } from "../services/interfaces/ConnectionService";
 import { ConnectionServiceImpl } from "../services/ConnectionServiceImpl";
+import type { ConfigurationService } from "../services/interfaces/ConfigurationService";
+import { ConfigurationServiceImpl } from "../services/ConfigurationServiceImpl";
 
 const botContainer = new Container();
 // Database/Repository dependencies
@@ -19,6 +21,11 @@ botContainer.bind<PrismaClient>(Types.PrismaClient).toConstantValue(prisma);
 botContainer
   .bind<ConnectionService>(Types.ConnectionService)
   .to(ConnectionServiceImpl)
+  .inSingletonScope();
+
+botContainer
+  .bind<ConfigurationService>(Types.ConfigurationService)
+  .to(ConfigurationServiceImpl)
   .inSingletonScope();
 
 export { botContainer };

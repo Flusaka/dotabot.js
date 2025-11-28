@@ -62,6 +62,10 @@ export class ChannelConfiguration implements Entity {
     return this._id;
   }
 
+  public get channelId() {
+    return this._channelId;
+  }
+
   public get tiers() {
     return this._tiers;
   }
