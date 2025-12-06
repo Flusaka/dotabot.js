@@ -7,7 +7,7 @@ import prisma from "../database/prisma";
 import type { BaseTournament } from "../pandascorejs/models/tournament/BaseTournament";
 import type { BaseLeague } from "../pandascorejs/models/league/BaseLeague";
 import type { BaseSerie } from "../pandascorejs/models/serie/BaseSerie";
-import { Tier } from "../generated/prisma/enums";
+import { TierMapper } from "./mappers/TierMapper";
 
 export async function sync(token: string) {
   // Pull from PandaScore
@@ -122,7 +122,7 @@ export async function sync(token: string) {
             pandaScoreId: tournament.id,
             beginAt: tournament.beginAt,
             endAt: tournament.endAt,
-            tier: Tier.S,
+            tier: TierMapper.toDatabaseModel(tournament.tier || "unranked"),
             tournamentIteration: {
               connect: { pandaScoreId: tournament.serieId },
             },
@@ -132,7 +132,7 @@ export async function sync(token: string) {
             pandaScoreId: tournament.id,
             beginAt: tournament.beginAt,
             endAt: tournament.endAt,
-            tier: Tier.S,
+            tier: TierMapper.toDatabaseModel(tournament.tier || "unranked"),
           },
         }),
     );
