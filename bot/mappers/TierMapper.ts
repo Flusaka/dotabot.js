@@ -1,4 +1,4 @@
-import { Tier } from "../domain/Tier";
+import { Tier } from "../domain/common/Tier";
 import { Tier as TierModel } from "../../generated/prisma/client";
 
 export class TierMapper {

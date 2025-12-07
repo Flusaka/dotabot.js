@@ -1,5 +1,5 @@
 import type { Language } from "../../domain/Language";
-import type { Tier } from "../../domain/Tier";
+import type { Tier } from "../../domain/common/Tier";
 import type { Timezone } from "../../domain/Timezone";
 
 export enum AddTierResult {

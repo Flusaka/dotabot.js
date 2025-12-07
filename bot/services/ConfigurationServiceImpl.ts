@@ -1,6 +1,6 @@
 import { inject } from "inversify";
 import type { Language } from "../domain/Language";
-import type { Tier } from "../domain/Tier";
+import type { Tier } from "../domain/common/Tier";
 import {
   AddTierResult,
   RemoveTierResult,

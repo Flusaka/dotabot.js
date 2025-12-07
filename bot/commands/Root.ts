@@ -18,6 +18,11 @@ import {
   type ConfigurationService,
 } from "../services/interfaces/ConfigurationService";
 import { Timezone } from "../domain/Timezone";
+import {
+  GetTournamentsWithMatchesTodayResult,
+  type TournamentService,
+} from "../services/interfaces/TournamentService";
+import type { TournamentEmbedMessageBuilder } from "../message/interfaces/TournamentEmbedMessageBuilder";
 
 const LanguageTextChoices = {
   [Language.English]: "English",
@@ -32,6 +37,8 @@ const TimezoneTextChoices = {
 class Root {
   private connectionService: ConnectionService;
   private configurationService: ConfigurationService;
+  private tournamentService: TournamentService;
+  private tournamentMessageBuilder: TournamentEmbedMessageBuilder;
 
   constructor() {
     this.connectionService = botContainer.get<ConnectionService>(
@@ -40,6 +47,13 @@ class Root {
     this.configurationService = botContainer.get<ConfigurationService>(
       Types.ConfigurationService,
     );
+    this.tournamentService = botContainer.get<TournamentService>(
+      Types.TournamentService,
+    );
+    this.tournamentMessageBuilder =
+      botContainer.get<TournamentEmbedMessageBuilder>(
+        Types.TournamentEmbedMessageBuilder,
+      );
   }
 
   @Slash({ description: "Connect this channel to DotaBot", name: "connect" })
@@ -95,6 +109,50 @@ class Root {
           `DotaBot couldn't be disconnected from ${channelMention(interaction.channelId)} at the moment :( Please try again later!`,
         );
         break;
+      }
+    }
+  }
+
+  @Slash({
+    description: "Get all matches taking place today",
+    name: "today",
+  })
+  async today(interaction: CommandInteraction) {
+    await interaction.deferReply();
+    const channelId = BigInt(interaction.channelId);
+    const result =
+      await this.tournamentService.getTournamentsWithMatchesToday(channelId);
+    switch (result.result) {
+      case GetTournamentsWithMatchesTodayResult.Success: {
+        for (const tournament of result.data!) {
+          for (const iteration of tournament.iterations) {
+            for (const phase of iteration.phases) {
+              const embed =
+                this.tournamentMessageBuilder.buildTournamentMessage(
+                  tournament,
+                  iteration,
+                  phase,
+                );
+
+              // If we've not replied yet, reply now, and follow up the rest
+              if (!interaction.replied) {
+                await interaction.editReply({ embeds: [embed] });
+              } else {
+                await interaction.followUp({ embeds: [embed] });
+              }
+            }
+          }
+        }
+        break;
+      }
+      case GetTournamentsWithMatchesTodayResult.ChannelNotConnected: {
+        await interaction.editReply(
+          `DotaBot is not currently connected to ${channelMention(interaction.channelId)}! Run /connect first!`,
+        );
+        break;
+      }
+      case GetTournamentsWithMatchesTodayResult.NoMatchesToday: {
+        await interaction.editReply("No matches today!");
       }
     }
   }

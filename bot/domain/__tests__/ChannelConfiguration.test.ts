@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { ChannelConfiguration } from "../ChannelConfiguration";
-import { Tier } from "../Tier";
+import { Tier } from "../common/Tier";
 import { Timezone } from "../Timezone";
 import { Language } from "../Language";
 import { TimeOnly, TimeParseError } from "../TimeOnly";

@@ -1,6 +1,6 @@
 import type { Entity } from "../common/Entity";
 import { Language } from "./Language";
-import { Tier } from "./Tier";
+import { Tier } from "./common/Tier";
 import { TimeOnly } from "./TimeOnly";
 import { Timezone } from "./Timezone";
 
