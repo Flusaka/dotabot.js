@@ -8,5 +8,5 @@ export interface TournamentEmbedMessageBuilder {
     tournament: Tournament,
     iteration: TournamentIteration,
     phase: TournamentPhase,
-  ): EmbedBuilder;
+  ): EmbedBuilder | undefined;
 }

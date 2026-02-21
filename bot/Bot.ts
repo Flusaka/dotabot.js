@@ -11,7 +11,7 @@ export class Bot {
 
   public async init(token: string) {
     this.client.once(Events.ClientReady, async () => {
-      console.log(`DotaBot is ready! User ID ${this.client.user?.id}`);
+      console.log("DotaBot is ready! Initialising commands...");
 
       await this.client.initApplicationCommands();
 
@@ -22,7 +22,6 @@ export class Bot {
       this.client.executeInteraction(interaction);
     });
 
-    console.log(`${dirname(import.meta.url)}/commands/**/*.{js,ts}`);
     await importx(`${dirname(import.meta.url)}/commands/**/*.{js,ts}`);
     await this.client.login(token);
   }

@@ -8,6 +8,7 @@ import type { BaseTournament } from "../pandascorejs/models/tournament/BaseTourn
 import type { BaseLeague } from "../pandascorejs/models/league/BaseLeague";
 import type { BaseSerie } from "../pandascorejs/models/serie/BaseSerie";
 import { TierMapper } from "./mappers/TierMapper";
+import { LanguageCodeMapper } from "./mappers/LanguageCodeMapper";
 
 export async function sync(token: string) {
   // Pull from PandaScore
@@ -167,6 +168,12 @@ export async function sync(token: string) {
                   }
                 : undefined,
           },
+          streams: match.streamsList.map((stream) => ({
+            url: stream.rawUrl,
+            main: stream.main,
+            official: stream.official,
+            language: LanguageCodeMapper.toDatabaseModel(stream.language),
+          })),
         },
         update: {
           scheduledAt: match.scheduledAt || match.beginAt,
@@ -186,6 +193,12 @@ export async function sync(token: string) {
                   }
                 : undefined,
           },
+          streams: match.streamsList.map((stream) => ({
+            url: stream.rawUrl,
+            main: stream.main,
+            official: stream.official,
+            language: LanguageCodeMapper.toDatabaseModel(stream.language),
+          })),
         },
       }),
     );

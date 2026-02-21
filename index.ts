@@ -1,11 +1,18 @@
 import { GatewayIntentBits } from "discord.js";
 import { Client } from "discordx";
 import { Bot } from "./bot/Bot";
+import { sync } from "./sync/sync";
 
 const discordToken = process.env.DISCORD_TOKEN;
 if (!discordToken) {
   throw new Error("No Discord token provided");
 }
+
+const pandascoreToken = process.env.PANDASCORE_TOKEN;
+if (!pandascoreToken) {
+  throw new Error("No PandaScore token provided");
+}
+
 const guildId = process.env.GUILD_ID;
 
 const client = new Client({
@@ -15,3 +22,7 @@ const client = new Client({
 });
 const bot = new Bot(client);
 await bot.init(discordToken);
+
+console.log("Program starting sync");
+await sync(pandascoreToken);
+console.log("Program finishing sync");

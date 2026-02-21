@@ -1,7 +1,10 @@
 import { inject, injectable } from "inversify";
-import type { Tournament } from "../domain/data/Tournament";
-import { Result } from "./common/Result";
-import { GetTournamentsWithMatchesTodayResult } from "./interfaces/TournamentService";
+import { Result, ResultWithData } from "./common/Result";
+import {
+  type GetTournamentsWithMatchesTodayResult,
+  GetTournamentsWithMatchesTodayResultStatus,
+  type TournamentService,
+} from "./interfaces/TournamentService";
 import { Types } from "../di/Types";
 import type { TournamentRepository } from "../repositories/interfaces/TournamentRepository";
 import { DateTime } from "luxon";
@@ -9,7 +12,7 @@ import { Tier } from "../domain/common/Tier";
 import type { ChannelConfigurationRepository } from "../repositories/interfaces/ChannelConfigurationRepository";
 
 @injectable()
-export class TournamentServiceImpl {
+export class TournamentServiceImpl implements TournamentService {
   constructor(
     @inject(Types.TournamentRepository)
     private tournamentRepository: TournamentRepository,
@@ -19,12 +22,12 @@ export class TournamentServiceImpl {
 
   async getTournamentsWithMatchesToday(
     channelId: bigint,
-  ): Promise<Result<GetTournamentsWithMatchesTodayResult, Tournament[]>> {
+  ): Promise<GetTournamentsWithMatchesTodayResult> {
     const channel = this.channelConfigRepository.getByChannelId(channelId);
 
     if (!channel) {
       return new Result(
-        GetTournamentsWithMatchesTodayResult.ChannelNotConnected,
+        GetTournamentsWithMatchesTodayResultStatus.ChannelNotConnected,
       );
     }
 
@@ -36,11 +39,14 @@ export class TournamentServiceImpl {
       });
 
     if (tournaments.length === 0) {
-      return new Result(GetTournamentsWithMatchesTodayResult.NoMatchesToday);
+      return new Result(
+        GetTournamentsWithMatchesTodayResultStatus.NoMatchesToday,
+      );
     }
 
-    return Promise.resolve(
-      new Result(GetTournamentsWithMatchesTodayResult.Success, tournaments),
+    return new ResultWithData(
+      GetTournamentsWithMatchesTodayResultStatus.Success,
+      tournaments,
     );
   }
 }

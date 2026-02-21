@@ -19,7 +19,7 @@ import {
 } from "../services/interfaces/ConfigurationService";
 import { Timezone } from "../domain/Timezone";
 import {
-  GetTournamentsWithMatchesTodayResult,
+  GetTournamentsWithMatchesTodayResultStatus,
   type TournamentService,
 } from "../services/interfaces/TournamentService";
 import type { TournamentEmbedMessageBuilder } from "../message/interfaces/TournamentEmbedMessageBuilder";
@@ -122,9 +122,9 @@ class Root {
     const channelId = BigInt(interaction.channelId);
     const result =
       await this.tournamentService.getTournamentsWithMatchesToday(channelId);
-    switch (result.result) {
-      case GetTournamentsWithMatchesTodayResult.Success: {
-        for (const tournament of result.data!) {
+    switch (result.status) {
+      case GetTournamentsWithMatchesTodayResultStatus.Success: {
+        for (const tournament of result.data) {
           for (const iteration of tournament.iterations) {
             for (const phase of iteration.phases) {
               const embed =
@@ -133,6 +133,8 @@ class Root {
                   iteration,
                   phase,
                 );
+
+              if (!embed) continue;
 
               // If we've not replied yet, reply now, and follow up the rest
               if (!interaction.replied) {
@@ -143,15 +145,20 @@ class Root {
             }
           }
         }
+
+        if (!interaction.replied) {
+          await interaction.editReply(":robot: No matches today!");
+        }
         break;
       }
-      case GetTournamentsWithMatchesTodayResult.ChannelNotConnected: {
+      case GetTournamentsWithMatchesTodayResultStatus.ChannelNotConnected: {
+        // TODO: Pull command ID back to do proper link
         await interaction.editReply(
           `DotaBot is not currently connected to ${channelMention(interaction.channelId)}! Run /connect first!`,
         );
         break;
       }
-      case GetTournamentsWithMatchesTodayResult.NoMatchesToday: {
+      case GetTournamentsWithMatchesTodayResultStatus.NoMatchesToday: {
         await interaction.editReply("No matches today!");
       }
     }
@@ -190,6 +197,7 @@ class Root {
         break;
       }
       case SetPreferredLanguageResult.ChannelNotConnected: {
+        // TODO: Pull command ID back to do proper link
         await interaction.editReply(
           `DotaBot is not currently connected to ${channelMention(interaction.channelId)}! Run /connect first!`,
         );
@@ -242,6 +250,7 @@ class Root {
         break;
       }
       case SetNotificationTimezoneResult.ChannelNotConnected: {
+        // TODO: Pull command ID back to do proper link
         await interaction.editReply(
           `DotaBot is not currently connected to ${channelMention(interaction.channelId)}! Run /connect first!`,
         );

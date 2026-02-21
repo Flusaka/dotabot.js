@@ -12,6 +12,7 @@ import { TournamentPhase } from "../domain/data/TournamentPhase";
 import { Match } from "../domain/data/Match";
 import { DateTime } from "luxon";
 import { Opponent } from "../domain/data/Opponent";
+import { StreamMapper } from "../mappers/StreamMapper";
 
 @injectable()
 export class PrismaTournamentRepository implements TournamentRepository {
@@ -72,6 +73,7 @@ export class PrismaTournamentRepository implements TournamentRepository {
                         name: true,
                       },
                     },
+                    streams: true,
                   },
                 },
               },
@@ -108,21 +110,23 @@ export class PrismaTournamentRepository implements TournamentRepository {
                               new Match(
                                 match.id,
                                 DateTime.fromJSDate(match.scheduledAt!),
-                                [
-                                  match.radiantTeam
-                                    ? new Opponent(
-                                        match.radiantTeam.id,
-                                        match.radiantTeam.name,
-                                      )
-                                    : Opponent.empty(),
-                                  match.direTeam
-                                    ? new Opponent(
-                                        match.direTeam.id,
-                                        match.direTeam.name,
-                                      )
-                                    : Opponent.empty(),
-                                ],
+                                match.radiantTeam
+                                  ? new Opponent(
+                                      match.radiantTeam.id,
+                                      match.radiantTeam.name,
+                                    )
+                                  : undefined,
+                                match.direTeam
+                                  ? new Opponent(
+                                      match.direTeam.id,
+                                      match.direTeam.name,
+                                    )
+                                  : undefined,
+                                StreamMapper.toDomain(match.streams),
                               ),
+                          )
+                          .sort((matchA, matchB) =>
+                            matchA.scheduledAt < matchB.scheduledAt ? 1 : -1,
                           ),
                       ),
                   ),

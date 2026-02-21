@@ -7,19 +7,11 @@ export class Opponent {
     this._name = name;
   }
 
-  static empty() {
-    return new Opponent(Number.NaN, "");
-  }
-
   get id() {
     return this._id;
   }
 
   get name() {
     return this._name;
-  }
-
-  get isUnknown() {
-    return isNaN(this._id);
   }
 }

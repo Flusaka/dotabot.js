@@ -109,6 +109,8 @@ model Match {
     pandaScoreId Int       @unique @map("pandascore_id")
     updatedAt    DateTime  @updatedAt @map("updated_at")
 
+    streams Json[]
+
     // Relations
     radiantTeamId Int?
     radiantTeam   Team? @relation("matchesAsRadiant", fields: [radiantTeamId], references: [id])
