@@ -14,12 +14,18 @@ import type { TournamentService } from "../services/interfaces/TournamentService
 import { TournamentServiceImpl } from "../services/TournamentServiceImpl";
 import type { TournamentEmbedMessageBuilder } from "../message/interfaces/TournamentEmbedMessageBuilder";
 import { TournamentEmbedMessageBuilderImpl } from "../message/TournamentEmbedMessageBuilderImpl";
+import type { StreamSelector } from "../selectors/interfaces/StreamSelector";
+import { PreferredLanguageStreamSelector } from "../selectors/PreferredLanguageStreamSelector";
 
 const botContainer = new Container();
 // Bot-specific dependencies
 botContainer
   .bind<TournamentEmbedMessageBuilder>(Types.TournamentEmbedMessageBuilder)
   .to(TournamentEmbedMessageBuilderImpl)
+  .inSingletonScope();
+botContainer
+  .bind<StreamSelector>(Types.StreamSelector)
+  .to(PreferredLanguageStreamSelector)
   .inSingletonScope();
 
 // Database/Repository dependencies

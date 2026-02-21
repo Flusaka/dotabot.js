@@ -1,6 +1,7 @@
 export const Types = {
   // Bot-related injections
   TournamentEmbedMessageBuilder: Symbol.for("TournamentMessageBuilder"),
+  StreamSelector: Symbol.for("StreamSelector"),
 
   // Database
   PrismaClient: Symbol.for("PrismaClient"),
