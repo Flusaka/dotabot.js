@@ -5,8 +5,19 @@ import type { TournamentIteration } from "../domain/data/TournamentIteration";
 import type { TournamentPhase } from "../domain/data/TournamentPhase";
 import type { Match, MatchOpponent } from "../domain/data/Match";
 import { Opponent } from "../domain/data/Opponent";
+import { Types } from "../di/Types";
+import type { StreamSelector } from "../selectors/interfaces/StreamSelector";
+import { inject, injectable } from "inversify";
+import { Language } from "../domain/Language";
+import { ChannelConfiguration } from "../domain/ChannelConfiguration";
+import { Timezone } from "../domain/Timezone";
 
+@injectable()
 export class TournamentEmbedMessageBuilderImpl implements TournamentEmbedMessageBuilder {
+  constructor(
+    @inject(Types.StreamSelector) private streamSelector: StreamSelector,
+  ) {}
+
   buildTournamentMessage(
     tournament: Tournament,
     iteration: TournamentIteration,
@@ -73,16 +84,23 @@ export class TournamentEmbedMessageBuilderImpl implements TournamentEmbedMessage
   getMatchesPerStream(matches: Match[]): Map<string, Match[]> {
     const perStreamMatches = new Map<string, Match[]>();
     for (const match of matches) {
-      // TODO: Implement stream selection logic
-      if (match.streams.length === 0) continue;
-      let streamMatches = perStreamMatches.get(match.streams[0]!.url);
+      if (match.streams.length === 0) {
+        continue;
+      }
+      const preferredStream =
+        this.streamSelector.findPreferredStream(
+          match.streams,
+          new ChannelConfiguration(0n, [], Timezone.GMT, Language.English),
+        ) || match.streams[0]!;
+
+      let streamMatches = perStreamMatches.get(preferredStream.url);
       if (streamMatches && streamMatches.length > 0) {
         streamMatches = [match, ...streamMatches];
       } else {
         streamMatches = [match];
       }
 
-      perStreamMatches.set(match.streams[0]!.url, streamMatches);
+      perStreamMatches.set(preferredStream.url, streamMatches);
     }
 
     return perStreamMatches;
