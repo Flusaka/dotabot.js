@@ -87,6 +87,7 @@ export class TournamentEmbedMessageBuilderImpl implements TournamentEmbedMessage
       if (match.streams.length === 0) {
         continue;
       }
+      // TODO Get the actual channel config somehow
       const preferredStream =
         this.streamSelector.findPreferredStream(
           match.streams,

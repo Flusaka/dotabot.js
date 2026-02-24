@@ -1,4 +1,4 @@
-import { inject } from "inversify";
+import { inject, named } from "inversify";
 import type { Language } from "../domain/Language";
 import type { Tier } from "../domain/common/Tier";
 import {
@@ -17,6 +17,7 @@ import type { Timezone } from "../domain/Timezone";
 export class ConfigurationServiceImpl implements ConfigurationService {
   constructor(
     @inject(Types.ChannelConfigurationRepository)
+    @named("cached")
     private channelConfigRepo: ChannelConfigurationRepository,
   ) {}
 

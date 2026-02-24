@@ -16,7 +16,7 @@ export class PrismaChannelConfigurationRepository implements ChannelConfiguratio
       where: { channelId: channelId },
     });
     if (!channelConfig) {
-      return undefined;
+      return;
     }
 
     return ChannelConfigurationMapper.toDomain(channelConfig);

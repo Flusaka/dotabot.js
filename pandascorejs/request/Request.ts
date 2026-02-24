@@ -98,7 +98,6 @@ export class Request<TResponseBody> {
 
   buildRequestUrl(): string {
     const queryString = new QuerySerialiser().serialise(this.query);
-    console.log(`Query string: ${queryString}`);
     return `${this.baseUrl}${this.path}${queryString}`;
   }
 

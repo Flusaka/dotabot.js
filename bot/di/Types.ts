@@ -6,6 +6,10 @@ export const Types = {
   // Database
   PrismaClient: Symbol.for("PrismaClient"),
 
+  // Caches
+  Cache: Symbol.for("Cache"),
+  ChannelConfigurationCache: Symbol.for("ChannelConfigurationCache"),
+
   // Repositories
   ChannelConfigurationRepository: Symbol.for("ChannelConfigurationRepository"),
   TournamentRepository: Symbol.for("TournamentRepository"),

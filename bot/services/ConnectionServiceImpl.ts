@@ -1,4 +1,4 @@
-import { inject, injectable } from "inversify";
+import { inject, injectable, named } from "inversify";
 import {
   ConnectionResult,
   DisconnectionResult,
@@ -12,6 +12,7 @@ import { ChannelConfiguration } from "../domain/ChannelConfiguration";
 export class ConnectionServiceImpl implements ConnectionService {
   constructor(
     @inject(Types.ChannelConfigurationRepository)
+    @named("cached")
     private channelConfigRepo: ChannelConfigurationRepository,
   ) {}
 

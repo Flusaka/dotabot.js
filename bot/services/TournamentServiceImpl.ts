@@ -1,4 +1,4 @@
-import { inject, injectable } from "inversify";
+import { inject, injectable, named } from "inversify";
 import { Result, ResultWithData } from "./common/Result";
 import {
   type GetTournamentsWithMatchesTodayResult,
@@ -17,13 +17,15 @@ export class TournamentServiceImpl implements TournamentService {
     @inject(Types.TournamentRepository)
     private tournamentRepository: TournamentRepository,
     @inject(Types.ChannelConfigurationRepository)
+    @named("cached")
     private channelConfigRepository: ChannelConfigurationRepository,
   ) {}
 
   async getTournamentsWithMatchesToday(
     channelId: bigint,
   ): Promise<GetTournamentsWithMatchesTodayResult> {
-    const channel = this.channelConfigRepository.getByChannelId(channelId);
+    const channel =
+      await this.channelConfigRepository.getByChannelId(channelId);
 
     if (!channel) {
       return new Result(

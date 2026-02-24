@@ -16,6 +16,10 @@ import type { TournamentEmbedMessageBuilder } from "../message/interfaces/Tourna
 import { TournamentEmbedMessageBuilderImpl } from "../message/TournamentEmbedMessageBuilderImpl";
 import type { StreamSelector } from "../selectors/interfaces/StreamSelector";
 import { PreferredLanguageStreamSelector } from "../selectors/PreferredLanguageStreamSelector";
+import type { ChannelConfigurationCache } from "../cache/interfaces/ChannelConfigurationCache";
+import { ChannelConfigurationCacheImpl } from "../cache/ChannelConfigurationCacheImpl";
+import { CachedChannelConfigurationRepository } from "../repositories/CachedChannelConfigurationRepository";
+import { LRUCache } from "lru-cache";
 
 const botContainer = new Container();
 // Bot-specific dependencies
@@ -32,12 +36,32 @@ botContainer
 botContainer
   .bind<ChannelConfigurationRepository>(Types.ChannelConfigurationRepository)
   .to(PrismaChannelConfigurationRepository)
-  .inSingletonScope();
+  .inSingletonScope()
+  .whenDefault();
 botContainer
   .bind<TournamentRepository>(Types.TournamentRepository)
   .to(PrismaTournamentRepository)
   .inSingletonScope();
 botContainer.bind<PrismaClient>(Types.PrismaClient).toConstantValue(prisma);
+
+// Caches
+botContainer
+  .bind<LRUCache<string, string>>(Types.Cache)
+  .toDynamicValue(() => {
+    return new LRUCache({
+      max: 1000,
+    });
+  })
+  .inSingletonScope();
+botContainer
+  .bind<ChannelConfigurationCache>(Types.ChannelConfigurationCache)
+  .to(ChannelConfigurationCacheImpl)
+  .inSingletonScope();
+botContainer
+  .bind<ChannelConfigurationRepository>(Types.ChannelConfigurationRepository)
+  .to(CachedChannelConfigurationRepository)
+  .inSingletonScope()
+  .whenNamed("cached");
 
 // Service dependencies
 botContainer
