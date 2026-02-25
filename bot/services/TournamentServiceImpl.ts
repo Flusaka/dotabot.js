@@ -37,7 +37,7 @@ export class TournamentServiceImpl implements TournamentService {
       await this.tournamentRepository.getTournamentsWithMatches({
         earliestMatchStartTime: DateTime.now().startOf("day"),
         latestMatchStartTime: DateTime.now().endOf("day"),
-        tiers: [Tier.S, Tier.A, Tier.B, Tier.C, Tier.D],
+        tiers: channel.tiers,
       });
 
     if (tournaments.length === 0) {

@@ -38,7 +38,7 @@ export class CachedChannelConfigurationRepository implements ChannelConfiguratio
   }
 
   update(id: number, entity: Partial<ChannelConfiguration>): Promise<boolean> {
-    throw new Error("Method not implemented.");
+    return this.repository.update(id, entity);
   }
 
   delete(id: number): Promise<boolean> {

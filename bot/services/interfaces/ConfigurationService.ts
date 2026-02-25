@@ -1,6 +1,7 @@
 import type { Language } from "../../domain/Language";
 import type { Tier } from "../../domain/common/Tier";
 import type { Timezone } from "../../domain/Timezone";
+import type { ChannelConfiguration } from "../../domain/ChannelConfiguration";
 
 export enum AddTierResult {
   Success,
@@ -36,6 +37,11 @@ export enum SetDailyNotificationTimeResult {
 }
 
 export interface ConfigurationService {
+  // Get configuration
+  getConfiguration(
+    channelId: bigint,
+  ): Promise<ChannelConfiguration | undefined>;
+
   // Tier configuration
   addTier(channelId: bigint, tier: Tier): Promise<AddTierResult>;
   removeTier(channelId: bigint, tier: Tier): Promise<RemoveTierResult>;

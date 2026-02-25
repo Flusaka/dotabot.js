@@ -1,7 +1,9 @@
-export enum Timezone {
-  GMT,
-  EET,
-}
+export const Timezone = {
+  GMT: "GMT",
+  EET: "EET",
+} as const;
+
+export type Timezone = (typeof Timezone)[keyof typeof Timezone];
 
 export function timezoneToString(timezone: Timezone) {
   switch (timezone) {

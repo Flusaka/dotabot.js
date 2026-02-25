@@ -26,12 +26,12 @@ import type { TournamentEmbedMessageBuilder } from "../message/interfaces/Tourna
 
 const LanguageTextChoices = {
   [Language.English]: "English",
-};
+} as const;
 
 const TimezoneTextChoices = {
   [Timezone.GMT]: "GMT",
   [Timezone.EET]: "EET",
-};
+} as const;
 
 @Discord()
 class Root {
@@ -124,11 +124,15 @@ class Root {
       await this.tournamentService.getTournamentsWithMatchesToday(channelId);
     switch (result.status) {
       case GetTournamentsWithMatchesTodayResultStatus.Success: {
+        const channelConfig =
+          await this.configurationService.getConfiguration(channelId);
+
         for (const tournament of result.data) {
           for (const iteration of tournament.iterations) {
             for (const phase of iteration.phases) {
               const embed =
                 this.tournamentMessageBuilder.buildTournamentMessage(
+                  channelConfig!,
                   tournament,
                   iteration,
                   phase,
@@ -178,7 +182,7 @@ class Root {
       description: "Language of your choice",
       name: "language",
       required: true,
-      type: ApplicationCommandOptionType.Number,
+      type: ApplicationCommandOptionType.String,
     })
     language: Language,
     interaction: CommandInteraction,
@@ -231,7 +235,7 @@ class Root {
       description: "The selected timezone",
       name: "timezone",
       required: true,
-      type: ApplicationCommandOptionType.Number,
+      type: ApplicationCommandOptionType.String,
     })
     timezone: Timezone,
     interaction: CommandInteraction,

@@ -13,6 +13,7 @@ import { Types } from "../di/Types";
 import type { ChannelConfigurationRepository } from "../repositories/interfaces/ChannelConfigurationRepository";
 import { TimeParseError } from "../domain/TimeOnly";
 import type { Timezone } from "../domain/Timezone";
+import type { ChannelConfiguration } from "../domain/ChannelConfiguration";
 
 export class ConfigurationServiceImpl implements ConfigurationService {
   constructor(
@@ -20,6 +21,12 @@ export class ConfigurationServiceImpl implements ConfigurationService {
     @named("cached")
     private channelConfigRepo: ChannelConfigurationRepository,
   ) {}
+
+  async getConfiguration(
+    channelId: bigint,
+  ): Promise<ChannelConfiguration | undefined> {
+    return this.channelConfigRepo.getByChannelId(channelId);
+  }
 
   async addTier(channelId: bigint, tier: Tier): Promise<AddTierResult> {
     const channel = await this.channelConfigRepo.getByChannelId(channelId);

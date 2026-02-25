@@ -18,6 +18,8 @@ datasource db {
  */
 enum Language {
     English
+    Russian
+    Spanish
 
     @@schema("bot")
 }

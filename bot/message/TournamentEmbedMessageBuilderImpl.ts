@@ -19,6 +19,7 @@ export class TournamentEmbedMessageBuilderImpl implements TournamentEmbedMessage
   ) {}
 
   buildTournamentMessage(
+    channelConfig: ChannelConfiguration,
     tournament: Tournament,
     iteration: TournamentIteration,
     phase: TournamentPhase,
@@ -26,7 +27,7 @@ export class TournamentEmbedMessageBuilderImpl implements TournamentEmbedMessage
     if (phase.matches.length === 0) {
       return;
     }
-    const matches = this.getMatchesPerStream(phase.matches);
+    const matches = this.getMatchesPerStream(channelConfig, phase.matches);
     if (matches.size === 0) {
       return;
     }
@@ -81,18 +82,18 @@ export class TournamentEmbedMessageBuilderImpl implements TournamentEmbedMessage
     return title;
   }
 
-  getMatchesPerStream(matches: Match[]): Map<string, Match[]> {
+  getMatchesPerStream(
+    channelConfig: ChannelConfiguration,
+    matches: Match[],
+  ): Map<string, Match[]> {
     const perStreamMatches = new Map<string, Match[]>();
     for (const match of matches) {
       if (match.streams.length === 0) {
         continue;
       }
-      // TODO Get the actual channel config somehow
       const preferredStream =
-        this.streamSelector.findPreferredStream(
-          match.streams,
-          new ChannelConfiguration(0n, [], Timezone.GMT, Language.English),
-        ) || match.streams[0]!;
+        this.streamSelector.findPreferredStream(match.streams, channelConfig) ||
+        match.streams[0]!;
 
       let streamMatches = perStreamMatches.get(preferredStream.url);
       if (streamMatches && streamMatches.length > 0) {
