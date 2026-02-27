@@ -1,0 +1,19 @@
+{
+    "name": "@dotabot.js/domain",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "check-types": "tsc --noEmit"
+    },
+    "devDependencies": {
+        "typescript": "^5.9.3",
+        "@types/luxon": "^3.7.1",
+        "@dotabot.js/tsconfig": "workspace:*"
+    },
+    "dependencies": {
+        "luxon": "^3.7.2"
+    },
+    "exports": {
+        "./*": "./src/*.ts"
+    }
+}

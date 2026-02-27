@@ -1,0 +1,31 @@
+{
+    "name": "@dotabot.js/database",
+    "version": "0.1.0",
+    "private": true,
+    "type": "module",
+    "devDependencies": {
+        "typescript": "^5.9.3",
+        "prisma": "^7.0.1",
+        "@types/pg": "^8.15.6",
+        "@dotabot.js/tsconfig": "workspace:*"
+    },
+    "dependencies": {
+        "@prisma/adapter-pg": "^7.0.1",
+        "@prisma/client": "^7.0.1",
+        "pg": "^8.16.3",
+        "dotenv": "17.3.1",
+        "inversify": "^7.10.4",
+        "reflect-metadata": "^0.2.2",
+        "luxon": "^3.7.2",
+        "@dotabot.js/domain": "workspace:*",
+        "@dotabot.js/shared": "workspace:*"
+    },
+    "exports": {
+        ".": "./src/index.ts",
+        "./di/install": "./src/di/install.ts"
+    },
+    "scripts": {
+        "db:generate": "prisma generate",
+        "db:migrate": "prisma migrate dev"
+    }
+}

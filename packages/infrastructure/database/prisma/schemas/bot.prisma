@@ -1,0 +1,190 @@
+generator client {
+    provider = "prisma-client"
+    output   = "../../generated/prisma"
+    // runtime  = "bun"
+}
+
+datasource db {
+    provider = "postgresql"
+    schemas  = ["bot", "source_data"]
+}
+
+/**
+ * Bot models
+ */
+
+/**
+ * Language for streams
+ */
+enum Language {
+    English
+    Russian
+    Spanish
+
+    @@schema("bot")
+}
+
+/**
+ * Timezone for notifications
+ */
+enum Timezone {
+    EET
+    GMT
+
+    @@schema("bot")
+}
+
+/**
+ * Tournament tier
+ */
+enum Tier {
+    S
+    A
+    B
+    C
+    D
+    Unknown
+
+    @@schema("bot")
+}
+
+model ChannelConfiguration {
+    // Properties
+    id                    Int       @id @default(autoincrement())
+    channelId             BigInt    @unique @map("channel_id")
+    tiers                 Tier[]    @default([S, A])
+    timezone              Timezone  @default(GMT)
+    preferredLanguage     Language  @default(English) @map("preferred_language")
+    dailyNotificationTime DateTime? @map("daily_notification_time") @db.Time()
+
+    // Indices
+    @@index(channelId)
+    // Mapping
+    @@map("channel_configurations")
+    // Schema
+    @@schema("bot")
+}
+
+/**
+ * Source data models
+ */
+model Team {
+    id           Int      @id @default(autoincrement())
+    name         String
+    pandaScoreId Int      @unique @map("pandascore_id")
+    updatedAt    DateTime @updatedAt
+    acronym      String?
+
+    // Relations
+    matchesAsRadiant Match[] @relation("matchesAsRadiant")
+    matchesAsDire    Match[] @relation("matchesAsDire")
+
+    // Indicies
+    @@index(pandaScoreId)
+    // Mapping
+    @@map("teams")
+    // Schema
+    @@schema("source_data")
+}
+
+model Player {
+    id           Int      @id @default(autoincrement())
+    name         String
+    pandaScoreId Int      @unique @map("pandascore_id")
+    updatedAt    DateTime @updatedAt
+
+    // Relations
+    matchesAsRadiant Match[] @relation("matchesAsRadiant")
+    matchesAsDire    Match[] @relation("matchesAsDire")
+
+    // Indices
+    @@index(pandaScoreId)
+    // Mapping
+    @@map("players")
+    // Schema
+    @@schema("source_data")
+}
+
+model Match {
+    id           Int       @id @default(autoincrement())
+    scheduledAt  DateTime? @map("scheduled_at") @db.Timestamp()
+    pandaScoreId Int       @unique @map("pandascore_id")
+    updatedAt    DateTime  @updatedAt @map("updated_at")
+
+    streams Json[]
+
+    // Relations
+    radiantTeamId Int?
+    radiantTeam   Team? @relation("matchesAsRadiant", fields: [radiantTeamId], references: [id])
+    direTeamId    Int?
+    direTeam      Team? @relation("matchesAsDire", fields: [direTeamId], references: [id])
+
+    radiantPlayerId Int?
+    radiantPlayer   Player? @relation("matchesAsRadiant", fields: [radiantPlayerId], references: [id])
+    direPlayerId    Int?
+    direPlayer      Player? @relation("matchesAsDire", fields: [direPlayerId], references: [id])
+
+    tournamentPhase   TournamentPhase @relation(fields: [tournamentPhaseId], references: [id])
+    tournamentPhaseId Int
+
+    // Indices
+    @@index(pandaScoreId)
+    // Mapping
+    @@map("matches")
+    // Schema
+    @@schema("source_data")
+}
+
+model TournamentPhase {
+    id           Int      @id @default(autoincrement())
+    name         String
+    pandaScoreId Int      @unique @map("pandascore_id")
+    tier         Tier
+    updatedAt    DateTime @updatedAt @map("updated_at")
+
+    matches Match[]
+
+    beginAt DateTime? @map("begin_at") @db.Timestamp()
+    endAt   DateTime? @map("end_at") @db.Timestamp()
+
+    // Relations
+    tournamentIteration   TournamentIteration @relation(fields: [tournamentIterationId], references: [id])
+    tournamentIterationId Int
+
+    @@index(pandaScoreId)
+    @@map("tournament_phases")
+    @@schema("source_data")
+}
+
+model TournamentIteration {
+    id           Int      @id @default(autoincrement())
+    name         String
+    pandaScoreId Int      @unique @map("pandascore_id")
+    updatedAt    DateTime @updatedAt @map("updated_at")
+
+    beginAt DateTime? @map("begin_at") @db.Timestamp()
+    endAt   DateTime? @map("end_at") @db.Timestamp()
+
+    // Relations
+    tournament   Tournament @relation(fields: [tournamentId], references: [id])
+    tournamentId Int
+
+    tournamentPhases TournamentPhase[]
+
+    @@index(pandaScoreId)
+    @@map("tournament_iterations")
+    @@schema("source_data")
+}
+
+model Tournament {
+    id           Int      @id @default(autoincrement())
+    name         String
+    pandaScoreId Int      @unique @map("pandascore_id")
+    updatedAt    DateTime @updatedAt @map("updated_at")
+
+    tournamentIterations TournamentIteration[]
+
+    @@index(pandaScoreId)
+    @@map("tournaments")
+    @@schema("source_data")
+}
