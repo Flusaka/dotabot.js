@@ -1,5 +1,5 @@
 import { Timezone } from "@dotabot.js/domain/Timezone";
-import { Timezone as TimezoneModel } from "../generated/prisma/client";
+import { Timezone as TimezoneModel } from "../../generated/prisma/client";
 
 export class TimezoneMapper {
   static toDomain(model: TimezoneModel): Timezone {

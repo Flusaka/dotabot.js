@@ -1,5 +1,5 @@
-import type { JsonArray } from "../../../../generated/prisma/internal/prismaNamespace";
-import type { Stream } from "../domain/data/Stream";
+import type { JsonArray } from "../../generated/prisma/internal/prismaNamespace";
+import type { Stream } from "@dotabot.js/domain/data/Stream";
 
 export class StreamMapper {
   static toDomain(streams: JsonArray): Stream[] {

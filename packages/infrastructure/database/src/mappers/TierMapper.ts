@@ -1,5 +1,5 @@
 import { Tier } from "@dotabot.js/domain/common/Tier";
-import { Tier as TierModel } from "../generated/prisma/client";
+import { Tier as TierModel } from "../../generated/prisma/client";
 
 export class TierMapper {
   static toDomain(model: TierModel): Tier {
