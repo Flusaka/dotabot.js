@@ -6,14 +6,30 @@
   "devDependencies": {
     "@types/bun": "latest",
     "prettier": "3.7.2",
-    "turbo": "^2.8.11",
-    "vitest": "^4.0.14",
-    "typescript": "^5.9.3"
+    "turbo": "^2.8.11"
   },
-  "workspaces": [
-    "apps/*",
-    "packages/**/*"
-  ],
+  "workspaces": {
+    "catalog": {
+      "typescript": "^5.9.3",
+      "luxon": "^3.7.2",
+      "@types/luxon": "^3.7.1"
+    },
+    "catalogs": {
+      "testing": {
+        "vitest": "^4.0.14"
+      },
+      "di": {
+        "inversify": "^7.10.4"
+      },
+      "reflection": {
+        "reflect-metadata": "^0.2.2"
+      }
+    },
+    "packages": [
+      "apps/*",
+      "packages/**/*"
+    ]
+  },
   "scripts": {
     "test": "vitest"
   }

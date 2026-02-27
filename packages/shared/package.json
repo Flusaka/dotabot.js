@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "private": true,
     "devDependencies": {
-        "typescript": "^5.9.3"
+        "typescript": "catalog:"
     },
     "exports": {
         "./*": "./src/*.ts"

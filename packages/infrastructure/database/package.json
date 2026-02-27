@@ -4,24 +4,23 @@
     "private": true,
     "type": "module",
     "devDependencies": {
-        "typescript": "^5.9.3",
+        "typescript": "catalog:",
+        "@types/luxon": "catalog:",
+        "@dotabot.js/tsconfig": "workspace:*",
         "prisma": "^7.0.1",
-        "@types/pg": "^8.15.6",
-        "@dotabot.js/tsconfig": "workspace:*"
+        "@types/pg": "^8.15.6"
     },
     "dependencies": {
+        "inversify": "catalog:di",
+        "reflect-metadata": "catalog:reflection",
+        "luxon": "catalog:",
+        "@dotabot.js/domain": "workspace:*",
+        "@dotabot.js/shared": "workspace:*",
         "@prisma/adapter-pg": "^7.0.1",
         "@prisma/client": "^7.0.1",
-        "pg": "^8.16.3",
-        "dotenv": "17.3.1",
-        "inversify": "^7.10.4",
-        "reflect-metadata": "^0.2.2",
-        "luxon": "^3.7.2",
-        "@dotabot.js/domain": "workspace:*",
-        "@dotabot.js/shared": "workspace:*"
+        "pg": "^8.16.3"
     },
     "exports": {
-        ".": "./src/index.ts",
         "./di/install": "./src/di/install.ts"
     },
     "scripts": {

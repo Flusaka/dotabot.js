@@ -3,15 +3,16 @@
     "version": "0.1.0",
     "private": true,
     "dependencies": {
-        "typescript": "^5.9.3",
-        "inversify": "^7.10.4",
-        "luxon": "^3.7.2",
-        "reflect-metadata": "^0.2.2",
-        "lru-cache": "^11.2.6",
+        "inversify": "catalog:di",
+        "luxon": "catalog:",
+        "reflect-metadata": "catalog:reflection",
         "@dotabot.js/domain": "workspace:*",
-        "@dotabot.js/shared": "workspace:*"
+        "@dotabot.js/shared": "workspace:*",
+        "lru-cache": "^11.2.6"
     },
     "devDependencies": {
+        "@types/luxon": "catalog:",
+        "typescript": "catalog:",
         "@dotabot.js/tsconfig": "workspace:*"
     },
     "exports": {
