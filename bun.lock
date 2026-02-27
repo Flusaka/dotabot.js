@@ -21,11 +21,12 @@
         "@dotabot.js/shared": "workspace:*",
         "discord.js": "^14.25.1",
         "discordx": "^11.13.2",
-        "inversify": "^7.10.4",
+        "inversify": "catalog:di",
+        "reflect-metadata": "catalog:reflection",
       },
       "devDependencies": {
         "@dotabot.js/tsconfig": "workspace:*",
-        "typescript": "^5.9.3",
+        "typescript": "catalog:",
       },
     },
     "packages/application": {
@@ -34,15 +35,15 @@
       "dependencies": {
         "@dotabot.js/domain": "workspace:*",
         "@dotabot.js/shared": "workspace:*",
-        "inversify": "^7.10.4",
+        "inversify": "catalog:di",
         "lru-cache": "^11.2.6",
         "luxon": "catalog:",
-        "reflect-metadata": "^0.2.2",
-        "typescript": "^5.9.3",
+        "reflect-metadata": "catalog:reflection",
       },
       "devDependencies": {
         "@dotabot.js/tsconfig": "workspace:*",
         "@types/luxon": "catalog:",
+        "typescript": "catalog:",
       },
     },
     "packages/domain": {
@@ -54,7 +55,7 @@
       "devDependencies": {
         "@dotabot.js/tsconfig": "workspace:*",
         "@types/luxon": "catalog:",
-        "typescript": "^5.9.3",
+        "typescript": "catalog:",
       },
     },
     "packages/infrastructure/database": {
@@ -65,10 +66,10 @@
         "@dotabot.js/shared": "workspace:*",
         "@prisma/adapter-pg": "^7.0.1",
         "@prisma/client": "^7.0.1",
-        "inversify": "^7.10.4",
+        "inversify": "catalog:di",
         "luxon": "catalog:",
         "pg": "^8.16.3",
-        "reflect-metadata": "^0.2.2",
+        "reflect-metadata": "catalog:reflection",
       },
       "devDependencies": {
         "@dotabot.js/tsconfig": "workspace:*",
@@ -91,7 +92,7 @@
       "name": "@dotabot.js/shared",
       "version": "0.1.0",
       "devDependencies": {
-        "typescript": "^5.9.3",
+        "typescript": "catalog:",
       },
     },
     "packages/tsconfig": {
@@ -107,6 +108,9 @@
   "catalogs": {
     "di": {
       "inversify": "^7.10.4",
+    },
+    "reflection": {
+      "reflect-metadata": "^0.2.2",
     },
     "testing": {
       "vitest": "^4.0.14",
