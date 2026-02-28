@@ -1,14 +1,14 @@
 import { DateTime } from "luxon";
-import { Client } from "../pandascorejs/Client";
-import type { Match } from "../pandascorejs/models/match/Match";
-import type { Response } from "../pandascorejs/request/Request";
-import { BaseTeam } from "../pandascorejs/models/team/BaseTeam";
-import prisma from "@dotabot.js/database/client";
-import type { BaseTournament } from "../pandascorejs/models/tournament/BaseTournament";
-import type { BaseLeague } from "../pandascorejs/models/league/BaseLeague";
-import type { BaseSerie } from "../pandascorejs/models/serie/BaseSerie";
+import { Client } from "@dotabot.js/pandascore.js/Client";
+import type { Match } from "@dotabot.js/pandascore.js/models/match/Match";
+import type { Response } from "@dotabot.js/pandascore.js/request/Request";
+import { BaseTeam } from "@dotabot.js/pandascore.js/models/team/BaseTeam";
+import type { BaseTournament } from "@dotabot.js/pandascore.js/models/tournament/BaseTournament";
+import type { BaseLeague } from "@dotabot.js/pandascore.js/models/league/BaseLeague";
+import type { BaseSerie } from "@dotabot.js/pandascore.js/models/serie/BaseSerie";
 import { TierMapper } from "./mappers/TierMapper";
 import { LanguageCodeMapper } from "./mappers/LanguageCodeMapper";
+import prisma from "@dotabot.js/database/prisma";
 
 export async function sync(token: string) {
   // Pull from PandaScore
@@ -225,3 +225,9 @@ async function getMatches(
   });
   return response;
 }
+
+if (!process.env.PANDASCORE_TOKEN) {
+  throw new Error("PandaScore token not specified!");
+}
+
+sync(process.env.PANDASCORE_TOKEN);

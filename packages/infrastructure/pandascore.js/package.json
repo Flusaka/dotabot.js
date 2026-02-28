@@ -7,6 +7,9 @@
         "camelcase-keys": "^10.0.1",
         "change-case": "^5.4.4"
     },
+    "devDependencies": {
+        "typescript": "catalog:"
+    },
     "exports": {
         "./*": "./src/*.ts"
     }

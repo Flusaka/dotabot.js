@@ -29,6 +29,18 @@
         "typescript": "catalog:",
       },
     },
+    "apps/sync": {
+      "name": "@dotabot.js/sync",
+      "version": "0.1.0",
+      "dependencies": {
+        "@dotabot.js/database": "workspace:",
+        "@dotabot.js/domain": "workspace:",
+        "@dotabot.js/pandascore.js": "workspace:",
+      },
+      "devDependencies": {
+        "typescript": "catalog:",
+      },
+    },
     "packages/application": {
       "name": "@dotabot.js/application",
       "version": "0.1.0",
@@ -86,6 +98,9 @@
         "camelcase-keys": "^10.0.1",
         "change-case": "^5.4.4",
         "zod": "^4.1.13",
+      },
+      "devDependencies": {
+        "typescript": "catalog:",
       },
     },
     "packages/shared": {
@@ -154,6 +169,8 @@
     "@dotabot.js/pandascore.js": ["@dotabot.js/pandascore.js@workspace:packages/infrastructure/pandascore.js"],
 
     "@dotabot.js/shared": ["@dotabot.js/shared@workspace:packages/shared"],
+
+    "@dotabot.js/sync": ["@dotabot.js/sync@workspace:apps/sync"],
 
     "@dotabot.js/tsconfig": ["@dotabot.js/tsconfig@workspace:packages/tsconfig"],
 

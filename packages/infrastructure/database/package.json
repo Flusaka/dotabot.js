@@ -21,10 +21,11 @@
         "pg": "^8.16.3"
     },
     "exports": {
-        "./di/install": "./src/di/install.ts"
+        "./*": "./src/*.ts"
     },
     "scripts": {
         "db:generate": "prisma generate",
-        "db:migrate": "prisma migrate dev"
+        "db:migrate": "prisma migrate dev",
+        "db:ui": "prisma studio"
     }
 }

@@ -1,5 +1,5 @@
-import { Tier } from "../../generated/prisma/enums";
-import { Tier as PandaScoreTier } from "../../pandascorejs/models/common/Tier";
+import { Tier } from "@dotabot.js/database/generated/prisma/enums";
+import { Tier as PandaScoreTier } from "@dotabot.js/pandascore.js/models/common/Tier";
 
 export class TierMapper {
   static toDatabaseModel(tier: PandaScoreTier): Tier {

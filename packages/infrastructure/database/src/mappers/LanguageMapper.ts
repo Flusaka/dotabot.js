@@ -1,5 +1,5 @@
 import { Language } from "@dotabot.js/domain/Language";
-import { Language as LanguageModel } from "../../generated/prisma/client";
+import { Language as LanguageModel } from "../generated/prisma/client";
 
 export class LanguageMapper {
   static toDomain(model: LanguageModel): Language {

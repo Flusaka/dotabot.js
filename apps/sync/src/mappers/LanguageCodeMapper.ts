@@ -1,5 +1,5 @@
-import { Language } from "../../generated/prisma/enums";
-import { Language as StreamLanguage } from "../../pandascorejs/models/common/Stream";
+import { Language } from "@dotabot.js/database/generated/prisma/enums";
+import { Language as StreamLanguage } from "@dotabot.js/pandascore.js/models/common/Stream";
 
 export class LanguageCodeMapper {
   static toDatabaseModel(languageCode: StreamLanguage): Language {

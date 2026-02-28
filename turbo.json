@@ -18,6 +18,9 @@
         },
         "db:migrate": {
             "cache": false
+        },
+        "db:ui": {
+            "cache": false
         }
     }
 }

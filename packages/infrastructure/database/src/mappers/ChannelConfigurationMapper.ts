@@ -1,4 +1,4 @@
-import { type ChannelConfiguration as ChannelConfigurationModel } from "../../generated/prisma/client";
+import { type ChannelConfiguration as ChannelConfigurationModel } from "../generated/prisma/client";
 import { ChannelConfiguration } from "@dotabot.js/domain/ChannelConfiguration";
 import { LanguageMapper } from "./LanguageMapper";
 import { TierMapper } from "./TierMapper";
