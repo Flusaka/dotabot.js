@@ -49,6 +49,17 @@ export class PrismaChannelConfigurationRepository implements ChannelConfiguratio
     return true;
   }
 
+  async deleteByChannelId(channelId: bigint): Promise<boolean> {
+    try {
+      await prisma.channelConfiguration.delete({
+        where: { channelId: channelId },
+      });
+      return true;
+    } catch (e: unknown) {
+      return false;
+    }
+  }
+
   async delete(id: number): Promise<boolean> {
     try {
       await prisma.channelConfiguration.delete({

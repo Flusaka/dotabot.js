@@ -41,7 +41,12 @@ export class CachedChannelConfigurationRepository implements ChannelConfiguratio
     return this.repository.update(id, entity);
   }
 
+  deleteByChannelId(channelId: bigint): Promise<boolean> {
+    this.cache.delete(channelId);
+    return this.repository.deleteByChannelId(channelId);
+  }
+
   delete(id: number): Promise<boolean> {
-    throw new Error("Method not implemented.");
+    return this.repository.delete(id);
   }
 }

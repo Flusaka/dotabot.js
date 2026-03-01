@@ -2,16 +2,19 @@
     "name": "@dotabot.js/sync",
     "version": "0.1.0",
     "private": true,
-    "main": "sync.ts",
+    "type": "module",
     "scripts": {
-        "dev": "bun ./src/sync.ts"
+        "build": "bun build ./src/sync.ts --outdir dist --target bun",
+        "dev": "bun ./src/sync.ts",
+        "start": "bun ./dist/sync.js"
     },
     "dependencies": {
-        "@dotabot.js/database": "workspace:",
-        "@dotabot.js/domain": "workspace:",
-        "@dotabot.js/pandascore.js": "workspace:"
+        "@dotabot.js/database": "workspace:*",
+        "@dotabot.js/domain": "workspace:*",
+        "@dotabot.js/pandascore.js": "workspace:*"
     },
     "devDependencies": {
-        "typescript": "catalog:"
+        "typescript": "catalog:",
+        "@dotabot.js/tsconfig": "workspace:*"
     }
 }

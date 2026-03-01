@@ -37,7 +37,7 @@ export class ConnectionServiceImpl implements ConnectionService {
       return DisconnectionResult.ChannelNotConnected;
     }
 
-    const result = await this.channelConfigRepo.delete(existing.id!);
+    const result = await this.channelConfigRepo.deleteByChannelId(channelId);
     if (!result) {
       return DisconnectionResult.UnknownError;
     }

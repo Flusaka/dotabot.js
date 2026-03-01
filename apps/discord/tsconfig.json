@@ -1,3 +1,0 @@
-{
-    "extends": "@dotabot.js/tsconfig/base.json",
-}

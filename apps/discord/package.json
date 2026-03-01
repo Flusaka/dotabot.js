@@ -2,22 +2,24 @@
     "name": "@dotabot.js/discord",
     "version": "0.1.0",
     "private": true,
-    "scripts": {
-        "dev": "bun ./src/index.ts"
-    },
+    "main": "src/index.ts",
+    "type": "module",
     "devDependencies": {
-        "typescript": "catalog:",
-        "@dotabot.js/tsconfig": "workspace:*"
+        "@dotabot.js/tsconfig": "workspace:*",
+        "@sapphire/ts-config": "^5.0.3",
+        "typescript": "catalog:"
     },
     "dependencies": {
-        "inversify": "catalog:di",
-        "reflect-metadata": "catalog:reflection",
         "@dotabot.js/application": "workspace:*",
         "@dotabot.js/database": "workspace:*",
         "@dotabot.js/domain": "workspace:*",
         "@dotabot.js/shared": "workspace:*",
-        "@discordx/importer": "^1.3.3",
-        "discord.js": "^14.25.1",
-        "discordx": "^11.13.2"
+        "@sapphire/framework": "^5.5.0",
+        "discord.js": "14.x",
+        "inversify": "catalog:di",
+        "reflect-metadata": "catalog:reflection"
+    },
+    "scripts": {
+        "dev": "bun ./src/index.ts"
     }
 }

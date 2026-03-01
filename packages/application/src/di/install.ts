@@ -2,6 +2,7 @@ import type { ChannelConfigurationCache } from "@dotabot.js/domain/cache/Channel
 import type { ChannelConfigurationRepository } from "@dotabot.js/domain/repository/ChannelConfigurationRepository";
 import type { ConfigurationService } from "@dotabot.js/domain/service/ConfigurationService";
 import type { ConnectionService } from "@dotabot.js/domain/service/ConnectionService";
+import type { StreamSelector } from "@dotabot.js/domain/selector/StreamSelector";
 import type { TournamentService } from "@dotabot.js/domain/service/TournamentService";
 import { Symbols } from "@dotabot.js/shared/Symbols";
 import { Container } from "inversify";
@@ -11,7 +12,6 @@ import { CachedChannelConfigurationRepository } from "../repositories/CachedChan
 import { ConfigurationServiceImpl } from "../services/ConfigurationServiceImpl";
 import { ConnectionServiceImpl } from "../services/ConnectionServiceImpl";
 import { TournamentServiceImpl } from "../services/TournamentServiceImpl";
-import { StreamSelector } from "@dotabot.js/domain/selector/StreamSelector";
 import { PreferredLanguageStreamSelector } from "../selectors/PreferredLanguageStreamSelector";
 
 export function installApplicationDependencies(container: Container) {

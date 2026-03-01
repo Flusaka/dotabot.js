@@ -50,4 +50,8 @@ export class ChannelConfigurationCacheImpl implements ChannelConfigurationCache 
       ttl: 10000,
     });
   }
+
+  delete(channelId: bigint): void {
+    this.cache.delete(channelId.toString());
+  }
 }
