@@ -1,26 +1,25 @@
-import { Language } from "@dotabot.js/domain/Language";
 import {
-  SetPreferredLanguageResult,
+  SetNotificationTimezoneResult,
   type ConfigurationService,
 } from "@dotabot.js/domain/service/ConfigurationService";
-import { Symbols as SharedSymbols } from "@dotabot.js/shared/Symbols";
+import { Timezone } from "@dotabot.js/domain/Timezone";
+import { Symbols } from "@dotabot.js/shared/Symbols";
 import { ApplicationCommandRegistry, Command } from "@sapphire/framework";
 import { botContainer } from "di/container";
 import { channelMention } from "discord.js";
 
-const LanguageTextChoices = {
-  [Language.English]: "English",
-  [Language.Russian]: "Russian",
-  [Language.Spanish]: "Spanish",
+const TimezoneTextChoices = {
+  [Timezone.GMT]: "GMT",
+  [Timezone.EET]: "EET",
 } as const;
 
-export class SetPreferredLanguageCommand extends Command {
+export class SetTimezone extends Command {
   private readonly _configurationService: ConfigurationService;
 
   constructor(context: Command.LoaderContext, options: Command.Options) {
     super(context, { ...options });
     this._configurationService = botContainer.get<ConfigurationService>(
-      SharedSymbols.ConfigurationService,
+      Symbols.ConfigurationService,
     );
   }
 
@@ -29,18 +28,18 @@ export class SetPreferredLanguageCommand extends Command {
   ) {
     registry.registerChatInputCommand((builder) =>
       builder
-        .setName("language")
+        .setName("timezone")
         .setDescription(
-          "Set the preferred language in which to receive stream suggestions",
+          "Set the timezone in which to receive daily notifications",
         )
         .addStringOption((option) =>
           option
-            .setName("language")
-            .setDescription("Language of your choice")
+            .setName("timezone")
+            .setDescription("Timezone of your choice")
             .setRequired(true)
             .setChoices(
-              Object.keys(LanguageTextChoices).map((value) => ({
-                name: LanguageTextChoices[value as Language],
+              Object.keys(TimezoneTextChoices).map((value) => ({
+                name: TimezoneTextChoices[value as Timezone],
                 value: value,
               })),
             ),
@@ -53,30 +52,30 @@ export class SetPreferredLanguageCommand extends Command {
   ) {
     await interaction.deferReply();
 
-    const language = interaction.options.getString("language")!;
+    const timezone = interaction.options.getString("timezone")!;
 
     const channelId = BigInt(interaction.channelId);
-    const result = await this._configurationService.setPreferredLanguage(
+    const result = await this._configurationService.setNotificationTimezone(
       channelId,
-      language,
+      timezone,
     );
     switch (result) {
-      case SetPreferredLanguageResult.Success: {
+      case SetNotificationTimezoneResult.Success: {
         await interaction.editReply(
-          `Preferred language has been set to ${LanguageTextChoices[language as Language]} for ${channelMention(interaction.channelId)}!`,
+          `Timezone has been set to ${TimezoneTextChoices[timezone as Timezone]} for ${channelMention(interaction.channelId)}!`,
         );
         break;
       }
-      case SetPreferredLanguageResult.ChannelNotConnected: {
+      case SetNotificationTimezoneResult.ChannelNotConnected: {
         // TODO: Pull command ID back to do proper link
         await interaction.editReply(
           `DotaBot is not currently connected to ${channelMention(interaction.channelId)}! Run /connect first!`,
         );
         break;
       }
-      case SetPreferredLanguageResult.UnknownError: {
+      case SetNotificationTimezoneResult.UnknownError: {
         await interaction.editReply(
-          `DotaBot couldn't set the preferred language for ${channelMention(interaction.channelId)} at the moment :( Please try again later!`,
+          `DotaBot couldn't set the timezone for ${channelMention(interaction.channelId)} at the moment :( Please try again later!`,
         );
         break;
       }
