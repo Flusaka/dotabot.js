@@ -34,10 +34,12 @@ export class CachedChannelConfigurationRepository implements ChannelConfiguratio
     entity: Omit<ChannelConfiguration, "id">,
   ): Promise<ChannelConfiguration> {
     const channelConfig = this.repository.create(entity);
+    // TODO: Add to cache at this point
     return channelConfig;
   }
 
   update(id: number, entity: Partial<ChannelConfiguration>): Promise<boolean> {
+    // TODO: Update to cache at this point
     return this.repository.update(id, entity);
   }
 

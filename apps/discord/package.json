@@ -18,6 +18,8 @@
         "@dotabot.js/domain": "workspace:*",
         "@dotabot.js/shared": "workspace:*",
         "@sapphire/framework": "^5.5.0",
+        "@sapphire/plugin-subcommands": "^7.0.1",
+        "@sapphire/utilities": "^3.18.2",
         "discord.js": "14.x",
         "inversify": "catalog:di",
         "reflect-metadata": "catalog:reflection"

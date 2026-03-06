@@ -8,3 +8,7 @@ export const Tier = {
 } as const;
 
 export type Tier = (typeof Tier)[keyof typeof Tier];
+
+export function isTier(value: string): value is Tier {
+  return Object.values(Tier).includes(value as Tier);
+}

@@ -4,6 +4,8 @@ import { Symbols } from "@dotabot.js/shared/Symbols";
 import { injectable, inject } from "inversify";
 import { LRUCache } from "lru-cache";
 
+const DefaultTTL = 30000;
+
 @injectable()
 export class ChannelConfigurationCacheImpl implements ChannelConfigurationCache {
   constructor(
@@ -32,7 +34,11 @@ export class ChannelConfigurationCacheImpl implements ChannelConfigurationCache 
     return parse(channelConfigJson);
   }
 
-  set(channelId: bigint, channelConfig: ChannelConfiguration): void {
+  set(
+    channelId: bigint,
+    channelConfig: ChannelConfiguration,
+    ttl?: number,
+  ): void {
     function serialise(config: ChannelConfiguration): string {
       return JSON.stringify({
         channelId: config.channelId.toString(),
@@ -47,7 +53,7 @@ export class ChannelConfigurationCacheImpl implements ChannelConfigurationCache 
     const json = serialise(channelConfig);
     console.log(`Channel will be added to cache! Serialising... ${json}`);
     this.cache.set(channelId.toString(), json, {
-      ttl: 10000,
+      ttl: ttl ?? DefaultTTL,
     });
   }
 
