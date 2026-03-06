@@ -1,4 +1,4 @@
-import type { Language } from "../src/Language";
+import type { Language } from "../Language";
 
 export type Stream = {
   url: string;

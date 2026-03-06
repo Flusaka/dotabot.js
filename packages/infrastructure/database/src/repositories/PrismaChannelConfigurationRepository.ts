@@ -1,8 +1,7 @@
-import { inject, injectable } from "inversify";
+import { injectable } from "inversify";
 import { ChannelConfigurationMapper } from "../mappers/ChannelConfigurationMapper";
 import type { ChannelConfiguration } from "@dotabot.js/domain/ChannelConfiguration";
 import type { ChannelConfigurationRepository } from "@dotabot.js/domain/repository/ChannelConfigurationRepository";
-import { Symbols } from "../di/Symbols";
 import prisma from "../prisma";
 
 @injectable()

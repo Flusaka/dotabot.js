@@ -1,4 +1,4 @@
-import type { Tournament } from "../../domain/data/Tournament";
+import type { Tournament } from "../data/Tournament";
 import type { Result, ResultWithData } from "../common/Result";
 
 export enum GetTournamentsWithMatchesTodayResultStatus {

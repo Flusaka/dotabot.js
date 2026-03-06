@@ -8,7 +8,9 @@
     "devDependencies": {
         "@dotabot.js/tsconfig": "workspace:*",
         "@sapphire/ts-config": "^5.0.3",
-        "typescript": "catalog:"
+        "typescript": "catalog:devDependencies",
+        "prettier": "catalog:devDependencies",
+        "@types/bun": "catalog:devDependencies"
     },
     "dependencies": {
         "@dotabot.js/application": "workspace:*",

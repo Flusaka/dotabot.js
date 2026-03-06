@@ -1,6 +1,6 @@
 export const Tier = {
   S: "S",
-  A: "S",
+  A: "A",
   B: "B",
   C: "C",
   D: "D",

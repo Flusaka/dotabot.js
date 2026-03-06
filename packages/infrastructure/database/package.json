@@ -4,7 +4,9 @@
     "private": true,
     "type": "module",
     "devDependencies": {
-        "typescript": "catalog:",
+        "typescript": "catalog:devDependencies",
+        "prettier": "catalog:devDependencies",
+        "@types/bun": "catalog:devDependencies",
         "@types/luxon": "catalog:",
         "@dotabot.js/tsconfig": "workspace:*",
         "prisma": "^7.0.1",

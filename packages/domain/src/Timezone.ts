@@ -5,12 +5,6 @@ export const Timezone = {
 
 export type Timezone = (typeof Timezone)[keyof typeof Timezone];
 
-export function timezoneToString(timezone: Timezone) {
-  switch (timezone) {
-    case Timezone.EET:
-      return "EET";
-    case Timezone.GMT:
-    default:
-      return "GMT";
-  }
+export function isTimezone(value: string): value is Timezone {
+  return Object.values(Timezone).includes(value as Timezone);
 }

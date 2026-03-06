@@ -1,7 +1,7 @@
-import type { Language } from "../src/Language";
-import type { Tier } from "../../domain/common/Tier";
-import type { Timezone } from "../src/Timezone";
-import type { ChannelConfiguration } from "../src/ChannelConfiguration";
+import type { Language } from "../Language";
+import type { Tier } from "../common/Tier";
+import type { Timezone } from "../Timezone";
+import type { ChannelConfiguration } from "../ChannelConfiguration";
 
 export enum AddTierResult {
   Success,

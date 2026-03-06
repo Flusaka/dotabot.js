@@ -3,9 +3,11 @@
     "version": "0.1.0",
     "private": true,
     "devDependencies": {
-        "typescript": "catalog:",
         "@types/luxon": "catalog:",
-        "@dotabot.js/tsconfig": "workspace:*"
+        "@dotabot.js/tsconfig": "workspace:*",
+        "typescript": "catalog:devDependencies",
+        "prettier": "catalog:devDependencies",
+        "@types/bun": "catalog:devDependencies"
     },
     "dependencies": {
         "luxon": "catalog:"

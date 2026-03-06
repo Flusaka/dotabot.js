@@ -14,7 +14,9 @@
         "@dotabot.js/pandascore.js": "workspace:*"
     },
     "devDependencies": {
-        "typescript": "catalog:",
+        "typescript": "catalog:devDependencies",
+        "prettier": "catalog:devDependencies",
+        "@types/bun": "catalog:devDependencies",
         "@dotabot.js/tsconfig": "workspace:*"
     }
 }

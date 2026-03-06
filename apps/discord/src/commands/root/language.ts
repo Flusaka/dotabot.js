@@ -1,4 +1,4 @@
-import { Language } from "@dotabot.js/domain/Language";
+import { isLanguage, Language } from "@dotabot.js/domain/Language";
 import {
   SetPreferredLanguageResult,
   type ConfigurationService,
@@ -15,11 +15,11 @@ const LanguageTextChoices = {
 } as const;
 
 export class SetPreferredLanguageCommand extends Command {
-  private readonly _configurationService: ConfigurationService;
+  private readonly configurationService: ConfigurationService;
 
   constructor(context: Command.LoaderContext, options: Command.Options) {
     super(context, { ...options });
-    this._configurationService = botContainer.get<ConfigurationService>(
+    this.configurationService = botContainer.get<ConfigurationService>(
       SharedSymbols.ConfigurationService,
     );
   }
@@ -39,8 +39,8 @@ export class SetPreferredLanguageCommand extends Command {
             .setDescription("Language of your choice")
             .setRequired(true)
             .setChoices(
-              Object.keys(LanguageTextChoices).map((value) => ({
-                name: LanguageTextChoices[value as Language],
+              Object.values(Language).map((value) => ({
+                name: LanguageTextChoices[value],
                 value: value,
               })),
             ),
@@ -53,17 +53,23 @@ export class SetPreferredLanguageCommand extends Command {
   ) {
     await interaction.deferReply();
 
-    const language = interaction.options.getString("language")!;
+    const language = interaction.options.getString("language");
+    if (!language || !isLanguage(language)) {
+      await interaction.editReply(
+        "You chose an invalid language! Please try again with a valid selection",
+      );
+      return;
+    }
 
     const channelId = BigInt(interaction.channelId);
-    const result = await this._configurationService.setPreferredLanguage(
+    const result = await this.configurationService.setPreferredLanguage(
       channelId,
       language,
     );
     switch (result) {
       case SetPreferredLanguageResult.Success: {
         await interaction.editReply(
-          `Preferred language has been set to ${LanguageTextChoices[language as Language]} for ${channelMention(interaction.channelId)}!`,
+          `Preferred language has been set to ${LanguageTextChoices[language]} for ${channelMention(interaction.channelId)}!`,
         );
         break;
       }

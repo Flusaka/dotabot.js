@@ -1,4 +1,4 @@
-import type { ChannelConfiguration } from "@dotabot.js/domain/ChannelConfiguration";
+import type { ChannelConfiguration } from "../ChannelConfiguration";
 
 export interface ChannelConfigurationCache {
   get(channelId: bigint): ChannelConfiguration | undefined;

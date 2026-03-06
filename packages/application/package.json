@@ -12,8 +12,10 @@
     },
     "devDependencies": {
         "@types/luxon": "catalog:",
-        "typescript": "catalog:",
-        "@dotabot.js/tsconfig": "workspace:*"
+        "@dotabot.js/tsconfig": "workspace:*",
+        "typescript": "catalog:devDependencies",
+        "prettier": "catalog:devDependencies",
+        "@types/bun": "catalog:devDependencies"
     },
     "exports": {
         "./*": "./src/*.ts"

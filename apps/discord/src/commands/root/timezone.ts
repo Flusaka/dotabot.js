@@ -2,7 +2,7 @@ import {
   SetNotificationTimezoneResult,
   type ConfigurationService,
 } from "@dotabot.js/domain/service/ConfigurationService";
-import { Timezone } from "@dotabot.js/domain/Timezone";
+import { isTimezone, Timezone } from "@dotabot.js/domain/Timezone";
 import { Symbols } from "@dotabot.js/shared/Symbols";
 import { ApplicationCommandRegistry, Command } from "@sapphire/framework";
 import { botContainer } from "di/container";
@@ -14,11 +14,11 @@ const TimezoneTextChoices = {
 } as const;
 
 export class SetTimezone extends Command {
-  private readonly _configurationService: ConfigurationService;
+  private readonly configurationService: ConfigurationService;
 
   constructor(context: Command.LoaderContext, options: Command.Options) {
     super(context, { ...options });
-    this._configurationService = botContainer.get<ConfigurationService>(
+    this.configurationService = botContainer.get<ConfigurationService>(
       Symbols.ConfigurationService,
     );
   }
@@ -38,8 +38,8 @@ export class SetTimezone extends Command {
             .setDescription("Timezone of your choice")
             .setRequired(true)
             .setChoices(
-              Object.keys(TimezoneTextChoices).map((value) => ({
-                name: TimezoneTextChoices[value as Timezone],
+              Object.values(Timezone).map((value) => ({
+                name: TimezoneTextChoices[value],
                 value: value,
               })),
             ),
@@ -52,10 +52,17 @@ export class SetTimezone extends Command {
   ) {
     await interaction.deferReply();
 
-    const timezone = interaction.options.getString("timezone")!;
+    const timezone = interaction.options.getString("timezone");
+
+    if (!timezone || !isTimezone(timezone)) {
+      await interaction.editReply(
+        "You chose an invalid timezone! Please try again with a valid selection",
+      );
+      return;
+    }
 
     const channelId = BigInt(interaction.channelId);
-    const result = await this._configurationService.setNotificationTimezone(
+    const result = await this.configurationService.setNotificationTimezone(
       channelId,
       timezone,
     );
