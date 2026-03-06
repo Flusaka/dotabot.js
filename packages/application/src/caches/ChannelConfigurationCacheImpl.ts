@@ -49,9 +49,7 @@ export class ChannelConfigurationCacheImpl implements ChannelConfigurationCache 
         id: config.id,
       });
     }
-    console.log("ChannelConfigurationCacheImpl::set " + channelId);
     const json = serialise(channelConfig);
-    console.log(`Channel will be added to cache! Serialising... ${json}`);
     this.cache.set(channelId.toString(), json, {
       ttl: ttl ?? DefaultTTL,
     });

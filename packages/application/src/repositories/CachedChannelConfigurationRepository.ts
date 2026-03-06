@@ -30,11 +30,13 @@ export class CachedChannelConfigurationRepository implements ChannelConfiguratio
     return this.repository.getById(id);
   }
 
-  create(
+  async create(
     entity: Omit<ChannelConfiguration, "id">,
   ): Promise<ChannelConfiguration> {
-    const channelConfig = this.repository.create(entity);
-    // TODO: Add to cache at this point
+    const channelConfig = await this.repository.create(entity);
+    if (channelConfig) {
+      this.cache.set(channelConfig.channelId, channelConfig);
+    }
     return channelConfig;
   }
 
@@ -43,9 +45,12 @@ export class CachedChannelConfigurationRepository implements ChannelConfiguratio
     return this.repository.update(id, entity);
   }
 
-  deleteByChannelId(channelId: bigint): Promise<boolean> {
-    this.cache.delete(channelId);
-    return this.repository.deleteByChannelId(channelId);
+  async deleteByChannelId(channelId: bigint): Promise<boolean> {
+    const result = await this.repository.deleteByChannelId(channelId);
+    if (result) {
+      this.cache.delete(channelId);
+    }
+    return result;
   }
 
   delete(id: number): Promise<boolean> {
