@@ -1,0 +1,33 @@
+{
+    "name": "@dotabot.js/database",
+    "version": "0.1.0",
+    "private": true,
+    "type": "module",
+    "devDependencies": {
+        "typescript": "catalog:devDependencies",
+        "prettier": "catalog:devDependencies",
+        "@types/bun": "catalog:devDependencies",
+        "@types/luxon": "catalog:",
+        "@dotabot.js/tsconfig": "workspace:*",
+        "prisma": "^7.0.1",
+        "@types/pg": "^8.15.6"
+    },
+    "dependencies": {
+        "inversify": "catalog:di",
+        "reflect-metadata": "catalog:reflection",
+        "luxon": "catalog:",
+        "@dotabot.js/domain": "workspace:*",
+        "@dotabot.js/shared": "workspace:*",
+        "@prisma/adapter-pg": "^7.0.1",
+        "@prisma/client": "^7.0.1",
+        "pg": "^8.16.3"
+    },
+    "exports": {
+        "./*": "./src/*.ts"
+    },
+    "scripts": {
+        "db:generate": "prisma generate",
+        "db:migrate": "prisma migrate dev",
+        "db:ui": "prisma studio"
+    }
+}

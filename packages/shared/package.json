@@ -1,0 +1,13 @@
+{
+    "name": "@dotabot.js/shared",
+    "version": "0.1.0",
+    "private": true,
+    "devDependencies": {
+        "typescript": "catalog:devDependencies",
+        "prettier": "catalog:devDependencies",
+        "@types/bun": "catalog:devDependencies"
+    },
+    "exports": {
+        "./*": "./src/*.ts"
+    }
+}

@@ -1,0 +1,12 @@
+{
+    "extends": "@dotabot.js/tsconfig/base.json",
+    "compilerOptions": {
+        "rootDir": "src",
+        "outDir": "dist",
+        "emitDecoratorMetadata": false,
+        "experimentalDecorators": true,
+        "forceConsistentCasingInFileNames": true,
+        "esModuleInterop": true
+    },
+    "include": ["src/**/*"]
+}

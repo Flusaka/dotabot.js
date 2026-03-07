@@ -1,36 +1,38 @@
 {
   "name": "dotabot.js",
   "module": "index.ts",
-  "type": "module",
   "private": true,
+  "packageManager": "bun@1.3.2",
   "devDependencies": {
-    "@types/bun": "latest",
-    "@types/luxon": "^3.7.1",
-    "@types/pg": "^8.15.6",
-    "prettier": "3.7.2",
-    "prisma": "^7.0.1",
-    "vitest": "^4.0.14"
+    "turbo": "^2.8.11"
   },
-  "peerDependencies": {
-    "typescript": "^5.9.3"
-  },
-  "dependencies": {
-    "@discordx/importer": "^1.3.3",
-    "@prisma/adapter-pg": "^7.0.1",
-    "@prisma/client": "^7.0.1",
-    "camelcase-keys": "^10.0.1",
-    "change-case": "^5.4.4",
-    "discord.js": "^14.25.1",
-    "discordx": "^11.13.2",
-    "inversify": "^7.10.4",
-    "lru-cache": "^11.2.6",
-    "luxon": "^3.7.2",
-    "pg": "^8.16.3",
-    "reflect-metadata": "^0.2.2",
-    "zod": "^4.1.13"
+  "workspaces": {
+    "catalog": {
+      "luxon": "^3.7.2",
+      "@types/luxon": "^3.7.1"
+    },
+    "catalogs": {
+      "testing": {
+        "vitest": "^4.0.14"
+      },
+      "di": {
+        "inversify": "^7.10.4"
+      },
+      "reflection": {
+        "reflect-metadata": "^0.2.2"
+      },
+      "devDependencies": {
+        "typescript": "^5.9.3",
+        "@types/bun": "latest",
+        "prettier": "3.7.2"
+      }
+    },
+    "packages": [
+      "apps/*",
+      "packages/**/*"
+    ]
   },
   "scripts": {
-    "dev": "bun .",
     "test": "vitest"
   }
 }

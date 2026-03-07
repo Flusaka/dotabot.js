@@ -1,0 +1,23 @@
+{
+    "name": "@dotabot.js/application",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "inversify": "catalog:di",
+        "luxon": "catalog:",
+        "reflect-metadata": "catalog:reflection",
+        "@dotabot.js/domain": "workspace:*",
+        "@dotabot.js/shared": "workspace:*",
+        "lru-cache": "^11.2.6"
+    },
+    "devDependencies": {
+        "@types/luxon": "catalog:",
+        "@dotabot.js/tsconfig": "workspace:*",
+        "typescript": "catalog:devDependencies",
+        "prettier": "catalog:devDependencies",
+        "@types/bun": "catalog:devDependencies"
+    },
+    "exports": {
+        "./*": "./src/*.ts"
+    }
+}

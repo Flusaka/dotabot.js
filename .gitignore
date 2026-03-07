@@ -33,4 +33,8 @@ report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
 # Finder (MacOS) folder config
 .DS_Store
 
-/generated/prisma
+# Ignore generated Prisma client
+packages/infrastructure/database/src/generated/prisma
+
+# Ignore turbo caching
+.turbo

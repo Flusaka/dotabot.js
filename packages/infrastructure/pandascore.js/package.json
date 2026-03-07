@@ -1,0 +1,18 @@
+{
+    "name": "@dotabot.js/pandascore.js",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "zod": "^4.1.13",
+        "camelcase-keys": "^10.0.1",
+        "change-case": "^5.4.4"
+    },
+    "devDependencies": {
+        "typescript": "catalog:devDependencies",
+        "prettier": "catalog:devDependencies",
+        "@types/bun": "catalog:devDependencies"
+    },
+    "exports": {
+        "./*": "./src/*.ts"
+    }
+}

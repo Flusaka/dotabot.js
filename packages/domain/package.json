@@ -1,0 +1,18 @@
+{
+    "name": "@dotabot.js/domain",
+    "version": "0.1.0",
+    "private": true,
+    "devDependencies": {
+        "@types/luxon": "catalog:",
+        "@dotabot.js/tsconfig": "workspace:*",
+        "typescript": "catalog:devDependencies",
+        "prettier": "catalog:devDependencies",
+        "@types/bun": "catalog:devDependencies"
+    },
+    "dependencies": {
+        "luxon": "catalog:"
+    },
+    "exports": {
+        "./*": "./src/*.ts"
+    }
+}
