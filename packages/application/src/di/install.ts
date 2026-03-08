@@ -4,6 +4,7 @@ import type { ConfigurationService } from "@dotabot.js/domain/service/Configurat
 import type { ConnectionService } from "@dotabot.js/domain/service/ConnectionService";
 import type { StreamSelector } from "@dotabot.js/domain/selector/StreamSelector";
 import type { TournamentService } from "@dotabot.js/domain/service/TournamentService";
+import type { DailyMatchesNotificationService } from "@dotabot.js/domain/service/DailyMatchesNotificationService";
 import { Symbols } from "@dotabot.js/shared/Symbols";
 import { Container } from "inversify";
 import { LRUCache } from "lru-cache/raw";
@@ -13,6 +14,7 @@ import { ConfigurationServiceImpl } from "../services/ConfigurationServiceImpl";
 import { ConnectionServiceImpl } from "../services/ConnectionServiceImpl";
 import { TournamentServiceImpl } from "../services/TournamentServiceImpl";
 import { PreferredLanguageStreamSelector } from "../selectors/PreferredLanguageStreamSelector";
+import { DailyMatchesNotificationServiceImpl } from "../services/DailyMatchesNotificationServiceImpl";
 
 export function installApplicationDependencies(container: Container) {
   // Caches
@@ -52,5 +54,11 @@ export function installApplicationDependencies(container: Container) {
   container
     .bind<StreamSelector>(Symbols.StreamSelector)
     .to(PreferredLanguageStreamSelector)
+    .inSingletonScope();
+  container
+    .bind<DailyMatchesNotificationService>(
+      Symbols.DailyMatchesNotificationService,
+    )
+    .to(DailyMatchesNotificationServiceImpl)
     .inSingletonScope();
 }

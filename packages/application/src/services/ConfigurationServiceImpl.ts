@@ -1,6 +1,7 @@
 import type { ChannelConfiguration } from "@dotabot.js/domain/ChannelConfiguration";
 import type { Tier } from "@dotabot.js/domain/common/Tier";
 import type { Language } from "@dotabot.js/domain/Language";
+import type { DailyNotificationScheduler } from "@dotabot.js/domain/notification/DailyNotificationScheduler";
 import type { ChannelConfigurationRepository } from "@dotabot.js/domain/repository/ChannelConfigurationRepository";
 import {
   type ConfigurationService,
@@ -9,8 +10,9 @@ import {
   SetPreferredLanguageResult,
   SetNotificationTimezoneResult,
   SetDailyNotificationTimeResult,
+  EnableDailyNotificationsResult,
 } from "@dotabot.js/domain/service/ConfigurationService";
-import { TimeParseError } from "@dotabot.js/domain/TimeOnly";
+import { TimeOnly, TimeParseError } from "@dotabot.js/domain/TimeOnly";
 import type { Timezone } from "@dotabot.js/domain/Timezone";
 import { Symbols } from "@dotabot.js/shared/Symbols";
 import { inject, named } from "inversify";
@@ -19,7 +21,9 @@ export class ConfigurationServiceImpl implements ConfigurationService {
   constructor(
     @inject(Symbols.ChannelConfigurationRepository)
     @named("cached")
-    private channelConfigRepo: ChannelConfigurationRepository,
+    private readonly channelConfigRepo: ChannelConfigurationRepository,
+    @inject(Symbols.DailyNotificationScheduler)
+    private readonly dailyNotificationScheduler: DailyNotificationScheduler,
   ) {}
 
   async getConfiguration(
@@ -98,6 +102,29 @@ export class ConfigurationServiceImpl implements ConfigurationService {
     return SetNotificationTimezoneResult.Success;
   }
 
+  async enableDailyNotifications(
+    channelId: bigint,
+    enable: boolean,
+  ): Promise<EnableDailyNotificationsResult> {
+    const channel = await this.channelConfigRepo.getByChannelId(channelId);
+    if (!channel) {
+      return EnableDailyNotificationsResult.ChannelNotConnected;
+    }
+
+    if (enable) {
+      channel.enableDailyNotifications();
+    } else {
+      channel.disableDailyNotifications();
+    }
+
+    if (!(await this.channelConfigRepo.update(channel.id!, channel))) {
+      return EnableDailyNotificationsResult.UnknownError;
+    }
+
+    // TODO: Schedule notifications
+    return EnableDailyNotificationsResult.Success;
+  }
+
   async setDailyNotificationTime(
     channelId: bigint,
     timeString: string,
@@ -108,11 +135,14 @@ export class ConfigurationServiceImpl implements ConfigurationService {
     }
 
     try {
-      channel.setDailyNotificationTime(timeString);
+      const time = TimeOnly.parse(timeString);
+      channel.setDailyNotificationTime(time);
 
       if (!(await this.channelConfigRepo.update(channel.id!, channel))) {
         return SetDailyNotificationTimeResult.UnknownError;
       }
+      this.dailyNotificationScheduler.schedule(channelId, time);
+
       return SetDailyNotificationTimeResult.Success;
     } catch (err: unknown) {
       if (err instanceof TimeParseError) {

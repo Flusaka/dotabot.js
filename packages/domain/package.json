@@ -7,12 +7,16 @@
         "@dotabot.js/tsconfig": "workspace:*",
         "typescript": "catalog:devDependencies",
         "prettier": "catalog:devDependencies",
-        "@types/bun": "catalog:devDependencies"
+        "@types/bun": "catalog:devDependencies",
+        "vitest": "catalog:testing"
     },
     "dependencies": {
         "luxon": "catalog:"
     },
     "exports": {
         "./*": "./src/*.ts"
+    },
+    "scripts": {
+        "test": "vitest"
     }
 }

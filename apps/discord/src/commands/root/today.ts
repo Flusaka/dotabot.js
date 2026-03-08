@@ -57,13 +57,13 @@ export class TodayCommand extends Command {
         for (const tournament of result.data) {
           for (const iteration of tournament.iterations) {
             for (const phase of iteration.phases) {
-              const embed = null;
-              this.tournamentMessageBuilder.buildTournamentMessage(
-                channelConfig!,
-                tournament,
-                iteration,
-                phase,
-              );
+              const embed =
+                this.tournamentMessageBuilder.buildTournamentMessage(
+                  channelConfig!,
+                  tournament,
+                  iteration,
+                  phase,
+                );
 
               if (!embed) continue;
 
