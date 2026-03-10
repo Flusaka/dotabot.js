@@ -35,10 +35,6 @@ export class BullDailyNotificationScheduler implements DailyNotificationSchedule
 
     const jobId = this.buildJobId(channelConfig.channelId);
     const { minutes, hours } = channelConfig.dailyNotificationTime!;
-    console.log(
-      `Scheduling notification for ${jobId} at ${channelConfig.dailyNotificationTime} in timezone ${toISOTimezone(channelConfig.timezone)}`,
-    );
-    // TODO: Manage timezones, either here or in app layer
     await this.queue.upsertJobScheduler(
       jobId,
       {
