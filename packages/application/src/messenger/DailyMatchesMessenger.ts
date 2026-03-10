@@ -3,7 +3,7 @@ import type { Tournament } from "@dotabot.js/domain/data/Tournament";
 
 export interface DailyMatchesMessenger {
   sendDailyMatches(
-    channel: ChannelConfiguration,
+    channelConfig: ChannelConfiguration,
     tournaments: Tournament[],
-  ): void;
+  ): Promise<void>;
 }

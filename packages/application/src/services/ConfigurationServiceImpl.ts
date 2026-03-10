@@ -121,7 +121,11 @@ export class ConfigurationServiceImpl implements ConfigurationService {
       return EnableDailyNotificationsResult.UnknownError;
     }
 
-    // TODO: Schedule notifications
+    if (enable) {
+      this.dailyNotificationScheduler.schedule(channel);
+    } else {
+      this.dailyNotificationScheduler.unschedule(channelId);
+    }
     return EnableDailyNotificationsResult.Success;
   }
 
@@ -141,7 +145,7 @@ export class ConfigurationServiceImpl implements ConfigurationService {
       if (!(await this.channelConfigRepo.update(channel.id!, channel))) {
         return SetDailyNotificationTimeResult.UnknownError;
       }
-      this.dailyNotificationScheduler.schedule(channelId, time);
+      this.dailyNotificationScheduler.schedule(channel);
 
       return SetDailyNotificationTimeResult.Success;
     } catch (err: unknown) {

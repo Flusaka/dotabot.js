@@ -23,30 +23,15 @@ export class DailyMatchesMessengerImpl implements DailyMatchesMessenger {
       return;
     }
 
-    let anyMessageSent = false;
-    for (const tournament of tournaments) {
-      for (const iteration of tournament.iterations) {
-        for (const phase of iteration.phases) {
-          const embed = this.tournamentMessageBuilder.buildTournamentMessage(
-            channelConfig,
-            tournament,
-            iteration,
-            phase,
-          );
+    const embeds = this.tournamentMessageBuilder.build(
+      channelConfig,
+      tournaments,
+    );
 
-          if (!embed) continue;
-
-          // Send message to channel
-          await channel.send({
-            embeds: [embed],
-          });
-          anyMessageSent = true;
-        }
-      }
-    }
-
-    if (!anyMessageSent) {
-      console.log("No matches today");
+    for (const embed of embeds) {
+      await channel.send({
+        embeds: [embed],
+      });
     }
   }
 }

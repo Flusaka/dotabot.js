@@ -5,6 +5,8 @@ import { Symbols } from "@dotabot.js/shared/Symbols";
 import { Queue } from "bullmq";
 import { inject, injectable } from "inversify";
 import { DailyNotificationWorker } from "./workers/DailyNotificationWorker";
+import type { ChannelConfiguration } from "@dotabot.js/domain/ChannelConfiguration";
+import { toISOTimezone } from "@dotabot.js/domain/Timezone";
 
 @injectable()
 export class BullDailyNotificationScheduler implements DailyNotificationScheduler {
@@ -16,6 +18,7 @@ export class BullDailyNotificationScheduler implements DailyNotificationSchedule
     notificationsService: DailyMatchesNotificationService,
   ) {
     this.queue = new Queue("daily_notifications", {
+      // TODO: Get connection from env
       connection: {
         host: "localhost",
         port: 6379,
@@ -25,17 +28,35 @@ export class BullDailyNotificationScheduler implements DailyNotificationSchedule
     this.worker = new DailyNotificationWorker(notificationsService);
   }
 
-  schedule(channelId: BigInt, time: TimeOnly): void {
-    console.log(`Scheduling notification for ${channelId} at ${time}`);
-    this.queue.add(
-      `daily-notification-${channelId}`,
-      { channelId: channelId.toString() },
+  async schedule(channelConfig: ChannelConfiguration): Promise<void> {
+    if (!channelConfig.dailyNotificationsEnabled) {
+      throw new Error("Daily notifications are not enabled!");
+    }
+
+    const jobId = this.buildJobId(channelConfig.channelId);
+    const { minutes, hours } = channelConfig.dailyNotificationTime!;
+    console.log(
+      `Scheduling notification for ${jobId} at ${channelConfig.dailyNotificationTime} in timezone ${toISOTimezone(channelConfig.timezone)}`,
+    );
+    // TODO: Manage timezones, either here or in app layer
+    await this.queue.upsertJobScheduler(
+      jobId,
       {
-        delay: 10000,
-        repeat: {
-          every: 24 * 60 * 60 * 1000,
-        },
+        pattern: `${minutes} ${hours} * * *`,
+        tz: toISOTimezone(channelConfig.timezone),
+      },
+      {
+        name: jobId,
+        data: { channelId: channelConfig.channelId.toString() },
       },
     );
   }
+
+  async unschedule(channelId: bigint): Promise<void> {
+    // Remove it from the queue but also from the worker
+    const jobId = this.buildJobId(channelId);
+    await this.queue.removeJobScheduler(jobId);
+  }
+
+  private buildJobId = (channelId: bigint) => `daily-notification-${channelId}`;
 }

@@ -5,15 +5,51 @@ import type { Tournament } from "@dotabot.js/domain/data/Tournament";
 import type { TournamentIteration } from "@dotabot.js/domain/data/TournamentIteration";
 import type { TournamentPhase } from "@dotabot.js/domain/data/TournamentPhase";
 import type { StreamSelector } from "@dotabot.js/domain/selector/StreamSelector";
-import { EmbedBuilder, hyperlink, time, TimestampStyles } from "discord.js";
+import {
+  EmbedBuilder,
+  hyperlink,
+  time,
+  TimestampStyles,
+  type ColorResolvable,
+} from "discord.js";
 import { injectable, inject } from "inversify";
 import { Symbols } from "@dotabot.js/shared/Symbols";
+
+const EmbedColor: ColorResolvable = "DarkAqua";
 
 @injectable()
 export class TournamentEmbedMessageBuilder {
   constructor(
     @inject(Symbols.StreamSelector) private streamSelector: StreamSelector,
   ) {}
+
+  build(
+    channelConfig: ChannelConfiguration,
+    tournaments: Tournament[],
+  ): EmbedBuilder[] {
+    const embeds: EmbedBuilder[] = [];
+    for (const tournament of tournaments) {
+      for (const iteration of tournament.iterations) {
+        for (const phase of iteration.phases) {
+          const embed = this.buildTournamentMessage(
+            channelConfig,
+            tournament,
+            iteration,
+            phase,
+          );
+          if (!embed) continue;
+
+          embeds.push(embed);
+        }
+      }
+    }
+
+    // If there's no embeds, there's no matches to report, at least push a "No matches today!" embed
+    if (embeds.length === 0) {
+      embeds.push(new EmbedBuilder().setTitle(":robot: No matches today!"));
+    }
+    return embeds;
+  }
 
   buildTournamentMessage(
     channelConfig: ChannelConfiguration,
@@ -33,7 +69,7 @@ export class TournamentEmbedMessageBuilder {
     const title = this.getTournamentTitle(tournament, iteration, phase);
     const builder = new EmbedBuilder()
       .setTitle(`:robot: ${title} games today!`)
-      .setColor("Aqua")
+      .setColor(EmbedColor)
       .setDescription(
         `Tournament data provided by ${hyperlink("PandaScore", "https://www.pandascore.co/")}`,
       );
