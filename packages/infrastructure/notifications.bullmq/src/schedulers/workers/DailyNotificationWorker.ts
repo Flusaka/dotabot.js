@@ -1,4 +1,5 @@
 import type { DailyMatchesNotificationService } from "@dotabot.js/domain/service/DailyMatchesNotificationService";
+import { Env } from "@dotabot.js/shared/Env";
 import { Worker } from "bullmq";
 
 export class DailyNotificationWorker {
@@ -16,8 +17,8 @@ export class DailyNotificationWorker {
       },
       {
         connection: {
-          host: "localhost",
-          port: 6379,
+          host: Env.getString("NOTIFICATION_DATABASE_HOST"),
+          port: Env.getNumber("NOTIFICATION_DATABASE_PORT"),
         },
       },
     );

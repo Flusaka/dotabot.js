@@ -1,12 +1,12 @@
 import type { DailyNotificationScheduler } from "@dotabot.js/domain/notification/DailyNotificationScheduler";
 import type { DailyMatchesNotificationService } from "@dotabot.js/domain/service/DailyMatchesNotificationService";
-import { TimeOnly } from "@dotabot.js/domain/TimeOnly";
 import { Symbols } from "@dotabot.js/shared/Symbols";
 import { Queue } from "bullmq";
 import { inject, injectable } from "inversify";
 import { DailyNotificationWorker } from "./workers/DailyNotificationWorker";
 import type { ChannelConfiguration } from "@dotabot.js/domain/ChannelConfiguration";
 import { toISOTimezone } from "@dotabot.js/domain/Timezone";
+import { Env } from "@dotabot.js/shared/Env";
 
 @injectable()
 export class BullDailyNotificationScheduler implements DailyNotificationScheduler {
@@ -18,10 +18,9 @@ export class BullDailyNotificationScheduler implements DailyNotificationSchedule
     notificationsService: DailyMatchesNotificationService,
   ) {
     this.queue = new Queue("daily_notifications", {
-      // TODO: Get connection from env
       connection: {
-        host: "localhost",
-        port: 6379,
+        host: Env.getString("NOTIFICATION_DATABASE_HOST"),
+        port: Env.getNumber("NOTIFICATION_DATABASE_PORT"),
       },
     });
 
