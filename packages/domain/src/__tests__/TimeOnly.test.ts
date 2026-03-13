@@ -1,6 +1,5 @@
 import { describe, expect, test } from "vitest";
 import { TimeOnly } from "../TimeOnly";
-import { Timezone } from "../src/Timezone";
 
 describe("TimeOnly Tests", () => {
   test.each([

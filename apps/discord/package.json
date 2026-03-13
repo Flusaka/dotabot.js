@@ -15,6 +15,7 @@
     "dependencies": {
         "@dotabot.js/application": "workspace:*",
         "@dotabot.js/database": "workspace:*",
+        "@dotabot.js/notifications": "workspace:*",
         "@dotabot.js/domain": "workspace:*",
         "@dotabot.js/shared": "workspace:*",
         "@sapphire/framework": "^5.5.0",

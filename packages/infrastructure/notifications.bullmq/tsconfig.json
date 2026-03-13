@@ -1,0 +1,7 @@
+{
+    "extends": "@dotabot.js/tsconfig/base.json",
+    "compilerOptions": {
+        "strictNullChecks": true,
+        "experimentalDecorators": true,
+    }
+}

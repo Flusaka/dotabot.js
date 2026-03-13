@@ -21,6 +21,11 @@
         },
         "db:ui": {
             "cache": false
+        },
+        "test": {
+            "dependsOn": [
+                "^test"
+            ]
         }
     }
 }

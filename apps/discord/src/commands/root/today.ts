@@ -54,32 +54,20 @@ export class TodayCommand extends Command {
         const channelConfig =
           await this.configurationService.getConfiguration(channelId);
 
-        for (const tournament of result.data) {
-          for (const iteration of tournament.iterations) {
-            for (const phase of iteration.phases) {
-              const embed = null;
-              this.tournamentMessageBuilder.buildTournamentMessage(
-                channelConfig!,
-                tournament,
-                iteration,
-                phase,
-              );
+        const embeds = this.tournamentMessageBuilder.build(
+          channelConfig!,
+          result.data,
+        );
 
-              if (!embed) continue;
-
-              // If we've not replied yet, reply now, and follow up the rest
-              if (!interaction.replied) {
-                await interaction.editReply({ embeds: [embed] });
-              } else {
-                await interaction.followUp({ embeds: [embed] });
-              }
-            }
+        for (const embed of embeds) {
+          // If we've not replied yet, reply now, and follow up the rest
+          if (!interaction.replied) {
+            await interaction.editReply({ embeds: [embed] });
+          } else {
+            await interaction.followUp({ embeds: [embed] });
           }
         }
 
-        if (!interaction.replied) {
-          await interaction.editReply(":robot: No matches today!");
-        }
         break;
       }
       case GetTournamentsWithMatchesTodayResultStatus.ChannelNotConnected: {

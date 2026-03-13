@@ -29,6 +29,12 @@ export enum SetNotificationTimezoneResult {
   UnknownError,
 }
 
+export enum EnableDailyNotificationsResult {
+  Success,
+  ChannelNotConnected,
+  UnknownError,
+}
+
 export enum SetDailyNotificationTimeResult {
   Success,
   ChannelNotConnected,
@@ -59,6 +65,10 @@ export interface ConfigurationService {
   ): Promise<SetNotificationTimezoneResult>;
 
   // Daily notification configuration
+  enableDailyNotifications(
+    channelId: bigint,
+    enable: boolean,
+  ): Promise<EnableDailyNotificationsResult>;
   setDailyNotificationTime(
     channelId: bigint,
     timeString: string,

@@ -3,6 +3,7 @@ import { Language } from "./Language";
 import { Tier } from "./common/Tier";
 import { TimeOnly } from "./TimeOnly";
 import { Timezone } from "./Timezone";
+import { DateTime } from "luxon";
 
 export class ChannelConfiguration implements Entity {
   private _id?: number;
@@ -78,6 +79,10 @@ export class ChannelConfiguration implements Entity {
     return this._preferredLanguage;
   }
 
+  public get dailyNotificationsEnabled() {
+    return this._dailyNotificationTime !== undefined;
+  }
+
   public get dailyNotificationTime() {
     return this._dailyNotificationTime;
   }
@@ -108,8 +113,21 @@ export class ChannelConfiguration implements Entity {
     this._timezone = timezone;
   }
 
-  setDailyNotificationTime(timeString: string) {
-    this._dailyNotificationTime = TimeOnly.parse(timeString);
+  enableDailyNotifications() {
+    this.setDailyNotificationTime(TimeOnly.zero);
+  }
+
+  disableDailyNotifications() {
+    this._dailyNotificationTime = undefined;
+  }
+
+  setDailyNotificationTimeFromString(timeString: string) {
+    const time = TimeOnly.parse(timeString);
+    this.setDailyNotificationTime(time);
+  }
+
+  setDailyNotificationTime(time: TimeOnly) {
+    this._dailyNotificationTime = time;
   }
   //#endregion
 }
