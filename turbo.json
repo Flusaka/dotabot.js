@@ -2,7 +2,8 @@
     "$schema": "https://turborepo.dev/schema.json",
     "globalEnv": [
         "DATABASE_URL",
-        "DISCORD_TOKEN"
+        "DISCORD_TOKEN",
+        "PANDASCORE_TOKEN"
     ],
     "tasks": {
         "build": {
