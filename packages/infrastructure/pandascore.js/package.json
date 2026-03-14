@@ -8,11 +8,16 @@
         "change-case": "^5.4.4"
     },
     "devDependencies": {
+        "@dotabot.js/eslint-config": "workspace:*",
         "typescript": "catalog:devDependencies",
         "prettier": "catalog:devDependencies",
-        "@types/bun": "catalog:devDependencies"
+        "@types/bun": "catalog:devDependencies",
+        "eslint": "catalog:devDependencies"
     },
     "exports": {
         "./*": "./src/*.ts"
+    },
+    "scripts": {
+        "lint": "eslint ."
     }
 }

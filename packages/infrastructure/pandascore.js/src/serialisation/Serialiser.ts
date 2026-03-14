@@ -5,7 +5,7 @@ export type SerialisationMethod = "simple" | "deep";
 export class Serialiser {
   protected serialiseValue(param: RequestParameter): string {
     if (Array.isArray(param.value)) {
-      return this.serialiseArray(param.value, param);
+      return this.serialiseArray(param.value);
     }
 
     if (typeof param.value === "object" && param.value !== null) {
@@ -19,7 +19,7 @@ export class Serialiser {
     return `${param.value}`;
   }
 
-  private serialiseArray(value: unknown[], param: RequestParameter): string {
+  private serialiseArray(value: unknown[]): string {
     return `${value.join(",")}`;
   }
 
