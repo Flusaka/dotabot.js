@@ -1,6 +1,5 @@
 {
   "name": "dotabot.js",
-  "module": "index.ts",
   "private": true,
   "packageManager": "bun@1.3.2",
   "devDependencies": {
@@ -30,7 +29,7 @@
       }
     },
     "packages": [
-      "apps/*",
+      "apps/**/*",
       "packages/**/*"
     ]
   },
