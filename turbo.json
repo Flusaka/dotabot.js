@@ -1,5 +1,10 @@
 {
     "$schema": "https://turborepo.dev/schema.json",
+    "globalEnv": [
+        "DATABASE_URL",
+        "DISCORD_TOKEN",
+        "PANDASCORE_TOKEN"
+    ],
     "tasks": {
         "build": {
             "outputs": [
@@ -25,6 +30,11 @@
         "test": {
             "dependsOn": [
                 "^test"
+            ]
+        },
+        "lint": {
+            "dependsOn": [
+                "^lint"
             ]
         }
     }

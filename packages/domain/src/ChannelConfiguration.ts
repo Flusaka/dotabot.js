@@ -3,7 +3,6 @@ import { Language } from "./Language";
 import { Tier } from "./common/Tier";
 import { TimeOnly } from "./TimeOnly";
 import { Timezone } from "./Timezone";
-import { DateTime } from "luxon";
 
 export class ChannelConfiguration implements Entity {
   private _id?: number;

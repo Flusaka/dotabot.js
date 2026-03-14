@@ -19,8 +19,16 @@ export class PrismaChannelConfigurationRepository implements ChannelConfiguratio
     return ChannelConfigurationMapper.toDomain(channelConfig);
   }
 
-  getById(id: number): Promise<ChannelConfiguration> {
-    throw new Error("Method not implemented.");
+  async getById(id: number): Promise<ChannelConfiguration | undefined> {
+    const channelConfig = await prisma.channelConfiguration.findUnique({
+      where: { id: id },
+    });
+
+    if (!channelConfig) {
+      return;
+    }
+
+    return ChannelConfigurationMapper.toDomain(channelConfig);
   }
 
   async create(
@@ -54,7 +62,7 @@ export class PrismaChannelConfigurationRepository implements ChannelConfiguratio
         where: { channelId: channelId },
       });
       return true;
-    } catch (e: unknown) {
+    } catch {
       return false;
     }
   }
@@ -65,7 +73,7 @@ export class PrismaChannelConfigurationRepository implements ChannelConfiguratio
         where: { id: id },
       });
       return true;
-    } catch (e: unknown) {
+    } catch {
       return false;
     }
   }

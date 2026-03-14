@@ -5,9 +5,11 @@
     "devDependencies": {
         "@types/luxon": "catalog:",
         "@dotabot.js/tsconfig": "workspace:*",
+        "@dotabot.js/eslint-config": "workspace:*",
         "typescript": "catalog:devDependencies",
         "prettier": "catalog:devDependencies",
         "@types/bun": "catalog:devDependencies",
+        "eslint": "catalog:devDependencies",
         "vitest": "catalog:testing"
     },
     "dependencies": {
@@ -17,6 +19,7 @@
         "./*": "./src/*.ts"
     },
     "scripts": {
-        "test": "vitest"
+        "test": "vitest",
+        "lint": "eslint ."
     }
 }

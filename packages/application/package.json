@@ -13,11 +13,16 @@
     "devDependencies": {
         "@types/luxon": "catalog:",
         "@dotabot.js/tsconfig": "workspace:*",
+        "@dotabot.js/eslint-config": "workspace:*",
         "typescript": "catalog:devDependencies",
         "prettier": "catalog:devDependencies",
-        "@types/bun": "catalog:devDependencies"
+        "@types/bun": "catalog:devDependencies",
+        "eslint": "catalog:devDependencies"
     },
     "exports": {
         "./*": "./src/*.ts"
+    },
+    "scripts": {
+        "lint": "eslint ."
     }
 }

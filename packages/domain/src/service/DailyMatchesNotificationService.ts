@@ -1,3 +1,3 @@
 export interface DailyMatchesNotificationService {
-  notify(channelId: BigInt): Promise<void>;
+  notify(channelId: bigint): Promise<void>;
 }

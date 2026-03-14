@@ -7,10 +7,12 @@
     "packageManager": "bun@1.3.2",
     "devDependencies": {
         "@dotabot.js/tsconfig": "workspace:*",
+        "@dotabot.js/eslint-config": "workspace:*",
         "@sapphire/ts-config": "^5.0.3",
         "typescript": "catalog:devDependencies",
         "prettier": "catalog:devDependencies",
-        "@types/bun": "catalog:devDependencies"
+        "@types/bun": "catalog:devDependencies",
+        "eslint": "catalog:devDependencies"
     },
     "dependencies": {
         "@dotabot.js/application": "workspace:*",
@@ -26,6 +28,7 @@
         "reflect-metadata": "catalog:reflection"
     },
     "scripts": {
-        "dev": "bun ./src/index.ts"
+        "dev": "bun ./src/index.ts",
+        "lint": "eslint ."
     }
 }
