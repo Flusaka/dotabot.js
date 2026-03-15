@@ -1,4 +1,4 @@
-import { SapphireClient } from "@sapphire/framework";
+import { LogLevel, SapphireClient } from "@sapphire/framework";
 import { GatewayIntentBits } from "discord.js";
 
 const discordToken = process.env.DISCORD_TOKEN;
@@ -8,6 +8,7 @@ if (!discordToken) {
 
 const client = new SapphireClient({
   intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages],
+  logger: { level: LogLevel.Debug },
 });
 
 client.login(discordToken);

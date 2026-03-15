@@ -4,7 +4,7 @@ import {
 } from "@dotabot.js/domain/service/ConnectionService";
 import { Symbols as SharedSymbols } from "@dotabot.js/shared/Symbols";
 import { ApplicationCommandRegistry, Command } from "@sapphire/framework";
-import { botContainer } from "di/container";
+import { botContainer } from "../../di/container";
 import { channelMention } from "discord.js";
 
 export class ConnectCommand extends Command {

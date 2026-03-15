@@ -11,7 +11,7 @@ import { Env } from "@dotabot.js/shared/Env";
 @injectable()
 export class BullDailyNotificationScheduler implements DailyNotificationScheduler {
   private readonly queue: Queue;
-  private readonly worker: DailyNotificationWorker;
+  // private readonly worker: DailyNotificationWorker;
 
   constructor(
     @inject(Symbols.DailyMatchesNotificationService)
@@ -24,7 +24,7 @@ export class BullDailyNotificationScheduler implements DailyNotificationSchedule
       },
     });
 
-    this.worker = new DailyNotificationWorker(notificationsService);
+    new DailyNotificationWorker(notificationsService);
   }
 
   async schedule(channelConfig: ChannelConfiguration): Promise<void> {

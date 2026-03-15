@@ -21,6 +21,7 @@
     "./*": "./src/*.ts"
   },
   "scripts": {
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "build": "tsc"
   }
 }

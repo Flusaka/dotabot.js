@@ -5,8 +5,8 @@ import {
 import { isTimezone, Timezone } from "@dotabot.js/domain/Timezone";
 import { Symbols } from "@dotabot.js/shared/Symbols";
 import { ApplicationCommandRegistry, Command } from "@sapphire/framework";
-import { botContainer } from "di/container";
 import { channelMention } from "discord.js";
+import { botContainer } from "../../di/container";
 
 const TimezoneTextChoices = {
   [Timezone.GMT]: "GMT",

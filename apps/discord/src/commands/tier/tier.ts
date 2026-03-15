@@ -5,7 +5,7 @@ import {
 } from "@dotabot.js/domain/service/ConfigurationService";
 import { Symbols } from "@dotabot.js/shared/Symbols";
 import { ApplicationCommandRegistry, Command } from "@sapphire/framework";
-import { botContainer } from "di/container";
+import { botContainer } from "../../di/container";
 import { isTier, Tier } from "@dotabot.js/domain/common/Tier";
 import { Subcommand } from "@sapphire/plugin-subcommands";
 import { channelMention } from "discord.js";

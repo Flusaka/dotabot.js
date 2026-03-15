@@ -5,7 +5,7 @@ import {
 } from "@dotabot.js/domain/service/ConfigurationService";
 import { Symbols as SharedSymbols } from "@dotabot.js/shared/Symbols";
 import { ApplicationCommandRegistry, Command } from "@sapphire/framework";
-import { botContainer } from "di/container";
+import { botContainer } from "../../di/container";
 import { channelMention } from "discord.js";
 
 const LanguageTextChoices = {
