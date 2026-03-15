@@ -6,8 +6,6 @@ import { PrismaTournamentRepository } from "../repositories/PrismaTournamentRepo
 import { Symbols as SharedSymbols } from "@dotabot.js/shared/Symbols";
 
 export function installDatabaseDependencies(container: Container) {
-  console.log("Installing DB dependencies");
-
   container
     .bind<ChannelConfigurationRepository>(
       SharedSymbols.ChannelConfigurationRepository,

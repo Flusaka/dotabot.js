@@ -4,9 +4,8 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "build": "bun build ./src/sync.ts --outdir dist --target bun",
         "dev": "bun ./src/sync.ts",
-        "start": "bun ./dist/sync.js"
+        "lint": "eslint ."
     },
     "dependencies": {
         "@dotabot.js/database": "workspace:*",
@@ -17,6 +16,8 @@
         "typescript": "catalog:devDependencies",
         "prettier": "catalog:devDependencies",
         "@types/bun": "catalog:devDependencies",
-        "@dotabot.js/tsconfig": "workspace:*"
+        "eslint": "catalog:devDependencies",
+        "@dotabot.js/tsconfig": "workspace:*",
+        "@dotabot.js/eslint-config": "workspace:*"
     }
 }

@@ -1,0 +1,19 @@
+{
+    "name": "@dotabot.js/eslint-config",
+    "version": "0.1.0",
+    "type": "module",
+    "private": true,
+    "exports": {
+        "./base": "./base.js"
+    },
+    "devDependencies": {
+        "@eslint/js": "^10.0.1",
+        "eslint": "catalog:devDependencies",
+        "eslint-config-prettier": "^10.1.8",
+        "eslint-plugin-only-warn": "^1.2.1",
+        "eslint-plugin-turbo": "^2.8.17",
+        "globals": "^17.4.0",
+        "typescript": "catalog:devDependencies",
+        "typescript-eslint": "catalog:devDependencies"
+    }
+}

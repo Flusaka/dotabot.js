@@ -7,8 +7,10 @@
         "typescript": "catalog:devDependencies",
         "prettier": "catalog:devDependencies",
         "@types/bun": "catalog:devDependencies",
+        "eslint": "catalog:devDependencies",
         "@types/luxon": "catalog:",
         "@dotabot.js/tsconfig": "workspace:*",
+        "@dotabot.js/eslint-config": "workspace:*",
         "prisma": "^7.0.1",
         "@types/pg": "^8.15.6"
     },
@@ -28,6 +30,7 @@
     "scripts": {
         "db:generate": "prisma generate",
         "db:migrate": "prisma migrate dev",
-        "db:ui": "prisma studio"
+        "db:ui": "prisma studio",
+        "lint": "eslint ."
     }
 }

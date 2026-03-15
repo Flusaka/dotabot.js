@@ -1,0 +1,26 @@
+{
+  "name": "@dotabot.js/notifications",
+  "version": "0.1.0",
+  "private": true,
+  "devDependencies": {
+    "@dotabot.js/tsconfig": "workspace:*",
+    "@dotabot.js/eslint-config": "workspace:*",
+    "@types/bun": "catalog:devDependencies",
+    "typescript": "catalog:devDependencies",
+    "prettier": "catalog:devDependencies",
+    "eslint": "catalog:devDependencies"
+  },
+  "dependencies": {
+    "@dotabot.js/domain": "workspace:*",
+    "@dotabot.js/shared": "workspace:*",
+    "bullmq": "^5.70.4",
+    "inversify": "catalog:di",
+    "ioredis": "^5.10.0"
+  },
+  "exports": {
+    "./*": "./src/*.ts"
+  },
+  "scripts": {
+    "lint": "eslint ."
+  }
+}

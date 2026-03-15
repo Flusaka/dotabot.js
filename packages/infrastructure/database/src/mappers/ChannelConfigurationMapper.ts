@@ -3,6 +3,7 @@ import { ChannelConfiguration } from "@dotabot.js/domain/ChannelConfiguration";
 import { LanguageMapper } from "./LanguageMapper";
 import { TierMapper } from "./TierMapper";
 import { TimezoneMapper } from "./TimezoneMapper";
+import { TimeOnlyMapper } from "./TimeOnlyMapper";
 
 export class ChannelConfigurationMapper {
   static toDomain(model: ChannelConfigurationModel): ChannelConfiguration {
@@ -12,6 +13,7 @@ export class ChannelConfigurationMapper {
       model.tiers.map(TierMapper.toDomain),
       TimezoneMapper.toDomain(model.timezone),
       LanguageMapper.toDomain(model.preferredLanguage),
+      TimeOnlyMapper.toDomain(model.dailyNotificationTime),
     );
   }
 
@@ -23,7 +25,9 @@ export class ChannelConfigurationMapper {
       tiers: domain.tiers.map(TierMapper.toModel),
       preferredLanguage: LanguageMapper.toModel(domain.preferredLanguage),
       timezone: TimezoneMapper.toModel(domain.timezone),
-      dailyNotificationTime: null,
+      dailyNotificationTime: TimeOnlyMapper.toModel(
+        domain.dailyNotificationTime,
+      ),
     };
   }
 
@@ -39,7 +43,9 @@ export class ChannelConfigurationMapper {
       timezone: domain.timezone
         ? TimezoneMapper.toModel(domain.timezone)
         : undefined,
-      dailyNotificationTime: null,
+      dailyNotificationTime: TimeOnlyMapper.toModel(
+        domain.dailyNotificationTime,
+      ),
     };
   }
 }

@@ -1,8 +1,8 @@
 import { describe, expect, test } from "vitest";
-import { ChannelConfiguration } from "../src/ChannelConfiguration";
+import { ChannelConfiguration } from "../ChannelConfiguration";
 import { Tier } from "../common/Tier";
-import { Timezone } from "../src/Timezone";
-import { Language } from "../src/Language";
+import { Timezone } from "../Timezone";
+import { Language } from "../Language";
 import { TimeOnly, TimeParseError } from "../TimeOnly";
 
 describe("ChannelConfiguration tests", () => {
@@ -93,7 +93,7 @@ describe("ChannelConfiguration tests", () => {
       );
 
       // 2. Act
-      config.setDailyNotificationTime(timeString);
+      config.setDailyNotificationTimeFromString(timeString);
 
       // 3. Assert
       expect(config.dailyNotificationTime).not.toBeUndefined();
@@ -116,9 +116,9 @@ describe("ChannelConfiguration tests", () => {
 
       // 2. Act
       // 3. Assert
-      expect(() => config.setDailyNotificationTime(timeString)).toThrowError(
-        TimeParseError,
-      );
+      expect(() =>
+        config.setDailyNotificationTimeFromString(timeString),
+      ).toThrowError(TimeParseError);
     },
   );
 });

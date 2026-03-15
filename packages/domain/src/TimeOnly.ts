@@ -30,4 +30,8 @@ export class TimeOnly {
     }
     return new TimeOnly(result.hour, result.minute);
   }
+
+  static get zero() {
+    return new TimeOnly(0, 0);
+  }
 }
