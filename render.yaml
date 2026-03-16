@@ -52,7 +52,7 @@ projects:
           - name: dotabot-pg
             databaseName: dotabot
             user: dotabot_user
-            plan: starter
+            plan: basic-256mb
             region: frankfurt
             postgresMajorVersion: "18"
             diskSizeGB: 1
