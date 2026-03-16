@@ -32,6 +32,10 @@ projects:
             autoDeployTrigger: checksPass
             branch: feature/deployment
             preDeployCommand: "bunx --bun turbo run db:migrate:deploy"
+            buildFilter:
+              paths:
+                - apps/discord/**
+                - packages/**
           - type: worker
             name: dotabot-sync
             runtime: docker
@@ -49,6 +53,10 @@ projects:
             dockerfilePath: ./apps/sync/Dockerfile
             autoDeployTrigger: checksPass
             branch: feature/deployment
+            buildFilter:
+              paths:
+                - apps/sync/**
+                - packages/**
           - type: keyvalue
             name: dotabot-redis
             ipAllowList: []
