@@ -31,7 +31,7 @@ projects:
             dockerfilePath: ./apps/discord/Dockerfile
             autoDeployTrigger: checksPass
             branch: feature/deployment
-            preDeployCommand: "bunx prisma migrate deploy --schema=./app/packages/infrastructure/database/prisma/schemas/bot.prisma"
+            preDeployCommand: "bunx prisma migrate deploy --schema=packages/infrastructure/database/prisma/schemas/bot.prisma"
           - type: worker
             name: dotabot-sync
             runtime: docker
