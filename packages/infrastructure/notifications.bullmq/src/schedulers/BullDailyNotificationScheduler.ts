@@ -32,6 +32,10 @@ export class BullDailyNotificationScheduler implements DailyNotificationSchedule
       throw new Error("Daily notifications are not enabled!");
     }
 
+    console.log(
+      `Scheduling daily notifications for channel ${channelConfig.channelId} at ${channelConfig.dailyNotificationTime!} ${channelConfig.timezone}`,
+    );
+
     const jobId = this.buildJobId(channelConfig.channelId);
     const { minutes, hours } = channelConfig.dailyNotificationTime!;
     await this.queue.upsertJobScheduler(
@@ -48,7 +52,6 @@ export class BullDailyNotificationScheduler implements DailyNotificationSchedule
   }
 
   async unschedule(channelId: bigint): Promise<void> {
-    // Remove it from the queue but also from the worker
     const jobId = this.buildJobId(channelId);
     await this.queue.removeJobScheduler(jobId);
   }
