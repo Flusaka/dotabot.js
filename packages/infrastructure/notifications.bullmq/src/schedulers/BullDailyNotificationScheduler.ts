@@ -32,10 +32,6 @@ export class BullDailyNotificationScheduler implements DailyNotificationSchedule
       throw new Error("Daily notifications are not enabled!");
     }
 
-    console.log(
-      `Scheduling daily notifications for channel ${channelConfig.channelId} at ${channelConfig.dailyNotificationTime!} ${channelConfig.timezone}`,
-    );
-
     const jobId = this.buildJobId(channelConfig.channelId);
     const { minutes, hours } = channelConfig.dailyNotificationTime!;
     await this.queue.upsertJobScheduler(
