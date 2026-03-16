@@ -78,6 +78,7 @@ export class TodayCommand extends Command {
         break;
       }
       case GetTournamentsWithMatchesTodayResultStatus.NoMatchesToday: {
+        // TODO: Show embed version instead of string message
         await interaction.editReply("No matches today!");
       }
     }
