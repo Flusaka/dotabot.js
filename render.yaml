@@ -25,13 +25,13 @@ projects:
             dockerContext: .
             dockerfilePath: ./apps/discord/Dockerfile
             autoDeployTrigger: checksPass
-            branch: main
+            branch: feature/deployment
             preDeployCommand: "bun run db:migrate"
           - type: worker
             name: dotabot-sync
             runtime: docker
             repo: https://github.com/Flusaka/dotabot.js
-            plan: free
+            plan: starter
             envVars:
               - key: DATABASE_URL
                 fromDatabase:
@@ -43,7 +43,7 @@ projects:
             dockerContext: .
             dockerfilePath: ./apps/sync/Dockerfile
             autoDeployTrigger: checksPass
-            branch: main
+            branch: feature/deployment
           - type: keyvalue
             name: dotabot-redis
             ipAllowList: []
