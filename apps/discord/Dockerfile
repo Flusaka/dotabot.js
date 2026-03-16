@@ -32,7 +32,5 @@ WORKDIR /app
 
 COPY --from=builder /app .
 
-WORKDIR /app/apps/discord
-
 # Run the app
-CMD ["bun", "start"]
+CMD ["bun", "--cwd", "apps/discord", "start"]
