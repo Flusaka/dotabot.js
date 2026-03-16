@@ -1,13 +1,13 @@
 import type { DailyMatchesNotificationService } from "@dotabot.js/domain/service/DailyMatchesNotificationService";
 import { Worker } from "bullmq";
-import Redis from "ioredis";
+import type { RedisOptions } from "ioredis";
 
 export class DailyNotificationWorker {
   private worker: Worker;
 
   constructor(
     notificationsService: DailyMatchesNotificationService,
-    redis: Redis,
+    redisOptions: RedisOptions,
   ) {
     this.worker = new Worker(
       "daily_notifications",
@@ -19,7 +19,7 @@ export class DailyNotificationWorker {
         notificationsService.notify(channelId);
       },
       {
-        connection: redis,
+        connection: redisOptions,
       },
     );
 

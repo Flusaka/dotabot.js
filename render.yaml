@@ -14,11 +14,16 @@ projects:
                 fromDatabase:
                   name: dotabot-pg
                   property: connectionString
-              - key: NOTIFICATION_DATABASE_URL
+              - key: NOTIFICATION_DATABASE_HOST
                 fromService:
                   name: dotabot-redis
                   type: keyvalue
-                  property: connectionString
+                  property: host
+              - key: NOTIFICATION_DATABASE_PORT
+                fromService:
+                  name: dotabot-redis
+                  type: keyvalue
+                  property: port
               - key: DISCORD_TOKEN
                 sync: false
             region: frankfurt

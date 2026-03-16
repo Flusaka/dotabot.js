@@ -1,3 +1,3 @@
 export const Symbols = {
-  Redis: Symbol.for("Redis"),
+  RedisOptions: Symbol.for("Redis"),
 } as const;
