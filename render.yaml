@@ -8,7 +8,7 @@ projects:
             name: dotabot-discord
             runtime: docker
             repo: https://github.com/Flusaka/dotabot
-            plan: starter
+            plan: free
             envVars:
               - key: DATABASE_URL
                 fromDatabase:
@@ -30,7 +30,7 @@ projects:
             name: dotabot-sync
             runtime: docker
             repo: https://github.com/Flusaka/dotabot
-            plan: starter
+            plan: free
             envVars:
               - key: DATABASE_URL
                 fromDatabase:
@@ -47,12 +47,12 @@ projects:
             name: dotabot-redis
             ipAllowList: []
             region: frankfurt
-            plan: starter
+            plan: free
         databases:
           - name: dotabot-pg
             databaseName: dotabot
             user: dotabot_user
-            plan: basic-256mb
+            plan: free
             region: frankfurt
             postgresMajorVersion: "18"
             diskSizeGB: 1
