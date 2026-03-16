@@ -7,7 +7,7 @@ projects:
           - type: worker
             name: dotabot-discord
             runtime: docker
-            repo: https://github.com/Flusaka/dotabot
+            repo: https://github.com/Flusaka/dotabot.js
             plan: starter
             envVars:
               - key: DATABASE_URL
@@ -30,7 +30,7 @@ projects:
           - type: worker
             name: dotabot-sync
             runtime: docker
-            repo: https://github.com/Flusaka/dotabot
+            repo: https://github.com/Flusaka/dotabot.js
             plan: free
             envVars:
               - key: DATABASE_URL
