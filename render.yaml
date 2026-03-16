@@ -15,8 +15,9 @@ projects:
                   name: dotabot-pg
                   property: connectionString
               - key: NOTIFICATION_DATABASE_URL
-                fromDatabase:
+                fromService:
                   name: dotabot-redis
+                  type: keyvalue
                   property: connectionString
               - key: DISCORD_TOKEN
                 sync: false
