@@ -30,7 +30,7 @@ projects:
             dockerContext: .
             dockerfilePath: ./apps/discord/Dockerfile
             autoDeployTrigger: checksPass
-            branch: feature/deployment
+            branch: main
             preDeployCommand: "bunx --bun turbo run db:migrate:deploy"
             buildFilter:
               paths:
@@ -52,7 +52,7 @@ projects:
             dockerContext: .
             dockerfilePath: ./apps/sync/Dockerfile
             autoDeployTrigger: checksPass
-            branch: feature/deployment
+            branch: main
             buildFilter:
               paths:
                 - apps/sync/**
