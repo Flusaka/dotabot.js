@@ -54,6 +54,7 @@ projects:
             ipAllowList: []
             region: frankfurt
             plan: free
+            maxmemoryPolicy: volatile-ttl
         databases:
           - name: dotabot-pg
             databaseName: dotabot
