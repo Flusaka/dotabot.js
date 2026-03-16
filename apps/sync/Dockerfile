@@ -10,6 +10,9 @@ RUN turbo prune @dotabot.js/sync --docker
 
 # Stage 2: Build
 FROM base AS builder
+# Read in DATABASE_URL as build arg and set it as env variable
+ARG DATABASE_URL
+ENV DATABASE_URL=$DATABASE_URL
 WORKDIR /app
 
 # Install dependencies
