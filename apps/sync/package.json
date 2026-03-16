@@ -5,7 +5,9 @@
     "type": "module",
     "scripts": {
         "dev": "bun ./src/sync.ts",
-        "lint": "eslint ."
+        "lint": "eslint .",
+        "build": "tsc",
+        "start": "bun dist/sync.js"
     },
     "dependencies": {
         "@dotabot.js/database": "workspace:*",

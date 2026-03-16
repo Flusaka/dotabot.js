@@ -30,7 +30,9 @@
     "scripts": {
         "db:generate": "prisma generate",
         "db:migrate": "prisma migrate dev",
+        "db:migrate:deploy": "prisma migrate deploy",
         "db:ui": "prisma studio",
-        "lint": "eslint ."
+        "lint": "eslint .",
+        "build": "tsc"
     }
 }

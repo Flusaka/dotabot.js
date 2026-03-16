@@ -10,7 +10,7 @@ import { TierMapper } from "./mappers/TierMapper";
 import { LanguageCodeMapper } from "./mappers/LanguageCodeMapper";
 import prisma from "@dotabot.js/database/prisma";
 
-export async function sync(token: string) {
+async function sync(token: string) {
   // Pull from PandaScore
   const client = new Client(token);
   const now = DateTime.now().toUTC();
@@ -230,4 +230,4 @@ if (!process.env.PANDASCORE_TOKEN) {
   throw new Error("PandaScore token not specified!");
 }
 
-sync(process.env.PANDASCORE_TOKEN);
+await sync(process.env.PANDASCORE_TOKEN);

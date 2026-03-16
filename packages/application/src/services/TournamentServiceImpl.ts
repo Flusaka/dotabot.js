@@ -32,6 +32,7 @@ export class TournamentServiceImpl implements TournamentService {
       );
     }
 
+    // TODO: Use timezone from channel config to get actual start/end of day
     const tournaments =
       await this.tournamentRepository.getTournamentsWithMatches({
         earliestMatchStartTime: DateTime.now().startOf("day"),

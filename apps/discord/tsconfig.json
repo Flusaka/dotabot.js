@@ -1,0 +1,16 @@
+{
+	"extends": ["@dotabot.js/tsconfig/base.json", "@sapphire/ts-config", "@sapphire/ts-config/extra-strict", "@sapphire/ts-config/decorators", "@sapphire/ts-config/verbatim"],
+    "compilerOptions": {
+        "allowJs": true,
+        "outDir": "dist",
+        "resolvePackageJsonImports": true,
+        "skipLibCheck": true,
+        "module": "preserve",
+        "moduleResolution": "bundler",
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+		"removeComments": true
+    },
+    "include": ["src"],
+    "exclude": ["./tsconfig.json"]
+}

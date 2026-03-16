@@ -5,10 +5,10 @@ import {
 } from "@dotabot.js/domain/service/TournamentService";
 import { Symbols as SharedSymbols } from "@dotabot.js/shared/Symbols";
 import { ApplicationCommandRegistry, Command } from "@sapphire/framework";
-import { botContainer } from "di/container";
-import { Symbols } from "di/symbols";
+import { botContainer } from "../../di/container";
+import { Symbols } from "../../di/symbols";
 import { channelMention } from "discord.js";
-import { TournamentEmbedMessageBuilder } from "message/TournamentEmbedMessageBuilder";
+import { TournamentEmbedMessageBuilder } from "../../message/TournamentEmbedMessageBuilder";
 
 export class TodayCommand extends Command {
   private readonly configurationService: ConfigurationService;
@@ -78,6 +78,7 @@ export class TodayCommand extends Command {
         break;
       }
       case GetTournamentsWithMatchesTodayResultStatus.NoMatchesToday: {
+        // TODO: Show embed version instead of string message
         await interaction.editReply("No matches today!");
       }
     }

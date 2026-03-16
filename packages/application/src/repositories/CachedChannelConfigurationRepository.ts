@@ -26,7 +26,7 @@ export class CachedChannelConfigurationRepository implements ChannelConfiguratio
     return channelConfig;
   }
 
-  getById(id: number): Promise<ChannelConfiguration> {
+  getById(id: number): Promise<ChannelConfiguration | undefined> {
     return this.repository.getById(id);
   }
 

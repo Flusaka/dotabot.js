@@ -2,9 +2,9 @@ import type { DailyMatchesMessenger } from "@dotabot.js/application/messenger/Da
 import type { ChannelConfiguration } from "@dotabot.js/domain/ChannelConfiguration";
 import type { Tournament } from "@dotabot.js/domain/data/Tournament";
 import { container } from "@sapphire/framework";
-import { Symbols } from "di/symbols";
+import { Symbols } from "../di/symbols";
 import { inject } from "inversify";
-import type { TournamentEmbedMessageBuilder } from "message/TournamentEmbedMessageBuilder";
+import type { TournamentEmbedMessageBuilder } from "../message/TournamentEmbedMessageBuilder";
 
 export class DailyMatchesMessengerImpl implements DailyMatchesMessenger {
   constructor(

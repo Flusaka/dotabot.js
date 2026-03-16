@@ -6,7 +6,7 @@ import { installApplicationDependencies } from "@dotabot.js/application/di/insta
 import { installDatabaseDependencies } from "@dotabot.js/database/di/install";
 import { installScheduling } from "@dotabot.js/notifications/di/install";
 import { type DailyMatchesMessenger } from "@dotabot.js/application/messenger/DailyMatchesMessenger";
-import { DailyMatchesMessengerImpl } from "messenger/DailyMatchesMessengerImpl";
+import { DailyMatchesMessengerImpl } from "../messenger/DailyMatchesMessengerImpl";
 
 const botContainer = new Container();
 // Bot-specific dependencies

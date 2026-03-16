@@ -1,30 +1,30 @@
 import type { DailyNotificationScheduler } from "@dotabot.js/domain/notification/DailyNotificationScheduler";
 import type { DailyMatchesNotificationService } from "@dotabot.js/domain/service/DailyMatchesNotificationService";
-import { Symbols } from "@dotabot.js/shared/Symbols";
+import { Symbols as SharedSymbols } from "@dotabot.js/shared/Symbols";
 import { Queue } from "bullmq";
 import { inject, injectable } from "inversify";
 import { DailyNotificationWorker } from "./workers/DailyNotificationWorker";
 import type { ChannelConfiguration } from "@dotabot.js/domain/ChannelConfiguration";
 import { toISOTimezone } from "@dotabot.js/domain/Timezone";
-import { Env } from "@dotabot.js/shared/Env";
+import { Symbols } from "../di/symbols";
+import type { RedisOptions } from "ioredis";
 
 @injectable()
 export class BullDailyNotificationScheduler implements DailyNotificationScheduler {
   private readonly queue: Queue;
-  private readonly worker: DailyNotificationWorker;
+  // private readonly worker: DailyNotificationWorker;
 
   constructor(
-    @inject(Symbols.DailyMatchesNotificationService)
+    @inject(SharedSymbols.DailyMatchesNotificationService)
     notificationsService: DailyMatchesNotificationService,
+    @inject(Symbols.RedisOptions)
+    redisOptions: RedisOptions,
   ) {
     this.queue = new Queue("daily_notifications", {
-      connection: {
-        host: Env.getString("NOTIFICATION_DATABASE_HOST"),
-        port: Env.getNumber("NOTIFICATION_DATABASE_PORT"),
-      },
+      connection: redisOptions,
     });
 
-    this.worker = new DailyNotificationWorker(notificationsService);
+    new DailyNotificationWorker(notificationsService, redisOptions);
   }
 
   async schedule(channelConfig: ChannelConfiguration): Promise<void> {
@@ -48,7 +48,6 @@ export class BullDailyNotificationScheduler implements DailyNotificationSchedule
   }
 
   async unschedule(channelId: bigint): Promise<void> {
-    // Remove it from the queue but also from the worker
     const jobId = this.buildJobId(channelId);
     await this.queue.removeJobScheduler(jobId);
   }

@@ -35,6 +35,10 @@
   },
   "scripts": {
     "test": "vitest",
-    "lint": "turbo run lint"
+    "lint": "turbo run lint",
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "db:migrate": "turbo run db:migrate",
+    "db:generate": "turbo run db:generate"
   }
 }

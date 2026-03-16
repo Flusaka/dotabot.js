@@ -1,0 +1,13 @@
+{
+    "extends": "@dotabot.js/tsconfig/base.json",
+    "include": ["src"],
+    "exclude": ["./tsconfig.json"],
+    "compilerOptions": {
+        "strictNullChecks": true,
+        "allowJs": true,
+        "outDir": "dist",
+        "resolvePackageJsonImports": true,
+        "module": "preserve",
+        "moduleResolution": "bundler"
+    }
+}

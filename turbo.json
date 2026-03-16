@@ -11,8 +11,9 @@
                 "dist/**"
             ],
             "dependsOn": [
+                "^db:generate",
                 "^build"
-            ]
+            ],
         },
         "dev": {
             "persistent": true,
@@ -22,6 +23,9 @@
             "cache": false
         },
         "db:migrate": {
+            "cache": false
+        },
+        "db:migrate:deploy": {
             "cache": false
         },
         "db:ui": {
