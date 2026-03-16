@@ -1,8 +1,7 @@
 const EnvironmentVariables = {
   DiscordToken: "DISCORD_TOKEN",
   GuildId: "GUILD_ID",
-  NotificationDatabaseHost: "NOTIFICATION_DATABASE_HOST",
-  NotificationDatabasePort: "NOTIFICATION_DATABASE_PORT",
+  NotificationDatabaseUrl: "NOTIFICATION_DATABASE_URL",
 } as const;
 type EnvironmentVariables =
   (typeof EnvironmentVariables)[keyof typeof EnvironmentVariables];

@@ -1,3 +1,3 @@
 export const Symbols = {
-  DailyNotificationWorker: Symbol.for("DailyNotificationWorker"),
+  Redis: Symbol.for("Redis"),
 } as const;

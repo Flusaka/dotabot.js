@@ -37,6 +37,7 @@
     "test": "vitest",
     "lint": "turbo run lint",
     "build": "turbo run build",
-    "dev": "turbo run dev"
+    "dev": "turbo run dev",
+    "db:migrate": "turbo run db:migrate"
   }
 }

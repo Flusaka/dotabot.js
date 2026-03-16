@@ -1,0 +1,60 @@
+version: "1"
+projects:
+  - name: DotaBot
+    environments:
+      - name: Staging
+        services:
+          - type: worker
+            name: dotabot-discord
+            runtime: docker
+            repo: https://github.com/Flusaka/dotabot
+            plan: starter
+            envVars:
+              - key: DATABASE_URL
+                fromDatabase:
+                  name: dotabot-pg
+                  property: connectionString
+              - key: NOTIFICATION_DATABASE_URL
+                fromDatabase:
+                  name: dotabot-redis
+                  property: connectionString
+              - key: DISCORD_TOKEN
+                sync: false
+            region: frankfurt
+            dockerContext: .
+            dockerfilePath: ./apps/discord/Dockerfile
+            autoDeployTrigger: checksPass
+            branch: main
+            preDeployCommand: "bun run db:migrate"
+          - type: worker
+            name: dotabot-sync
+            runtime: docker
+            repo: https://github.com/Flusaka/dotabot
+            plan: starter
+            envVars:
+              - key: DATABASE_URL
+                fromDatabase:
+                  name: dotabot-pg
+                  property: connectionString
+              - key: PANDASCORE_TOKEN
+                sync: false
+            region: frankfurt
+            dockerContext: .
+            dockerfilePath: ./apps/sync/Dockerfile
+            autoDeployTrigger: checksPass
+            branch: main
+          - type: keyvalue
+            name: dotabot-redis
+            ipAllowList: []
+            region: frankfurt
+            plan: starter
+        databases:
+          - name: dotabot-pg
+            databaseName: dotabot
+            user: dotabot_user
+            plan: starter
+            region: frankfurt
+            postgresMajorVersion: "18"
+            diskSizeGB: 1
+            ipAllowList: []
+            

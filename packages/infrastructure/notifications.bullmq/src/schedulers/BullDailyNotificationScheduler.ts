@@ -1,12 +1,13 @@
 import type { DailyNotificationScheduler } from "@dotabot.js/domain/notification/DailyNotificationScheduler";
 import type { DailyMatchesNotificationService } from "@dotabot.js/domain/service/DailyMatchesNotificationService";
-import { Symbols } from "@dotabot.js/shared/Symbols";
+import { Symbols as SharedSymbols } from "@dotabot.js/shared/Symbols";
 import { Queue } from "bullmq";
 import { inject, injectable } from "inversify";
 import { DailyNotificationWorker } from "./workers/DailyNotificationWorker";
 import type { ChannelConfiguration } from "@dotabot.js/domain/ChannelConfiguration";
 import { toISOTimezone } from "@dotabot.js/domain/Timezone";
-import { Env } from "@dotabot.js/shared/Env";
+import { Symbols } from "../di/symbols";
+import Redis from "ioredis";
 
 @injectable()
 export class BullDailyNotificationScheduler implements DailyNotificationScheduler {
@@ -14,17 +15,16 @@ export class BullDailyNotificationScheduler implements DailyNotificationSchedule
   // private readonly worker: DailyNotificationWorker;
 
   constructor(
-    @inject(Symbols.DailyMatchesNotificationService)
+    @inject(SharedSymbols.DailyMatchesNotificationService)
     notificationsService: DailyMatchesNotificationService,
+    @inject(Symbols.Redis)
+    redis: Redis,
   ) {
     this.queue = new Queue("daily_notifications", {
-      connection: {
-        host: Env.getString("NOTIFICATION_DATABASE_HOST"),
-        port: Env.getNumber("NOTIFICATION_DATABASE_PORT"),
-      },
+      connection: redis,
     });
 
-    new DailyNotificationWorker(notificationsService);
+    new DailyNotificationWorker(notificationsService, redis);
   }
 
   async schedule(channelConfig: ChannelConfiguration): Promise<void> {
