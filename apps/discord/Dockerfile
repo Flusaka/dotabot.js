@@ -20,7 +20,6 @@ RUN bun install
 COPY --from=prepare /app/out/full .
 
 # Build all parts that have been pruned
-RUN bun run db:generate
 RUN bun run build
 
 # Stage 3: Run
