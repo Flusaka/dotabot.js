@@ -151,8 +151,13 @@ describe("TournamentService::getTournamentsWithMatchesToday", () => {
 
       const startOfDay = DateTime.local({
         zone: IANAZone.create(timezone),
-      }).startOf("day");
-      const endOfDay = startOfDay.plus({ days: 1 }).minus({ seconds: 1 });
+      })
+        .startOf("day")
+        .toUTC();
+      const endOfDay = startOfDay
+        .plus({ days: 1 })
+        .minus({ seconds: 1 })
+        .toUTC();
 
       // 2. Act
       await service.getTournamentsWithMatchesToday(0n, "Midnight");
@@ -207,8 +212,8 @@ describe("TournamentService::getTournamentsWithMatchesToday", () => {
         {
           zone: IANAZone.create(timezone),
         },
-      );
-      const endTime = startTime.plus({ days: 1 }).minus({ seconds: 1 });
+      ).toUTC();
+      const endTime = startTime.plus({ days: 1 }).minus({ seconds: 1 }).toUTC();
 
       // 2. Act
       await service.getTournamentsWithMatchesToday(0n, "DailyNotificationTime");

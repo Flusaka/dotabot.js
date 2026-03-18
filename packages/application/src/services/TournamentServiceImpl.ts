@@ -61,10 +61,11 @@ export class TournamentServiceImpl implements TournamentService {
 
     const tournaments =
       await this.tournamentRepository.getTournamentsWithMatches({
-        earliestMatchStartTime: earliestMatchStartTime,
+        earliestMatchStartTime: earliestMatchStartTime.toUTC(),
         latestMatchStartTime: earliestMatchStartTime
           .plus({ days: 1 })
-          .minus({ seconds: 1 }),
+          .minus({ seconds: 1 })
+          .toUTC(),
         tiers: channel.tiers,
       });
 
