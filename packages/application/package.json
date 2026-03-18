@@ -17,7 +17,8 @@
         "typescript": "catalog:devDependencies",
         "prettier": "catalog:devDependencies",
         "@types/bun": "catalog:devDependencies",
-        "eslint": "catalog:devDependencies"
+        "eslint": "catalog:devDependencies",
+        "vitest": "catalog:testing"
     },
     "exports": {
         "./*": "./src/*.ts"

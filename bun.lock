@@ -43,8 +43,10 @@
         "@dotabot.js/pandascore.js": "workspace:*",
       },
       "devDependencies": {
+        "@dotabot.js/eslint-config": "workspace:*",
         "@dotabot.js/tsconfig": "workspace:*",
         "@types/bun": "catalog:devDependencies",
+        "eslint": "catalog:devDependencies",
         "prettier": "catalog:devDependencies",
         "typescript": "catalog:devDependencies",
       },
@@ -68,6 +70,7 @@
         "eslint": "catalog:devDependencies",
         "prettier": "catalog:devDependencies",
         "typescript": "catalog:devDependencies",
+        "vitest": "catalog:testing",
       },
     },
     "packages/domain": {
