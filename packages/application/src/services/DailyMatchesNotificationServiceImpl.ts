@@ -29,8 +29,10 @@ export class DailyMatchesNotificationServiceImpl implements DailyMatchesNotifica
     }
 
     // Pull back tournaments first
-    const result =
-      await this.tournamentService.getTournamentsWithMatchesToday(channelId);
+    const result = await this.tournamentService.getTournamentsWithMatchesToday(
+      channelId,
+      "DailyNotificationTime",
+    );
     if (result.status === GetTournamentsWithMatchesTodayResultStatus.Success) {
       this.dailyMatchesMessenger.sendDailyMatches(channelConfig, result.data);
     }

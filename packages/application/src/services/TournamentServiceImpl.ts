@@ -5,10 +5,11 @@ import {
   type TournamentService,
   type GetTournamentsWithMatchesTodayResult,
   GetTournamentsWithMatchesTodayResultStatus,
+  StartTime,
 } from "@dotabot.js/domain/service/TournamentService";
 import { Symbols } from "@dotabot.js/shared/Symbols";
 import { inject, injectable, named } from "inversify";
-import { DateTime } from "luxon";
+import { DateTime, IANAZone } from "luxon";
 
 @injectable()
 export class TournamentServiceImpl implements TournamentService {
@@ -22,6 +23,7 @@ export class TournamentServiceImpl implements TournamentService {
 
   async getTournamentsWithMatchesToday(
     channelId: bigint,
+    startTime: StartTime,
   ): Promise<GetTournamentsWithMatchesTodayResult> {
     const channel =
       await this.channelConfigRepository.getByChannelId(channelId);
@@ -32,11 +34,38 @@ export class TournamentServiceImpl implements TournamentService {
       );
     }
 
-    // TODO: Use timezone from channel config to get actual start/end of day
+    const zone = IANAZone.create(channel.timezone);
+    let earliestMatchStartTime: DateTime = DateTime.local({
+      zone,
+    });
+
+    switch (startTime) {
+      case "Midnight":
+        earliestMatchStartTime = earliestMatchStartTime.startOf("day");
+        break;
+      case "DailyNotificationTime":
+        if (!channel.dailyNotificationsEnabled) {
+          throw new Error(
+            "Daily notifications are not enabled for this channel! Matches cannot be retrieved from daily notification time.",
+          );
+        }
+        earliestMatchStartTime = DateTime.fromObject(
+          {
+            hour: channel.dailyNotificationTime!.hours,
+            minute: channel.dailyNotificationTime!.minutes,
+          },
+          { zone },
+        );
+        break;
+    }
+
     const tournaments =
       await this.tournamentRepository.getTournamentsWithMatches({
-        earliestMatchStartTime: DateTime.now().startOf("day"),
-        latestMatchStartTime: DateTime.now().endOf("day"),
+        earliestMatchStartTime: earliestMatchStartTime.toUTC(),
+        latestMatchStartTime: earliestMatchStartTime
+          .plus({ days: 1 })
+          .minus({ seconds: 1 })
+          .toUTC(),
         tiers: channel.tiers,
       });
 

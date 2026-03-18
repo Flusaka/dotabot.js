@@ -1,6 +1,12 @@
 import type { Tournament } from "../data/Tournament";
 import type { Result, ResultWithData } from "../common/Result";
 
+export const StartTime = {
+  Midnight: "Midnight",
+  DailyNotificationTime: "DailyNotificationTime",
+} as const;
+export type StartTime = (typeof StartTime)[keyof typeof StartTime];
+
 export enum GetTournamentsWithMatchesTodayResultStatus {
   Success = 0,
   ChannelNotConnected,
@@ -20,5 +26,6 @@ export type GetTournamentsWithMatchesTodayResult =
 export interface TournamentService {
   getTournamentsWithMatchesToday(
     channelId: bigint,
+    startTime: StartTime,
   ): Promise<GetTournamentsWithMatchesTodayResult>;
 }
