@@ -36,8 +36,9 @@ projects:
               paths:
                 - apps/discord/**
                 - packages/**
-          - type: worker
+          - type: cron
             name: dotabot-sync
+            schedule: "*/30 * * * *"
             runtime: docker
             repo: https://github.com/Flusaka/dotabot.js
             plan: starter
