@@ -206,6 +206,8 @@ async function sync(token: string) {
   });
 
   console.log(`Finishing transaction: ${DateTime.now()}`);
+
+  await prune(earliest);
 }
 
 async function getMatches(
@@ -224,6 +226,40 @@ async function getMatches(
     },
   });
   return response;
+}
+
+async function prune(before: DateTime): Promise<void> {
+  console.log("Starting prune");
+  let result = await prisma.match.deleteMany({
+    where: {
+      scheduledAt: {
+        lt: before.toJSDate(),
+      },
+    },
+  });
+  console.log(`Deleted ${result.count} matches`);
+
+  result = await prisma.tournamentPhase.deleteMany({
+    where: {
+      matches: { none: {} },
+    },
+  });
+  console.log(`Deleted ${result.count} phases`);
+
+  result = await prisma.tournamentIteration.deleteMany({
+    where: {
+      tournamentPhases: { none: {} },
+    },
+  });
+  console.log(`Deleted ${result.count} iterations`);
+
+  result = await prisma.tournament.deleteMany({
+    where: {
+      tournamentIterations: { none: {} },
+    },
+  });
+  console.log(`Deleted ${result.count} tournaments`);
+  console.log("Ending prune");
 }
 
 if (!process.env.PANDASCORE_TOKEN) {
