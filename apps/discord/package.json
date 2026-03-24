@@ -28,7 +28,7 @@
         "reflect-metadata": "catalog:reflection"
     },
     "scripts": {
-        "dev": "bun ./src/index.ts",
+        "dev": "bun run src/index.ts",
         "build": "tsc",
         "lint": "eslint .",
         "start": "bun run dist/index.js"

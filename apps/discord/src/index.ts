@@ -1,9 +1,21 @@
-import { SapphireClient } from "@sapphire/framework";
+import {
+  ApplicationCommandRegistries,
+  RegisterBehavior,
+  SapphireClient,
+} from "@sapphire/framework";
 import { GatewayIntentBits } from "discord.js";
 
 const discordToken = process.env.DISCORD_TOKEN;
 if (!discordToken) {
   throw new Error("No Discord token provided");
+}
+
+const guildId = process.env.GUILD_ID;
+if (guildId) {
+  ApplicationCommandRegistries.setDefaultGuildIds([guildId]);
+  ApplicationCommandRegistries.setDefaultBehaviorWhenNotIdentical(
+    RegisterBehavior.BulkOverwrite,
+  );
 }
 
 const client = new SapphireClient({

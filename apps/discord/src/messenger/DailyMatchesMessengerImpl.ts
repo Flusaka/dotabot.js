@@ -5,6 +5,7 @@ import { container } from "@sapphire/framework";
 import { Symbols } from "../di/symbols";
 import { inject } from "inversify";
 import type { TournamentEmbedMessageBuilder } from "../message/TournamentEmbedMessageBuilder";
+import { MessageFlags } from "discord.js";
 
 export class DailyMatchesMessengerImpl implements DailyMatchesMessenger {
   constructor(
@@ -23,14 +24,15 @@ export class DailyMatchesMessengerImpl implements DailyMatchesMessenger {
       return;
     }
 
-    const embeds = this.tournamentMessageBuilder.build(
+    const containers = this.tournamentMessageBuilder.build(
       channelConfig,
       tournaments,
     );
 
-    for (const embed of embeds) {
+    for (const container of containers) {
       await channel.send({
-        embeds: [embed],
+        components: [container],
+        flags: MessageFlags.IsComponentsV2,
       });
     }
   }

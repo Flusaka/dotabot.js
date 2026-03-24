@@ -3,7 +3,8 @@
     "globalEnv": [
         "DATABASE_URL",
         "DISCORD_TOKEN",
-        "PANDASCORE_TOKEN"
+        "PANDASCORE_TOKEN",
+        "GUILD_ID"
     ],
     "tasks": {
         "build": {
