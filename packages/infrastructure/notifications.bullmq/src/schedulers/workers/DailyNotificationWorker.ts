@@ -15,7 +15,7 @@ export class DailyNotificationWorker {
         if (!job.data.channelId) {
           throw new Error("No channel ID specified");
         }
-        const channelId = BigInt(job.data.channelId);
+        const channelId = job.data.channelId;
         await notificationsService.notify(channelId);
       },
       {

@@ -14,7 +14,7 @@ export class CachedChannelConfigurationRepository implements ChannelConfiguratio
   ) {}
 
   async getByChannelId(
-    channelId: bigint,
+    channelId: string,
   ): Promise<ChannelConfiguration | undefined> {
     let channelConfig = this.cache.get(channelId);
     if (!channelConfig) {
@@ -45,7 +45,7 @@ export class CachedChannelConfigurationRepository implements ChannelConfiguratio
     return this.repository.update(id, entity);
   }
 
-  async deleteByChannelId(channelId: bigint): Promise<boolean> {
+  async deleteByChannelId(channelId: string): Promise<boolean> {
     const result = await this.repository.deleteByChannelId(channelId);
     if (result) {
       this.cache.delete(channelId);

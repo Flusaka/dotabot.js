@@ -51,7 +51,8 @@ enum Tier {
 model ChannelConfiguration {
     // Properties
     id                    Int       @id @default(autoincrement())
-    channelId             BigInt    @unique @map("channel_id")
+    channelId             String    @unique @map("channel_id")
+    serverId              String    @default("") @map("server_id")
     tiers                 Tier[]    @default([S, A])
     timezone              Timezone  @default(GMT)
     preferredLanguage     Language  @default(English) @map("preferred_language")
@@ -59,6 +60,7 @@ model ChannelConfiguration {
 
     // Indices
     @@index(channelId)
+    @@index(serverId)
     // Mapping
     @@map("channel_configurations")
     // Schema

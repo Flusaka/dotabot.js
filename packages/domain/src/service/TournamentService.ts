@@ -25,7 +25,7 @@ export type GetTournamentsWithMatchesTodayResult =
 
 export interface TournamentService {
   getTournamentsWithMatchesToday(
-    channelId: bigint,
+    channelId: string,
     startTime: StartTime,
   ): Promise<GetTournamentsWithMatchesTodayResult>;
 }

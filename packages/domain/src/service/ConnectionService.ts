@@ -11,6 +11,6 @@ export enum DisconnectionResult {
 }
 
 export interface ConnectionService {
-  connect(channelId: bigint): Promise<ConnectionResult>;
-  disconnect(channelId: bigint): Promise<DisconnectionResult>;
+  connect(channelId: string, serverId: string): Promise<ConnectionResult>;
+  disconnect(channelId: string): Promise<DisconnectionResult>;
 }

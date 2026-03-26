@@ -45,16 +45,15 @@ export class TodayCommand extends Command {
   ) {
     await interaction.deferReply();
 
-    const channelId = BigInt(interaction.channelId);
-
     const result = await this.tournamentService.getTournamentsWithMatchesToday(
-      channelId,
+      interaction.channelId,
       "Midnight",
     );
     switch (result.status) {
       case GetTournamentsWithMatchesTodayResultStatus.Success: {
-        const channelConfig =
-          await this.configurationService.getConfiguration(channelId);
+        const channelConfig = await this.configurationService.getConfiguration(
+          interaction.channelId,
+        );
 
         const containers = this.tournamentMessageBuilder.build(
           channelConfig!,

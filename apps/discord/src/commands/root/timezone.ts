@@ -61,9 +61,8 @@ export class SetTimezone extends Command {
       return;
     }
 
-    const channelId = BigInt(interaction.channelId);
     const result = await this.configurationService.setNotificationTimezone(
-      channelId,
+      interaction.channelId,
       timezone,
     );
     switch (result) {

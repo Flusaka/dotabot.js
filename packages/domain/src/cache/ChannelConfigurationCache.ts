@@ -1,11 +1,11 @@
 import type { ChannelConfiguration } from "../ChannelConfiguration";
 
 export interface ChannelConfigurationCache {
-  get(channelId: bigint): ChannelConfiguration | undefined;
+  get(channelId: string): ChannelConfiguration | undefined;
   set(
-    channelId: bigint,
+    channelId: string,
     channelConfig: ChannelConfiguration,
     ttl?: number,
   ): void;
-  delete(channelId: bigint): void;
+  delete(channelId: string): void;
 }

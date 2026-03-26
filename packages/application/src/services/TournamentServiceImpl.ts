@@ -22,7 +22,7 @@ export class TournamentServiceImpl implements TournamentService {
   ) {}
 
   async getTournamentsWithMatchesToday(
-    channelId: bigint,
+    channelId: string,
     startTime: StartTime,
   ): Promise<GetTournamentsWithMatchesTodayResult> {
     const channel =

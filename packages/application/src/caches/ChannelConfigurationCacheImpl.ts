@@ -12,12 +12,13 @@ export class ChannelConfigurationCacheImpl implements ChannelConfigurationCache 
     @inject(Symbols.Cache) private readonly cache: LRUCache<string, string>,
   ) {}
 
-  get(channelId: bigint): ChannelConfiguration | undefined {
+  get(channelId: string): ChannelConfiguration | undefined {
     function parse(json: string): ChannelConfiguration {
       // TODO: Maybe have some kind of DTO type for better error handling
       const obj = JSON.parse(json);
       return new ChannelConfiguration(
-        BigInt(obj.channelId),
+        obj.channelId,
+        obj.serverId,
         obj.tiers,
         obj.timezone,
         obj.preferredLanguage,
@@ -26,7 +27,7 @@ export class ChannelConfigurationCacheImpl implements ChannelConfigurationCache 
       );
     }
 
-    const channelConfigJson = this.cache.get(channelId.toString());
+    const channelConfigJson = this.cache.get(channelId);
     if (!channelConfigJson) {
       return;
     }
@@ -35,13 +36,14 @@ export class ChannelConfigurationCacheImpl implements ChannelConfigurationCache 
   }
 
   set(
-    channelId: bigint,
+    channelId: string,
     channelConfig: ChannelConfiguration,
     ttl?: number,
   ): void {
     function serialise(config: ChannelConfiguration): string {
       return JSON.stringify({
-        channelId: config.channelId.toString(),
+        channelId: config.channelId,
+        serverId: config.serverId,
         tiers: config.tiers,
         timezone: config.timezone,
         preferredLanguage: config.preferredLanguage,
@@ -50,12 +52,12 @@ export class ChannelConfigurationCacheImpl implements ChannelConfigurationCache 
       });
     }
     const json = serialise(channelConfig);
-    this.cache.set(channelId.toString(), json, {
+    this.cache.set(channelId, json, {
       ttl: ttl ?? DefaultTTL,
     });
   }
 
-  delete(channelId: bigint): void {
-    this.cache.delete(channelId.toString());
+  delete(channelId: string): void {
+    this.cache.delete(channelId);
   }
 }
