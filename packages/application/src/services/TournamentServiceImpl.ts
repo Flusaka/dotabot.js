@@ -41,7 +41,7 @@ export class TournamentServiceImpl implements TournamentService {
 
     switch (startTime) {
       case "Midnight":
-        earliestMatchStartTime = earliestMatchStartTime.startOf("day");
+        earliestMatchStartTime = earliestMatchStartTime.startOf("day").toUTC();
         break;
       case "DailyNotificationTime":
         if (!channel.dailyNotificationsEnabled) {
@@ -55,17 +55,16 @@ export class TournamentServiceImpl implements TournamentService {
             minute: channel.dailyNotificationTime!.minutes,
           },
           { zone },
-        );
+        ).toUTC();
         break;
     }
 
     const tournaments =
       await this.tournamentRepository.getTournamentsWithMatches({
-        earliestMatchStartTime: earliestMatchStartTime.toUTC(),
+        earliestMatchStartTime: earliestMatchStartTime,
         latestMatchStartTime: earliestMatchStartTime
           .plus({ days: 1 })
-          .minus({ seconds: 1 })
-          .toUTC(),
+          .minus({ seconds: 1 }),
         tiers: channel.tiers,
       });
 
