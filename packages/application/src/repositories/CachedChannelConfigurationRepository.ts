@@ -53,6 +53,11 @@ export class CachedChannelConfigurationRepository implements ChannelConfiguratio
     return result;
   }
 
+  async deleteByServerId(serverId: string): Promise<boolean> {
+    // TODO: Update cache and remove deleted channel configurations
+    return this.repository.deleteByServerId(serverId);
+  }
+
   delete(id: number): Promise<boolean> {
     return this.repository.delete(id);
   }

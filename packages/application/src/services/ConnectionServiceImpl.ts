@@ -51,4 +51,9 @@ export class ConnectionServiceImpl implements ConnectionService {
     await this.dailyNotificationScheduler.unschedule(channelId);
     return DisconnectionResult.Success;
   }
+
+  async disconnectAll(serverId: string): Promise<void> {
+    await this.channelConfigRepo.deleteByServerId(serverId);
+    // TODO: Clear daily notification schedules
+  }
 }

@@ -67,6 +67,17 @@ export class PrismaChannelConfigurationRepository implements ChannelConfiguratio
     }
   }
 
+  async deleteByServerId(serverId: string): Promise<boolean> {
+    try {
+      await prisma.channelConfiguration.deleteMany({
+        where: { serverId: serverId },
+      });
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
   async delete(id: number): Promise<boolean> {
     try {
       await prisma.channelConfiguration.delete({
