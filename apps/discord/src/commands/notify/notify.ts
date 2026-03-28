@@ -80,9 +80,8 @@ export class NotifyCommand extends Subcommand {
       return;
     }
 
-    const channelId = BigInt(interaction.channelId);
     const result = await this._configurationService.enableDailyNotifications(
-      channelId,
+      interaction.channelId,
       enabled,
     );
 
@@ -121,9 +120,8 @@ export class NotifyCommand extends Subcommand {
       return;
     }
 
-    const channelId = BigInt(interaction.channelId);
     const result = await this._configurationService.setDailyNotificationTime(
-      channelId,
+      interaction.channelId,
       timeString,
     );
 
