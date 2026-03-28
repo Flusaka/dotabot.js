@@ -20,7 +20,7 @@ export class DailyMatchesNotificationServiceImpl implements DailyMatchesNotifica
     private readonly tournamentService: TournamentService,
   ) {}
 
-  async notify(channelId: bigint): Promise<void> {
+  async notify(channelId: string): Promise<void> {
     const channelConfig =
       await this.channelConfigRepo.getByChannelId(channelId);
     if (!channelConfig) {

@@ -10,6 +10,7 @@ export class ChannelConfigurationMapper {
     return ChannelConfiguration.fromExisting(
       model.id,
       model.channelId,
+      model.serverId,
       model.tiers.map(TierMapper.toDomain),
       TimezoneMapper.toDomain(model.timezone),
       LanguageMapper.toDomain(model.preferredLanguage),
@@ -22,6 +23,7 @@ export class ChannelConfigurationMapper {
   ): Omit<ChannelConfigurationModel, "id"> {
     return {
       channelId: domain.channelId,
+      serverId: domain.serverId,
       tiers: domain.tiers.map(TierMapper.toModel),
       preferredLanguage: LanguageMapper.toModel(domain.preferredLanguage),
       timezone: TimezoneMapper.toModel(domain.timezone),
@@ -36,6 +38,7 @@ export class ChannelConfigurationMapper {
   ): Partial<Omit<ChannelConfigurationModel, "id">> {
     return {
       channelId: domain.channelId,
+      serverId: domain.serverId,
       tiers: domain.tiers?.map(TierMapper.toModel),
       preferredLanguage: domain.preferredLanguage
         ? LanguageMapper.toModel(domain.preferredLanguage)

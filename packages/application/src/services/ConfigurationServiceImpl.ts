@@ -27,12 +27,12 @@ export class ConfigurationServiceImpl implements ConfigurationService {
   ) {}
 
   async getConfiguration(
-    channelId: bigint,
+    channelId: string,
   ): Promise<ChannelConfiguration | undefined> {
     return this.channelConfigRepo.getByChannelId(channelId);
   }
 
-  async addTier(channelId: bigint, tier: Tier): Promise<AddTierResult> {
+  async addTier(channelId: string, tier: Tier): Promise<AddTierResult> {
     const channel = await this.channelConfigRepo.getByChannelId(channelId);
     if (!channel) {
       return AddTierResult.ChannelNotConnected;
@@ -49,7 +49,7 @@ export class ConfigurationServiceImpl implements ConfigurationService {
     return AddTierResult.Success;
   }
 
-  async removeTier(channelId: bigint, tier: Tier): Promise<RemoveTierResult> {
+  async removeTier(channelId: string, tier: Tier): Promise<RemoveTierResult> {
     const channel = await this.channelConfigRepo.getByChannelId(channelId);
     if (!channel) {
       return RemoveTierResult.ChannelNotConnected;
@@ -67,7 +67,7 @@ export class ConfigurationServiceImpl implements ConfigurationService {
   }
 
   async setPreferredLanguage(
-    channelId: bigint,
+    channelId: string,
     language: Language,
   ): Promise<SetPreferredLanguageResult> {
     const channel = await this.channelConfigRepo.getByChannelId(channelId);
@@ -85,7 +85,7 @@ export class ConfigurationServiceImpl implements ConfigurationService {
   }
 
   async setNotificationTimezone(
-    channelId: bigint,
+    channelId: string,
     timezone: Timezone,
   ): Promise<SetNotificationTimezoneResult> {
     const channel = await this.channelConfigRepo.getByChannelId(channelId);
@@ -103,7 +103,7 @@ export class ConfigurationServiceImpl implements ConfigurationService {
   }
 
   async enableDailyNotifications(
-    channelId: bigint,
+    channelId: string,
     enable: boolean,
   ): Promise<EnableDailyNotificationsResult> {
     const channel = await this.channelConfigRepo.getByChannelId(channelId);
@@ -130,7 +130,7 @@ export class ConfigurationServiceImpl implements ConfigurationService {
   }
 
   async setDailyNotificationTime(
-    channelId: bigint,
+    channelId: string,
     timeString: string,
   ): Promise<SetDailyNotificationTimeResult> {
     const channel = await this.channelConfigRepo.getByChannelId(channelId);

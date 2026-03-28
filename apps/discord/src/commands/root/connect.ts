@@ -31,8 +31,10 @@ export class ConnectCommand extends Command {
     interaction: Command.ChatInputCommandInteraction,
   ) {
     await interaction.deferReply();
-    const channelId = BigInt(interaction.channelId);
-    const result = await this._connectionService.connect(channelId);
+    const result = await this._connectionService.connect(
+      interaction.channelId,
+      interaction.guildId!,
+    );
     switch (result) {
       case ConnectionResult.Success: {
         await interaction.editReply(

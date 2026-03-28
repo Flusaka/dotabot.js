@@ -31,8 +31,9 @@ export class DisconnectCommand extends Command {
     interaction: Command.ChatInputCommandInteraction,
   ) {
     await interaction.deferReply();
-    const channelId = BigInt(interaction.channelId);
-    const result = await this._connectionService.disconnect(channelId);
+    const result = await this._connectionService.disconnect(
+      interaction.channelId,
+    );
     switch (result) {
       case DisconnectionResult.Success: {
         await interaction.editReply(

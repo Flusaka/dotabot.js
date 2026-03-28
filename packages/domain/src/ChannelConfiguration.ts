@@ -6,14 +6,16 @@ import { Timezone } from "./Timezone";
 
 export class ChannelConfiguration implements Entity {
   private _id?: number;
-  private _channelId: bigint;
+  private _channelId: string;
+  private _serverId: string;
   private _tiers: Tier[];
   private _timezone: Timezone;
   private _preferredLanguage: Language;
   private _dailyNotificationTime?: TimeOnly;
 
   constructor(
-    channelId: bigint,
+    channelId: string,
+    serverId: string,
     tiers: Tier[],
     timezone: Timezone,
     preferredLanguage: Language,
@@ -22,6 +24,7 @@ export class ChannelConfiguration implements Entity {
   ) {
     this._id = id;
     this._channelId = channelId;
+    this._serverId = serverId;
     this._tiers = tiers;
     this._timezone = timezone;
     this._preferredLanguage = preferredLanguage;
@@ -29,9 +32,13 @@ export class ChannelConfiguration implements Entity {
   }
 
   //#region Factory functions
-  static defaultNew(channelId: bigint): Omit<ChannelConfiguration, "id"> {
+  static defaultNew(
+    channelId: string,
+    serverId: string,
+  ): Omit<ChannelConfiguration, "id"> {
     return new ChannelConfiguration(
       channelId,
+      serverId,
       [Tier.S, Tier.A],
       Timezone.GMT,
       Language.English,
@@ -40,7 +47,8 @@ export class ChannelConfiguration implements Entity {
 
   static fromExisting(
     id: number,
-    channelId: bigint,
+    channelId: string,
+    serverId: string,
     tiers: Tier[],
     timezone: Timezone,
     preferredLanguage: Language,
@@ -48,6 +56,7 @@ export class ChannelConfiguration implements Entity {
   ): ChannelConfiguration {
     return new ChannelConfiguration(
       channelId,
+      serverId,
       tiers,
       timezone,
       preferredLanguage,
@@ -64,6 +73,10 @@ export class ChannelConfiguration implements Entity {
 
   public get channelId() {
     return this._channelId;
+  }
+
+  public get serverId() {
+    return this._serverId;
   }
 
   public get tiers() {

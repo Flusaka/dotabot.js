@@ -7,7 +7,7 @@ import { Symbols as SharedSymbols } from "@dotabot.js/shared/Symbols";
 import { ApplicationCommandRegistry, Command } from "@sapphire/framework";
 import { botContainer } from "../../di/container";
 import { Symbols } from "../../di/symbols";
-import { channelMention } from "discord.js";
+import { channelMention, MessageFlags } from "discord.js";
 import { TournamentEmbedMessageBuilder } from "../../message/TournamentEmbedMessageBuilder";
 
 export class TodayCommand extends Command {
@@ -45,28 +45,33 @@ export class TodayCommand extends Command {
   ) {
     await interaction.deferReply();
 
-    const channelId = BigInt(interaction.channelId);
-
     const result = await this.tournamentService.getTournamentsWithMatchesToday(
-      channelId,
+      interaction.channelId,
       "Midnight",
     );
     switch (result.status) {
       case GetTournamentsWithMatchesTodayResultStatus.Success: {
-        const channelConfig =
-          await this.configurationService.getConfiguration(channelId);
+        const channelConfig = await this.configurationService.getConfiguration(
+          interaction.channelId,
+        );
 
-        const embeds = this.tournamentMessageBuilder.build(
+        const containers = this.tournamentMessageBuilder.build(
           channelConfig!,
           result.data,
         );
 
-        for (const embed of embeds) {
+        for (const container of containers) {
           // If we've not replied yet, reply now, and follow up the rest
           if (!interaction.replied) {
-            await interaction.editReply({ embeds: [embed] });
+            await interaction.editReply({
+              components: [container],
+              flags: MessageFlags.IsComponentsV2,
+            });
           } else {
-            await interaction.followUp({ embeds: [embed] });
+            await interaction.followUp({
+              components: [container],
+              flags: MessageFlags.IsComponentsV2,
+            });
           }
         }
 

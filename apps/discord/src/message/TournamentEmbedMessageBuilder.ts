@@ -6,16 +6,17 @@ import type { TournamentIteration } from "@dotabot.js/domain/data/TournamentIter
 import type { TournamentPhase } from "@dotabot.js/domain/data/TournamentPhase";
 import type { StreamSelector } from "@dotabot.js/domain/selector/StreamSelector";
 import {
-  EmbedBuilder,
+  ContainerBuilder,
   hyperlink,
+  SeparatorSpacingSize,
   time,
   TimestampStyles,
-  type ColorResolvable,
+  type RGBTuple,
 } from "discord.js";
 import { injectable, inject } from "inversify";
 import { Symbols } from "@dotabot.js/shared/Symbols";
 
-const EmbedColor: ColorResolvable = "DarkAqua";
+const AccentColour: RGBTuple | number = 4688544;
 
 @injectable()
 export class TournamentEmbedMessageBuilder {
@@ -26,29 +27,36 @@ export class TournamentEmbedMessageBuilder {
   build(
     channelConfig: ChannelConfiguration,
     tournaments: Tournament[],
-  ): EmbedBuilder[] {
-    const embeds: EmbedBuilder[] = [];
+  ): ContainerBuilder[] {
+    const containers: ContainerBuilder[] = [];
     for (const tournament of tournaments) {
       for (const iteration of tournament.iterations) {
         for (const phase of iteration.phases) {
-          const embed = this.buildTournamentMessage(
+          const container = this.buildTournamentMessage(
             channelConfig,
             tournament,
             iteration,
             phase,
           );
-          if (!embed) continue;
+          if (!container) continue;
 
-          embeds.push(embed);
+          containers.push(container);
         }
       }
     }
 
     // If there's no embeds, there's no matches to report, at least push a "No matches today!" embed
-    if (embeds.length === 0) {
-      embeds.push(new EmbedBuilder().setTitle(":robot: No matches today!"));
+    if (containers.length === 0) {
+      containers.push(
+        new ContainerBuilder()
+          .setAccentColor(AccentColour)
+          .addTextDisplayComponents((text) =>
+            text.setContent("No matches today!"),
+          ),
+      );
     }
-    return embeds;
+
+    return containers;
   }
 
   buildTournamentMessage(
@@ -56,7 +64,7 @@ export class TournamentEmbedMessageBuilder {
     tournament: Tournament,
     iteration: TournamentIteration,
     phase: TournamentPhase,
-  ): EmbedBuilder | undefined {
+  ): ContainerBuilder | undefined {
     if (phase.matches.length === 0) {
       return;
     }
@@ -67,26 +75,55 @@ export class TournamentEmbedMessageBuilder {
     }
 
     const title = this.getTournamentTitle(tournament, iteration, phase);
-    const builder = new EmbedBuilder()
-      .setTitle(`:robot: ${title} games today!`)
-      .setColor(EmbedColor)
-      .setDescription(
-        `Tournament data provided by ${hyperlink("PandaScore", "https://www.pandascore.co/")}`,
+    let builder = new ContainerBuilder()
+      .setAccentColor(AccentColour)
+      .addSectionComponents(
+        (section) =>
+          section.addTextDisplayComponents((text) =>
+            text.setContent(`### :robot: ${title} matches today!`),
+          ),
+        // TODO: Add back in when adding match notifications
+        // .setButtonAccessory((button) =>
+        //   button
+        //     .setCustomId(`${phase.id}`)
+        //     .setLabel("Notify me!")
+        //     .setStyle(ButtonStyle.Success)
+        //     .setEmoji({ name: "🔔" }),
+        // ),
+      )
+      .addSeparatorComponents((separator) =>
+        separator.setDivider(false).setSpacing(SeparatorSpacingSize.Small),
       );
 
     // key = stream URL
     // value = matches array
     for (const [key, value] of matches) {
-      builder.addFields({
-        name: `Matches on ${key}`,
-        value: value
-          .map(
-            (match) =>
-              `${time(match.scheduledAt.toJSDate(), TimestampStyles.ShortTime)} - ${this.getOpponentName(match.radiant)} vs ${this.getOpponentName(match.dire)}`,
-          )
-          .join("\n"),
-      });
+      builder = builder
+        .addTextDisplayComponents((text) =>
+          text.setContent(`### Matches on ${key}`),
+        )
+        .addTextDisplayComponents((text) =>
+          text.setContent(
+            value
+              .map(
+                (match) =>
+                  `${time(match.scheduledAt.toJSDate(), TimestampStyles.ShortTime)} - ${this.getOpponentName(match.radiant)} vs ${this.getOpponentName(match.dire)}`,
+              )
+              .join("\n"),
+          ),
+        )
+        .addSeparatorComponents((separator) =>
+          separator.setDivider(true).setSpacing(SeparatorSpacingSize.Small),
+        );
     }
+
+    builder = builder.addTextDisplayComponents((text) =>
+      text.setContent(
+        `Tournament data provided by ${hyperlink("PandaScore", "https://pandascore.co/")}`,
+      ),
+    );
+
+    // console.log(builder.toJSON());
 
     return builder;
   }

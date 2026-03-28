@@ -94,9 +94,10 @@ export class TierCommand extends Subcommand {
       return;
     }
 
-    const channelId = BigInt(interaction.channelId);
-
-    const result = await this._configurationService.addTier(channelId, tier);
+    const result = await this._configurationService.addTier(
+      interaction.channelId,
+      tier,
+    );
     switch (result) {
       case AddTierResult.Success: {
         await interaction.editReply(
@@ -136,9 +137,10 @@ export class TierCommand extends Subcommand {
       return;
     }
 
-    const channelId = BigInt(interaction.channelId);
-
-    const result = await this._configurationService.removeTier(channelId, tier);
+    const result = await this._configurationService.removeTier(
+      interaction.channelId,
+      tier,
+    );
     switch (result) {
       case RemoveTierResult.Success: {
         await interaction.editReply(

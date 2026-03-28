@@ -47,10 +47,10 @@ export class BullDailyNotificationScheduler implements DailyNotificationSchedule
     );
   }
 
-  async unschedule(channelId: bigint): Promise<void> {
+  async unschedule(channelId: string): Promise<void> {
     const jobId = this.buildJobId(channelId);
     await this.queue.removeJobScheduler(jobId);
   }
 
-  private buildJobId = (channelId: bigint) => `daily-notification-${channelId}`;
+  private buildJobId = (channelId: string) => `daily-notification-${channelId}`;
 }

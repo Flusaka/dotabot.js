@@ -45,32 +45,32 @@ export enum SetDailyNotificationTimeResult {
 export interface ConfigurationService {
   // Get configuration
   getConfiguration(
-    channelId: bigint,
+    channelId: string,
   ): Promise<ChannelConfiguration | undefined>;
 
   // Tier configuration
-  addTier(channelId: bigint, tier: Tier): Promise<AddTierResult>;
-  removeTier(channelId: bigint, tier: Tier): Promise<RemoveTierResult>;
+  addTier(channelId: string, tier: Tier): Promise<AddTierResult>;
+  removeTier(channelId: string, tier: Tier): Promise<RemoveTierResult>;
 
   // Language configuration
   setPreferredLanguage(
-    channelId: bigint,
+    channelId: string,
     language: Language,
   ): Promise<SetPreferredLanguageResult>;
 
   // Timezone configuration
   setNotificationTimezone(
-    channelId: bigint,
+    channelId: string,
     timezone: Timezone,
   ): Promise<SetNotificationTimezoneResult>;
 
   // Daily notification configuration
   enableDailyNotifications(
-    channelId: bigint,
+    channelId: string,
     enable: boolean,
   ): Promise<EnableDailyNotificationsResult>;
   setDailyNotificationTime(
-    channelId: bigint,
+    channelId: string,
     timeString: string,
   ): Promise<SetDailyNotificationTimeResult>;
 }

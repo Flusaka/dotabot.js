@@ -10,7 +10,8 @@ describe("ChannelConfiguration tests", () => {
     // 1. Arrange
     const config = ChannelConfiguration.fromExisting(
       0,
-      0n,
+      "123456789",
+      "123456789",
       [Tier.S],
       Timezone.GMT,
       Language.English,
@@ -28,7 +29,8 @@ describe("ChannelConfiguration tests", () => {
     // 1. Arrange
     const config = ChannelConfiguration.fromExisting(
       0,
-      0n,
+      "123456789",
+      "123456789",
       [Tier.S],
       Timezone.GMT,
       Language.English,
@@ -45,7 +47,8 @@ describe("ChannelConfiguration tests", () => {
     // 1. Arrange
     const config = ChannelConfiguration.fromExisting(
       0,
-      0n,
+      "123456789",
+      "123456789",
       [Tier.S, Tier.A],
       Timezone.GMT,
       Language.English,
@@ -63,7 +66,8 @@ describe("ChannelConfiguration tests", () => {
     // 1. Arrange
     const config = ChannelConfiguration.fromExisting(
       0,
-      0n,
+      "123456789",
+      "123456789",
       [Tier.S],
       Timezone.GMT,
       Language.English,
@@ -86,7 +90,8 @@ describe("ChannelConfiguration tests", () => {
       // 1. Arrange
       const config = ChannelConfiguration.fromExisting(
         0,
-        0n,
+        "123456789",
+        "123456789",
         [Tier.S],
         Timezone.GMT,
         Language.English,
@@ -108,7 +113,8 @@ describe("ChannelConfiguration tests", () => {
       // 1. Arrange
       const config = ChannelConfiguration.fromExisting(
         0,
-        0n,
+        "123456789",
+        "123456789",
         [Tier.S],
         Timezone.GMT,
         Language.English,

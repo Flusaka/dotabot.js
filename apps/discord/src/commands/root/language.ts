@@ -61,9 +61,8 @@ export class SetPreferredLanguageCommand extends Command {
       return;
     }
 
-    const channelId = BigInt(interaction.channelId);
     const result = await this.configurationService.setPreferredLanguage(
-      channelId,
+      interaction.channelId,
       language,
     );
     switch (result) {

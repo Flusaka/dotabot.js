@@ -17,6 +17,7 @@ describe("TournamentService::getTournamentsWithMatchesToday", () => {
     return {
       getByChannelId: repository.getByChannelId ?? vi.fn(),
       deleteByChannelId: repository.deleteByChannelId ?? vi.fn(),
+      deleteByServerId: repository.deleteByServerId ?? vi.fn(),
       getById: repository.getById ?? vi.fn(),
       create: repository.create ?? vi.fn(),
       update: repository.update ?? vi.fn(),
@@ -46,7 +47,10 @@ describe("TournamentService::getTournamentsWithMatchesToday", () => {
     );
 
     // 2. Act
-    const result = await service.getTournamentsWithMatchesToday(0n, "Midnight");
+    const result = await service.getTournamentsWithMatchesToday(
+      "123456789",
+      "Midnight",
+    );
 
     // 3. Assert
     expect(result.status).toBe(
@@ -62,7 +66,8 @@ describe("TournamentService::getTournamentsWithMatchesToday", () => {
         .mockResolvedValue(
           ChannelConfiguration.fromExisting(
             0,
-            0n,
+            "123456789",
+            "123456789",
             [],
             Timezone.GMT,
             Language.English,
@@ -79,7 +84,10 @@ describe("TournamentService::getTournamentsWithMatchesToday", () => {
     );
 
     // 2. Act
-    const result = await service.getTournamentsWithMatchesToday(0n, "Midnight");
+    const result = await service.getTournamentsWithMatchesToday(
+      "123456789",
+      "Midnight",
+    );
 
     // 3. Assert
     expect(result.status).toBe(
@@ -95,7 +103,8 @@ describe("TournamentService::getTournamentsWithMatchesToday", () => {
         .mockResolvedValue(
           ChannelConfiguration.fromExisting(
             0,
-            0n,
+            "123456789",
+            "123456789",
             [],
             Timezone.GMT,
             Language.English,
@@ -114,7 +123,10 @@ describe("TournamentService::getTournamentsWithMatchesToday", () => {
     );
 
     // 2. Act
-    const result = await service.getTournamentsWithMatchesToday(0n, "Midnight");
+    const result = await service.getTournamentsWithMatchesToday(
+      "123456789",
+      "Midnight",
+    );
 
     // 3. Assert
     expect(result.status).toBe(
@@ -130,7 +142,8 @@ describe("TournamentService::getTournamentsWithMatchesToday", () => {
       // 1. Arrange
       const channel = ChannelConfiguration.fromExisting(
         0,
-        0n,
+        "123456789",
+        "123456789",
         [],
         timezone,
         Language.English,
@@ -160,7 +173,7 @@ describe("TournamentService::getTournamentsWithMatchesToday", () => {
         .toUTC();
 
       // 2. Act
-      await service.getTournamentsWithMatchesToday(0n, "Midnight");
+      await service.getTournamentsWithMatchesToday("123456789", "Midnight");
 
       // 3. Assert
       expect(
@@ -184,7 +197,8 @@ describe("TournamentService::getTournamentsWithMatchesToday", () => {
       const dailyNotificationTime = new TimeOnly(10, 0);
       const channel = ChannelConfiguration.fromExisting(
         0,
-        0n,
+        "123456789",
+        "123456789",
         [],
         timezone,
         Language.English,
@@ -213,10 +227,13 @@ describe("TournamentService::getTournamentsWithMatchesToday", () => {
           zone: IANAZone.create(timezone),
         },
       ).toUTC();
-      const endTime = startTime.plus({ days: 1 }).minus({ seconds: 1 }).toUTC();
+      const endTime = startTime.plus({ days: 1 }).minus({ seconds: 1 });
 
       // 2. Act
-      await service.getTournamentsWithMatchesToday(0n, "DailyNotificationTime");
+      await service.getTournamentsWithMatchesToday(
+        "123456789",
+        "DailyNotificationTime",
+      );
 
       // 3. Assert
       expect(

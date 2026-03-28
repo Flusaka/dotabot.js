@@ -7,7 +7,7 @@ import prisma from "../prisma";
 @injectable()
 export class PrismaChannelConfigurationRepository implements ChannelConfigurationRepository {
   async getByChannelId(
-    channelId: bigint,
+    channelId: string,
   ): Promise<ChannelConfiguration | undefined> {
     const channelConfig = await prisma.channelConfiguration.findUnique({
       where: { channelId: channelId },
@@ -56,10 +56,21 @@ export class PrismaChannelConfigurationRepository implements ChannelConfiguratio
     return true;
   }
 
-  async deleteByChannelId(channelId: bigint): Promise<boolean> {
+  async deleteByChannelId(channelId: string): Promise<boolean> {
     try {
       await prisma.channelConfiguration.delete({
         where: { channelId: channelId },
+      });
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  async deleteByServerId(serverId: string): Promise<boolean> {
+    try {
+      await prisma.channelConfiguration.deleteMany({
+        where: { serverId: serverId },
       });
       return true;
     } catch {
