@@ -77,20 +77,20 @@ export class TournamentEmbedMessageBuilder {
     const title = this.getTournamentTitle(tournament, iteration, phase);
     let builder = new ContainerBuilder()
       .setAccentColor(AccentColour)
-      .addSectionComponents(
-        (section) =>
-          section.addTextDisplayComponents((text) =>
-            text.setContent(`### :robot: ${title} matches today!`),
-          ),
-        // TODO: Add back in when adding match notifications
-        // .setButtonAccessory((button) =>
-        //   button
-        //     .setCustomId(`${phase.id}`)
-        //     .setLabel("Notify me!")
-        //     .setStyle(ButtonStyle.Success)
-        //     .setEmoji({ name: "🔔" }),
-        // ),
+      // TODO: Add back in when adding match notifications
+      // .addSectionComponents((section) =>
+      // section
+      .addTextDisplayComponents((text) =>
+        text.setContent(`### :robot: ${title} matches today!`),
       )
+      // .setButtonAccessory((button) =>
+      //   button
+      //     .setCustomId(`${phase.id}`)
+      //     .setLabel("Notify me!")
+      //     .setStyle(ButtonStyle.Success)
+      //     .setEmoji({ name: "🔔" }),
+      // ),
+      // )
       .addSeparatorComponents((separator) =>
         separator.setDivider(false).setSpacing(SeparatorSpacingSize.Small),
       );
