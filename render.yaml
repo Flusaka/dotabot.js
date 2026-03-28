@@ -5,23 +5,23 @@ projects:
       - name: Production
         services:
           - type: worker
-            name: dotabot-discord
+            name: dotabot-discord-prod
             runtime: docker
             repo: https://github.com/Flusaka/dotabot.js
             plan: starter
             envVars:
               - key: DATABASE_URL
                 fromDatabase:
-                  name: dotabot-pg
+                  name: dotabot-pg-prod
                   property: connectionString
               - key: NOTIFICATION_DATABASE_HOST
                 fromService:
-                  name: dotabot-redis
+                  name: dotabot-redis-prod
                   type: keyvalue
                   property: host
               - key: NOTIFICATION_DATABASE_PORT
                 fromService:
-                  name: dotabot-redis
+                  name: dotabot-redis-prod
                   type: keyvalue
                   property: port
               - key: DISCORD_TOKEN
@@ -37,7 +37,7 @@ projects:
                 - apps/discord/**
                 - packages/**
           - type: cron
-            name: dotabot-sync
+            name: dotabot-sync-prod
             schedule: "*/30 * * * *"
             runtime: docker
             repo: https://github.com/Flusaka/dotabot.js
@@ -45,7 +45,7 @@ projects:
             envVars:
               - key: DATABASE_URL
                 fromDatabase:
-                  name: dotabot-pg
+                  name: dotabot-pg-prod
                   property: connectionString
               - key: PANDASCORE_TOKEN
                 sync: false
@@ -59,13 +59,13 @@ projects:
                 - apps/sync/**
                 - packages/**
           - type: keyvalue
-            name: dotabot-redis
+            name: dotabot-redis-prod
             ipAllowList: []
             region: frankfurt
             plan: starter
             maxmemoryPolicy: noeviction
         databases:
-          - name: dotabot-pg
+          - name: dotabot-pg-prod
             databaseName: dotabot
             user: dotabot_user
             plan: basic-256mb
