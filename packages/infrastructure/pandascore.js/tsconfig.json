@@ -1,7 +1,7 @@
 {
     "extends": "@dotabot.js/tsconfig/base.json",
     "include": ["src"],
-    "exclude": ["./tsconfig.json"],
+    "exclude": ["./tsconfig.json", "src/**/*.test.ts"],
     "compilerOptions": {
         "strictNullChecks": true,
         "allowJs": true,

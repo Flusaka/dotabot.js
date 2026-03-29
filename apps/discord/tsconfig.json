@@ -12,5 +12,5 @@
 		"removeComments": true
     },
     "include": ["src"],
-    "exclude": ["./tsconfig.json"]
+    "exclude": ["./tsconfig.json", "src/**/*.test.ts"]
 }

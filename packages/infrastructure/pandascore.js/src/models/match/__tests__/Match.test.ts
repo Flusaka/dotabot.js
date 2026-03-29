@@ -219,6 +219,7 @@ describe("Match Schema", () => {
       winner_type: "Team",
     };
 
+    // TODO: Expand this
     const parsedMatch = Match.parse(validMatch);
     expect(parsedMatch).toBeDefined();
     expect(parsedMatch.id).toBe(589643);
