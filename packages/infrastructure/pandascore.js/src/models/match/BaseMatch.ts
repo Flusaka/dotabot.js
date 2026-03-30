@@ -18,7 +18,6 @@ export const BaseMatchSchema = z.looseObject({
   draw: z.boolean(),
   endAt: z.iso.datetime().nullable(),
   forfeit: z.boolean(),
-  // TODO: games
   gameAdvantage: z.int().gte(1).nullable(),
   id: z.number().gte(1),
   // TODO: live

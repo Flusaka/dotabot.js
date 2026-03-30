@@ -12,7 +12,27 @@ const Opponent = z.discriminatedUnion("type", [
   z.object({ type: z.literal("Player"), opponent: BasePlayer }),
 ]);
 
+const Game = z.preprocess(
+  (data: object) => camelCase(data),
+  z.looseObject({
+    beginAt: z.iso.datetime().nullable(),
+    complete: z.boolean(),
+    detailedStats: z.boolean(),
+    endAt: z.iso.datetime().nullable(),
+    finished: z.boolean(),
+    forfeit: z.boolean(),
+    id: z.number().gte(1),
+    length: z.number().gte(0).nullable(),
+    matchId: z.number().gte(1),
+    position: z.number().gte(1),
+    status: z.enum(["finished", "not_played", "not_started", "running"]),
+    // TODO: winner
+    // TODO: winner_type
+  }),
+);
+
 export const MatchSchema = BaseMatchSchema.extend({
+  games: z.array(Game),
   league: BaseLeague,
   opponents: z.array(Opponent),
   serie: BaseSerie,
@@ -26,5 +46,5 @@ export const Match = z.preprocess(
 );
 
 export type Opponent = z.infer<typeof Opponent>;
-export type MatchResponse = z.input<typeof Match>;
+export type Game = z.infer<typeof Game>;
 export type Match = z.infer<typeof Match>;

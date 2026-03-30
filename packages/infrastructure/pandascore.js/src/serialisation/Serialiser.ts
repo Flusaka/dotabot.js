@@ -1,25 +1,57 @@
 import type { RequestParameter } from "../request/types";
 
-export type SerialisationMethod = "simple" | "deep";
+export type SerialisationMethod = "simple" | "deep" | "form";
 
-export class Serialiser {
+export abstract class Serialiser {
   protected serialiseValue(param: RequestParameter): string {
     if (Array.isArray(param.value)) {
-      return this.serialiseArray(param.value);
+      return this.serialiseArray(
+        param.key,
+        param.value,
+        param.serialisationMethod,
+      );
+    }
+
+    if (param.value instanceof Date) {
+      return this.serialisePrimitive(
+        param.key,
+        param.value.toISOString(),
+        param.serialisationMethod,
+      );
     }
 
     if (typeof param.value === "object" && param.value !== null) {
       return this.serialiseObject(param.value, param);
     }
 
-    return this.serialisePrimitive(param);
+    return this.serialisePrimitive(
+      param.key,
+      `${param.value}`,
+      param.serialisationMethod,
+    );
   }
 
-  private serialisePrimitive(param: RequestParameter): string {
-    return `${param.value}`;
+  private serialisePrimitive(
+    key: string,
+    value: string,
+    serialisationMethod?: SerialisationMethod,
+  ): string {
+    switch (serialisationMethod) {
+      case "form":
+        return `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
+    }
+    return `${value}`;
   }
 
-  private serialiseArray(value: unknown[]): string {
+  private serialiseArray(
+    key: string,
+    value: unknown[],
+    serialisationMethod?: SerialisationMethod,
+  ): string {
+    switch (serialisationMethod) {
+      case "form":
+        return `${encodeURIComponent(key)}=${encodeURIComponent(value.join(","))}`;
+    }
     return `${value.join(",")}`;
   }
 

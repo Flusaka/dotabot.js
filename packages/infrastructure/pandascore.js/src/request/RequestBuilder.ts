@@ -37,6 +37,13 @@ export class RequestBuilder<TResponse> {
     return this;
   }
 
+  setToken(token: string): RequestBuilder<TResponse> {
+    return this.addHeader({
+      key: "Authorization",
+      value: `Bearer ${token}`,
+    });
+  }
+
   addQueryParam(param: Partial<RequestParameter>): RequestBuilder<TResponse> {
     if (!param.key || !param.value) {
       return this;
@@ -45,7 +52,7 @@ export class RequestBuilder<TResponse> {
     this.params.query.set(param.key, {
       key: param.key,
       value: snakeCase(param.value),
-      serialisationMethod: param.serialisationMethod ?? "simple",
+      serialisationMethod: param.serialisationMethod ?? "form",
     });
     return this;
   }

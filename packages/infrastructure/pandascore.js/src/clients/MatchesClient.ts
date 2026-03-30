@@ -5,7 +5,7 @@ import { RequestBuilder } from "../request/RequestBuilder";
 import type { Response } from "../request/Request";
 import type { Page } from "../page/Page";
 
-export interface GetMatchesRequestParams {
+interface GetMatchesRequestParams {
   range?: MatchesRange;
   page?: Page;
 }

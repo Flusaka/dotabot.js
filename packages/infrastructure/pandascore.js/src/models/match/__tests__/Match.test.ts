@@ -3,7 +3,7 @@ import { Match } from "../Match";
 
 describe("Match Schema", () => {
   it("should parse a valid match in snake_case", () => {
-    const validMatch = {
+    const raw = {
       begin_at: "2021-04-22T22:17:54Z",
       detailed_stats: true,
       draw: false,
@@ -220,10 +220,11 @@ describe("Match Schema", () => {
     };
 
     // TODO: Expand this
-    const parsedMatch = Match.parse(validMatch);
+    const parsedMatch = Match.parse(raw);
     expect(parsedMatch).toBeDefined();
     expect(parsedMatch.id).toBe(589643);
     expect(parsedMatch.matchType).toBe("best_of");
+    expect(parsedMatch.games.length).toBe(raw.games.length);
   });
 
   it("should throw for an invalid match", () => {

@@ -92,11 +92,11 @@ export class Request<TResponseBody> {
     this.responseSchema = params.responseSchema;
   }
 
-  buildHeaders(): Headers {
+  private buildHeaders(): Headers {
     return new HeaderSerialiser().serialise(this.headers);
   }
 
-  buildRequestUrl(): string {
+  private buildRequestUrl(): string {
     const queryString = new QuerySerialiser().serialise(this.query);
     return `${this.baseUrl}${this.path}${queryString}`;
   }
